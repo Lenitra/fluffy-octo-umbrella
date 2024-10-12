@@ -48,4 +48,9 @@ public class CamControler : MonoBehaviour
             Camera.main.fieldOfView = Mathf.Clamp(newFov, minZoom, maxZoom);
         }
     }
+
+    public void lookTile(GameObject tile){
+        Vector3 tilePos = tile.transform.position;
+        transform.position = new Vector3(tilePos.x, transform.position.y, tilePos.z-4);
+    }
 }

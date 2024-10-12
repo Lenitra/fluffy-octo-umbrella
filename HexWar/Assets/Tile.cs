@@ -5,13 +5,16 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
     
-    [SerializeField] private int units = 0;
-    [SerializeField] private string owner = "none";
-    [SerializeField] private bool hq = false;
-    [SerializeField] private int[] position = new int[2];
+    public int units = 0;
+    public string owner = "none";
+    public bool hq = false;
+    public int[] position = new int[2];
+    public string type = "";
 
 
-    [SerializeField] private GameObject hqObject;
+    public GameObject hqObject;
+    private int selectionOffset = 2;
+
 
 
     void Start()
@@ -20,11 +23,12 @@ public class Tile : MonoBehaviour
         position[0] = int.Parse(gameObject.name.Split("Hexagon ")[1].Split(",")[0]);
         position[1] = int.Parse(gameObject.name.Split("Hexagon ")[1].Split(",")[1]);
 
-
-        // TODO: TEST
-        if (position[0] == 0 && position[1] == 0) {
+        if(type.Split(":")[0] == "HQ") {
             hq = true;
+        } else {
+            hq = false;
         }
+
 
 
         if (hq) {
@@ -32,6 +36,37 @@ public class Tile : MonoBehaviour
         } else {
             hqObject.SetActive(false);
         }
-        
     }
+
+
+    public void setupTile(int units, string owner, bool hq, string type) {
+        this.units = units;
+        this.owner = owner;
+        this.hq = hq;
+        this.type = type;
+        Start();
+    }
+
+
+    public IEnumerator selectTile()
+    {
+
+        for (int i = 0; i < selectionOffset * 10; i++)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y + 0.01f, transform.position.z);
+            yield return new WaitForSeconds(0.001f);
+        }
+        yield return new WaitForSeconds(0.1f);
+    }
+
+    public IEnumerator unselectTile(GameObject tile)
+    {
+        for (int i = 0; i < selectionOffset * 10; i++)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y - 0.01f, transform.position.z);
+            yield return new WaitForSeconds(0.001f);
+        }
+        yield return new WaitForSeconds(0.1f);
+    }
+
 }
