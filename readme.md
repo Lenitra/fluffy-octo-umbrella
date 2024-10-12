@@ -1,6 +1,6 @@
 Inspirations : 
-Mini jeu de conquête for honor 
-Risk, jeu de plateau 
+- Mini jeu de conquête for honor 
+- Risk, jeu de plateau 
 
 Cartes 
 Jeu de conquête avec des cartes bonus débloquables et une gestion d'unités.
@@ -14,16 +14,16 @@ Système de deck permettant au joueur de définir un deck de X cartes qui pourra
 
 
 Missions individuelles qui permettent de gagner du gold/xp qui permet d'augmenter le QG et d'acheter des lootboxes de cartes.
-tuile a conquérir/défendre en une certaine durée
-rassembler un maximum d'unités sur une tuile
+- tuile a conquérir/défendre en une certaine durée
+- rassembler un maximum d'unités sur une tuile
 
 
 Cartes qui s'obtiennent sur la durée, plus il y a de tuiles conquises plus on obtient des cartes rapidement. 
 Liste des bonus de cartes
-diminue l'intervalle de récupération de cartes
-boost les points d'une tuile (%)
-génère des unités sur la tuile
-diminue les unités de n'importe quelle tuile
-augmentation des unités d'une tuile
-révéler si il y a un bonus sur la tuile ciblée
-...
+- diminue l'intervalle de récupération de cartes
+- boost les points d'une tuile (%)
+- génère des unités sur la tuile
+- diminue les unités de n'importe quelle tuile
+- augmentation des unités d'une tuile
+- révéler si il y a un bonus sur la tuile ciblée
+- ...
