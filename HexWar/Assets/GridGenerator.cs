@@ -25,14 +25,13 @@ public class GridGenerator : MonoBehaviour
             int z = (int)tileData["z"];
             string owner = (string)tileData["owner"];
             int units = (int)tileData["units"];
-            bool hq = (bool)tileData["hq"];
             string type_id = (string)tileData["type"];
 
             GameObject hex = GameObject.Instantiate(hexPrefab);
             hex.name = "Hexagon " + x + ", " + z;
             hex.transform.SetParent(this.transform);
             hex.transform.position = new Vector3(GetHexCoordinates(x, z)[0], 0, GetHexCoordinates(x, z)[1]);
-            hex.GetComponent<Tile>().setupTile(units, owner, hq, type_id);
+            hex.GetComponent<Tile>().setupTile(units, owner, type_id);
         }
     }
 

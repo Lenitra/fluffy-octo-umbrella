@@ -39,10 +39,9 @@ public class Tile : MonoBehaviour
     }
 
 
-    public void setupTile(int units, string owner, bool hq, string type) {
+    public void setupTile(int units, string owner, string type) {
         this.units = units;
         this.owner = owner;
-        this.hq = hq;
         this.type = type;
         Start();
     }
