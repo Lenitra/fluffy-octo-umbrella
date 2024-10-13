@@ -9,7 +9,7 @@ public class CamControler : MonoBehaviour
     public float minZoom = 5f;      // Limite minimale du zoom
     public float maxZoom = 60f;     // Limite maximale du zoom
 
-    void Update()
+    void FixedUpdate()
     {
         HandleMovement();
         HandleZoom();
@@ -28,7 +28,7 @@ public class CamControler : MonoBehaviour
         // Appliquer le déplacement à la caméra
         if (direction.magnitude >= 0.1f)
         {
-            transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
+            transform.position += direction * moveSpeed * Time.deltaTime;
         }
     }
 

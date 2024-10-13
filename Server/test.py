@@ -5,20 +5,18 @@ import os
 here = os.path.dirname(os.path.abspath(__file__))
 
 
-map = []
+map = {}
 
 
 
 
-for i in range (100):
-    for j in range(100):
-        map.append({
-            "x" : i,
-            "z" : j,
-            "type" : "",
-            "owner" : "",
-            "units" : 0
-        })
+for i in range (32):
+    for j in range(32):
+        map[f"{i}:{j}"] = {
+            "owner": "",
+            "type": "",
+            "units": 0
+        }
 
 # register map into data/map.json
 with open(here+"/data/map.json", "w") as f:

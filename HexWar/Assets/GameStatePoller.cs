@@ -7,8 +7,9 @@ public class GameStatePoller : MonoBehaviour
 {
     public static event Action<string> OnGameDataReceived; // Déclaration de l'événement
 
-    private float pollInterval = 2.0f; // Interval en secondes
-    private string gameServerURL = "http://localhost:5000/get_player_map";
+    private float pollInterval = 5.0f; // Interval en secondes
+    private string gameServerURL = "http://localhost:5000/get_hex/"+ "Lenitra" + "/" + "2"; // URL du serveur de jeu
+    // private string gameServerURL = "http://localhost:5000/get_all_map"; // URL du serveur de jeu
 
     void Start()
     {

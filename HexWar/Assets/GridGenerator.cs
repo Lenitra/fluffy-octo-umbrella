@@ -12,8 +12,57 @@ public class GridGenerator : MonoBehaviour
     public float gridGap = 0.02f;
 
 
+    public GameObject getHex(int x, int z){
+        foreach (Transform child in transform){
+            if (child.name == "Hexagon " + x + ", " + z){
+                return child.gameObject;
+            }
+        }
+        return null;
+    }
 
 
+    public void UpdateGrid(List<Dictionary<string, object>> tilesData)
+    {
+        // loop through all tilesData
+        foreach (Dictionary<string, object> tileData in tilesData)
+        {
+            // get the tile position
+            int x = int.Parse(tileData["key"].ToString().Split(':')[0]);
+            int z = int.Parse(tileData["key"].ToString().Split(':')[1]);
+            // check if the tile already with good attributes
+            GameObject tile = getHex(x, z);
+            if (tile != null)
+            {
+                Tile tileComponent = tile.GetComponent<Tile>();
+                if (tileComponent.units != (int)tileData["units"])
+                {
+                    tileComponent.units = (int)tileData["units"];
+                }
+
+                if (tileComponent.owner != (string)tileData["owner"])
+                {
+                    tileComponent.owner = (string)tileData["owner"];
+                }
+
+                if (tileComponent.type != (string)tileData["type"])
+                {
+                    tileComponent.setType((string)tileData["type"]);
+                }
+            
+            }
+            else
+            {
+
+                // if the tile is not created, create it
+                GameObject hex = GameObject.Instantiate(hexPrefab);
+                hex.name = "Hexagon " + x + ", " + z;
+                hex.transform.SetParent(this.transform);
+                hex.transform.position = new Vector3(GetHexCoordinates(x, z)[0], 0, GetHexCoordinates(x, z)[1]);
+                hex.GetComponent<Tile>().setupTile((int)tileData["units"], (string)tileData["owner"], (string)tileData["type"]);
+            }
+        }
+    }
 
 
 

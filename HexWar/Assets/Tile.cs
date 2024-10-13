@@ -38,6 +38,19 @@ public class Tile : MonoBehaviour
         }
     }
 
+    public void setType(string type) {
+        this.type = type;
+        if (type.Split(":")[0] == "HQ") {
+            hq = true;
+        } else {
+            hq = false;
+        }
+        if (hq) {
+            hqObject.SetActive(true);
+        } else {
+            hqObject.SetActive(false);
+        }
+    }
 
     public void setupTile(int units, string owner, string type) {
         this.units = units;
