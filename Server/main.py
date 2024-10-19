@@ -25,26 +25,45 @@ def game_state():
 
 # Fonction auxiliaire pour obtenir les hexagones adjacents
 def get_adjacent_hexes(x, z):
-    if z % 2 == 0:
-        return [
-            {"x": x + 1, "z": z},
-            {"x": x - 1, "z": z},
-            {"x": x, "z": z + 1},
-            {"x": x, "z": z - 1},
-            {"x": x - 1, "z": z - 1},
-            {"x": x + 1, "z": z - 1}
-        ]
-
+    toret = []
+    toret.append({"x": x + 1, "z": z})
+    toret.append({"x": x - 1, "z": z})
+    toret.append({"x": x, "z": z + 1})
+    toret.append({"x": x, "z": z - 1})
+    if x % 2 != 0:
+        toret.append({"x": x + 1, "z": z + 1})
+        toret.append({"x": x - 1, "z": z + 1})
     else:
-        return [
-            {"x": x + 1, "z": z},
-            {"x": x - 1, "z": z},
-            {"x": x, "z": z + 1},
-            {"x": x, "z": z - 1},
-            {"x": x - 1, "z": z + 1},
-            {"x": x + 1, "z": z + 1}
-        ]
-    
+        toret.append({"x": x + 1, "z": z - 1})
+        toret.append({"x": x - 1, "z": z - 1})
+
+    return toret
+
+
+# bouger les unités d'un hexagone à un autre 
+# @param origin: hexagone d'origine sous forme de string "x:z"
+# @param destination: hexagone de destination sous forme de string "x:z"
+# @param units: nombre d'unités à déplacer
+# @return: True si le déplacement a réussi, False sinon
+@app.route("/move_units/<string:origin>/<string:destination>/<int:units>")
+def move_units(origin, destination, units):
+    with open(here+"/data/map.json", "r") as f:
+        hexes = json.load(f)
+
+    if origin not in hexes or destination not in hexes:
+        return False
+
+    if hexes[origin]["units"] < units:
+        return False
+
+    hexes[origin]["units"] -= units
+    hexes[destination]["units"] += units
+
+    with open(here+"/data/map.json", "w") as f:
+        json.dump(hexes, f, indent=4)
+
+    return True
+
 
 
 # Route Flask pour obtenir les hexagones d'un joueur dans un certain rayon
