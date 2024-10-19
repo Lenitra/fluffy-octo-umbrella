@@ -1,3 +1,11 @@
+## Todo List
+- Gestion client de l'affichage du territoire avec un code couleur
+- Visuel de déplacement des unités
+
+
+
+
+
 Inspirations : 
 - Mini jeu de conquête for honor 
 - Risk, jeu de plateau 
@@ -27,3 +35,6 @@ Liste des bonus de cartes
 - augmentation des unités d'une tuile
 - révéler si il y a un bonus sur la tuile ciblée
 - ...
+
+
+

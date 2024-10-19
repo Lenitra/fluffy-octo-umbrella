@@ -1,21 +1,21 @@
 {
     "0:0": {
-        "owner": "",
-        "type": "",
-        "units": 0
+        "owner": "Lenitra",
+        "type": "HQ:1",
+        "units": 1086988
     },
     "0:1": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
-        "units": 0
+        "units": 5
     },
     "0:2": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
     "0:3": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -160,12 +160,12 @@
         "units": 0
     },
     "1:0": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
-        "units": 0
+        "units": 10
     },
     "1:1": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -330,7 +330,7 @@
         "units": 0
     },
     "2:2": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -485,7 +485,7 @@
         "units": 0
     },
     "3:1": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -655,7 +655,7 @@
         "units": 0
     },
     "4:3": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -840,7 +840,7 @@
         "units": 0
     },
     "5:8": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -980,7 +980,7 @@
         "units": 0
     },
     "6:4": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -1145,7 +1145,7 @@
         "units": 0
     },
     "7:5": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -1155,9 +1155,9 @@
         "units": 0
     },
     "7:7": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
-        "units": 0
+        "units": 5
     },
     "7:8": {
         "owner": "",
@@ -2640,8 +2640,8 @@
         "units": 0
     },
     "16:16": {
-        "owner": "Lenitra",
-        "type": "HQ:10",
+        "owner": "",
+        "type": "",
         "units": 0
     },
     "16:17": {

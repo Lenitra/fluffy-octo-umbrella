@@ -14,7 +14,7 @@ public class GridGenerator : MonoBehaviour
 
     public GameObject getHex(int x, int z){
         foreach (Transform child in transform){
-            if (child.name == "Hexagon " + x + ", " + z){
+            if (child.name == "Hexagon " + x + ":" + z){
                 return child.gameObject;
             }
         }
@@ -35,33 +35,53 @@ public class GridGenerator : MonoBehaviour
             if (tile != null)
             {
                 Tile tileComponent = tile.GetComponent<Tile>();
-                if (tileComponent.units != (int)tileData["units"])
+                
+                int units = (int)tileData["units"];
+                if (tileComponent.units != units)
                 {
-                    tileComponent.units = (int)tileData["units"];
+                    tileComponent.setupTile(units, tileComponent.owner, tileComponent.type);
                 }
 
-                if (tileComponent.owner != (string)tileData["owner"])
+                string owner = (string)tileData["owner"];
+                if (tileComponent.owner != owner)
                 {
-                    tileComponent.owner = (string)tileData["owner"];
+                    tileComponent.setupTile(tileComponent.units, owner, tileComponent.type);
                 }
 
-                if (tileComponent.type != (string)tileData["type"])
+                string type = (string)tileData["type"];
+                if (tileComponent.type != type)
                 {
-                    tileComponent.setType((string)tileData["type"]);
+                    tileComponent.setupTile(tileComponent.units, tileComponent.owner, type);
                 }
             
             }
             else
             {
 
+
                 // if the tile is not created, create it
-                GameObject hex = GameObject.Instantiate(hexPrefab);
-                hex.name = "Hexagon " + x + ", " + z;
-                hex.transform.SetParent(this.transform);
-                hex.transform.position = new Vector3(GetHexCoordinates(x, z)[0], 0, GetHexCoordinates(x, z)[1]);
-                hex.GetComponent<Tile>().setupTile((int)tileData["units"], (string)tileData["owner"], (string)tileData["type"]);
+                StartCoroutine(InstantiateHexagon(x, z, tileData));
+                // GameObject hex = GameObject.Instantiate(hexPrefab);
+                // hex.name = "Hexagon " + x + ":" + z;
+                // hex.transform.SetParent(this.transform);
+                // hex.transform.position = new Vector3(GetHexCoordinates(x, z)[0], 0, GetHexCoordinates(x, z)[1]);
+                // hex.GetComponent<Tile>().setupTile((int)tileData["units"], (string)tileData["owner"], (string)tileData["type"]);
             }
         }
+    }
+
+    IEnumerator InstantiateHexagon(int x, int z, Dictionary<string, object> tileData){
+        // if the tile is not created, create it
+        GameObject hex = GameObject.Instantiate(hexPrefab);
+        hex.name = "Hexagon " + x + ":" + z;
+        hex.transform.SetParent(this.transform);
+
+        hex.transform.position = new Vector3(GetHexCoordinates(x, z)[0], 0, GetHexCoordinates(x, z)[1]);
+
+        yield return new WaitForSeconds(0.1f);
+        hex.GetComponent<Tile>().setupTile((int)tileData["units"], (string)tileData["owner"], (string)tileData["type"]);
+
+
     }
 
 
@@ -77,7 +97,7 @@ public class GridGenerator : MonoBehaviour
             string type_id = (string)tileData["type"];
 
             GameObject hex = GameObject.Instantiate(hexPrefab);
-            hex.name = "Hexagon " + x + ", " + z;
+            hex.name = "Hexagon " + x + "" + z;
             hex.transform.SetParent(this.transform);
             hex.transform.position = new Vector3(GetHexCoordinates(x, z)[0], 0, GetHexCoordinates(x, z)[1]);
             hex.GetComponent<Tile>().setupTile(units, owner, type_id);

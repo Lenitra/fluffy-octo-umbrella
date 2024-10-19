@@ -50,7 +50,20 @@ public class CamControler : MonoBehaviour
     }
 
     public void lookTile(GameObject tile){
+        // transform.position = new Vector3(tilePos.x, transform.position.y, tilePos.z-3);
+
         Vector3 tilePos = tile.transform.position;
-        transform.position = new Vector3(tilePos.x, transform.position.y, tilePos.z-4);
+        // move the camera to the tile smoothly with transform.translate
+        StartCoroutine(translateToTile(tilePos));
+    }
+
+    IEnumerator translateToTile(Vector3 tilePos){
+        float timespeed = 0.25f;
+        // go to new Vector3(tilePos.x, transform.position.y, tilePos.z-3) smoothly in timespeed seconds
+        for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / timespeed)
+        {
+            transform.position = Vector3.Lerp(transform.position, new Vector3(tilePos.x, transform.position.y, tilePos.z-3), t);
+            yield return null;
+        }
     }
 }

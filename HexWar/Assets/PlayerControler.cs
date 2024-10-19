@@ -3,70 +3,114 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class PlayerControler : MonoBehaviour
 {
 
     // TODO: Ajouter de l'UI pour afficher les informations des hexagones sélectionnés
-    [SerializeField] private TextMeshProUGUI tileInfo;
     [SerializeField] private RectTransform tileInfoPanel;
 
+    [SerializeField] private Button moveUnitsBtn;
 
     [SerializeField] private GridGenerator gridGenerator;
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private CamControler camControler;
 
 
+    private string state = "";
 
     private GameObject selectedTile;
     // Update is called once per frame
+
+
+    void Start(){
+        // add event listener to moveUnitsBtn
+        moveUnitsBtn.onClick.AddListener(moveUnitsBtnClic);
+        // set playerpref username 
+
+        // TODO: Pour débug
+        PlayerPrefs.SetString("username", "Lenitra");
+        PlayerPrefs.SetString("color", "255, 72, 0");
+
+
+    }
+
+
     void Update()
     {
         // lancer de raycast
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            // check if the click is on a UI element
+            if (EventSystem.current.IsPointerOverGameObject())
             {
-
-
-
-                if (selectedTile == null)
+                return; 
+            }
+            if (state == ""){
+                // move units
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
                 {
-                    selectedTile = hit.collider.gameObject;
-                    StartCoroutine(selectedTile.GetComponent<Tile>().selectTile());
-                    StartCoroutine(animateTileInfoPanel());
 
-                } else {
-                    StartCoroutine(selectedTile.GetComponent<Tile>().unselectTile(selectedTile));
-                    StartCoroutine(animateTileInfoPanelBack());
-                    if (hit.collider.gameObject == selectedTile){
-                        selectedTile = null;
-                        return;
-                    } else {
+
+
+                    if (selectedTile == null)
+                    {
                         selectedTile = hit.collider.gameObject;
+                        camControler.lookTile(selectedTile);
                         StartCoroutine(selectedTile.GetComponent<Tile>().selectTile());
                         StartCoroutine(animateTileInfoPanel());
+
+                    } else {
+                        StartCoroutine(selectedTile.GetComponent<Tile>().unselectTile(selectedTile));
+                        StartCoroutine(animateTileInfoPanelBack());
+                        if (hit.collider.gameObject == selectedTile){
+                            selectedTile = null;
+                            return;
+                        } else {
+                            selectedTile = hit.collider.gameObject;
+                            StartCoroutine(selectedTile.GetComponent<Tile>().selectTile());
+                            camControler.lookTile(selectedTile);
+                            StartCoroutine(animateTileInfoPanel());
+                        }
                     }
                 }
             }
 
-            if (selectedTile != null){
-                string msg = "NAME : " + selectedTile.name;
-                msg += "\nPOSITION : " + selectedTile.transform.position;
-                msg += "\nCalculated : " + gridGenerator.GetHexCoordinates(selectedTile.GetComponent<Tile>().position[0], selectedTile.GetComponent<Tile>().position[1])[0] + ", " + gridGenerator.GetHexCoordinates(selectedTile.GetComponent<Tile>().position[0], selectedTile.GetComponent<Tile>().position[1])[1];
-                msg += "\nTAG : " + selectedTile.GetComponent<Tile>().position[0] + ", " + selectedTile.GetComponent<Tile>().position[1];
-                msg += "\nUNITS : " + selectedTile.GetComponent<Tile>().units;
-                msg += "\nOWNER : " + selectedTile.GetComponent<Tile>().owner;
-                msg += "\nHQ : " + selectedTile.GetComponent<Tile>().hq;
-                msg += "\nTYPE : " + selectedTile.GetComponent<Tile>().type;
-                tileInfo.text = msg;
-            }
+            else if (state == "move"){
+                // move units
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (hit.collider.gameObject.tag == "Tile"){
+                        gameManager.moveUnitsBtnClic(selectedTile.name.Split(' ')[1], hit.collider.gameObject.name.Split(' ')[1]);
+                        state = "";
 
+                        // StartCoroutine(selectedTile.GetComponent<Tile>().unselectTile(selectedTile));
+                        // StartCoroutine(animateTileInfoPanelBack());
+
+                        // selectedTile = null;
+                    }
+                }
+            }
         }
     }
 
 
+    private void moveUnitsBtnClic(){
+        if (selectedTile != null){
+            if (selectedTile.GetComponent<Tile>().units > 0){
+                state = "move";
+            }
+        }
+    }
 
+    
+
+    // annimation : translate the panel to the right
     private IEnumerator animateTileInfoPanel(){
         // translate the panel to the right 
         for (int i = 0; i < 10; i++)
@@ -76,6 +120,8 @@ public class PlayerControler : MonoBehaviour
         }
     }
 
+
+    // annimation : translate the panel to the left
     private IEnumerator animateTileInfoPanelBack(){
         // translate the panel to the right
         for (int i = 0; i < 10; i++)

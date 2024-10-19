@@ -7,17 +7,20 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private GridGenerator gridGenerator;
     [SerializeField] private CamControler camControler;
+    private ServerClient serverClient;
 
     private string username = "Lenitra";
 
     private void OnEnable()
     {
-        GameStatePoller.OnGameDataReceived += SetupTiles; // Abonnement à l'événement
+        serverClient = FindObjectOfType<ServerClient>();
+        ServerClient.OnGameDataReceived += SetupTiles; // Abonnement de l'événement
+
     }
 
     private void OnDisable()
     {
-        GameStatePoller.OnGameDataReceived -= SetupTiles; // Désabonnement de l'événement
+        ServerClient.OnGameDataReceived -= SetupTiles; // Désabonnement de l'événement
     }
 
     public void SetupTiles(string jsonData)
@@ -50,37 +53,22 @@ public class GameManager : MonoBehaviour
 
         // Mettre à jour la grille
         gridGenerator.UpdateGrid(tilesData);
-
-        // Trouver le HQ du joueur
-        var hqData = hexDictionary
-            .FirstOrDefault(hex => hex.Value != null && hex.Value.owner == username && hex.Value.type.Contains("HQ"));
-
-        // Vérifier si le HQ a été trouvé
-        if (!hqData.Equals(default(KeyValuePair<string, HexData>)))
-        {
-            // Extraire les coordonnées à partir de la clé (e.g., "16:16")
-            string[] coords = hqData.Key.Split(':');
-            int x = int.Parse(coords[0]);
-            int z = int.Parse(coords[1]);
-
-            // S'assurer que gridGenerator.getHex(x, z) ne retourne pas null
-            var hexTile = gridGenerator.getHex(x, z);
-            if (hexTile != null)
-            {
-                // Placer la caméra sur le HQ
-                camControler.lookTile(hexTile);
-            }
-            else
-            {
-                Debug.LogError("Erreur: Impossible de trouver l'hex à la position " + x + ":" + z);
-            }
-        }
-        else
-        {
-            Debug.LogWarning("HQ non trouvé pour le joueur " + username);
-        }
     }
+
+
+    public void moveUnitsBtnClic(string origin , string destination, int units = 5)
+    {
+        Debug.Log("Move units from " + origin + " to " + destination + " with " + units + " units.");
+        // send a http request to the server
+        serverClient.moveUnits(origin, destination, units);
+    }
+
 }
+
+
+
+
+
 
 // Classe GameData pour contenir le tableau des hexagones
 [Serializable]

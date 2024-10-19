@@ -1,56 +1,96 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+
+
 
 public class Tile : MonoBehaviour
 {
-    
+        
     public int units = 0;
-    public string owner = "none";
+    public string owner = "";
     public bool hq = false;
     public int[] position = new int[2];
     public string type = "";
 
 
     public GameObject hqObject;
-    private int selectionOffset = 2;
+    private float selectionOffset = 0.8f;
+
+    // textmeshpro for info on the tile
+    [SerializeField] private GameObject toShowOnSelected;
+    [SerializeField] private TextMeshPro tileInfo;
+    [SerializeField] private GameObject hoverOwner;
+    
 
 
 
     void Start()
     {
         // name of the object is "Hexagon x, z"
-        position[0] = int.Parse(gameObject.name.Split("Hexagon ")[1].Split(",")[0]);
-        position[1] = int.Parse(gameObject.name.Split("Hexagon ")[1].Split(",")[1]);
+        position[0] = int.Parse(gameObject.name.Split("Hexagon ")[1].Split(":")[0]);
+        position[1] = int.Parse(gameObject.name.Split("Hexagon ")[1].Split(":")[1]);
+
+        
+
+        // set the text of the tileInfo
+        toShowOnSelected.gameObject.SetActive(false);
+        string msg;
+        msg = "<sprite=36> " + position[0] + ":" + position[1] + "\n";
+        if (owner != "") {
+            msg += "<sprite=112>" + owner + "\n";
+        }
+        
+        msg += "<sprite=91>" + units + "\n";
+        if (type != "")
+            msg += "<sprite=45>" + type.Split(":")[0] + " " + type.Split(":")[1];
+        tileInfo.text = msg;
+
+        // add a material to the hoverOwner
+        // set renderinmode to transparent
+        Material material = hoverOwner.GetComponent<Renderer>().material;
+        material.SetFloat("_Mode", 2);
+        material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        material.SetInt("_ZWrite", 0);
+        material.DisableKeyword("_ALPHATEST_ON");
+        material.EnableKeyword("_ALPHABLEND_ON");
+        material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+
+        // set the color of the hoverOwner
+        float r = float.Parse(PlayerPrefs.GetString("color").Split(',')[0])/255;
+        float g = float.Parse(PlayerPrefs.GetString("color").Split(',')[1])/255;
+        float b = float.Parse(PlayerPrefs.GetString("color").Split(',')[2])/255;
+        float a = 20f / 255f;
+        material.color = new Color(r,g,b,a); 
+
+
+
+        //  if the owner is the same as the username from playerprefs, show the hoverOwner 
+        if (owner == PlayerPrefs.GetString("username"))
+        {
+            hoverOwner.SetActive(true);
+        }
+        else
+        {
+            hoverOwner.SetActive(false);
+        }
 
         if(type.Split(":")[0] == "HQ") {
             hq = true;
-        } else {
-            hq = false;
-        }
-
-
-
-        if (hq) {
             hqObject.SetActive(true);
-        } else {
+        }
+        else {
+            hq = false;
             hqObject.SetActive(false);
         }
+
+
     }
 
-    public void setType(string type) {
-        this.type = type;
-        if (type.Split(":")[0] == "HQ") {
-            hq = true;
-        } else {
-            hq = false;
-        }
-        if (hq) {
-            hqObject.SetActive(true);
-        } else {
-            hqObject.SetActive(false);
-        }
-    }
+
 
     public void setupTile(int units, string owner, string type) {
         this.units = units;
@@ -62,10 +102,11 @@ public class Tile : MonoBehaviour
 
     public IEnumerator selectTile()
     {
-
-        for (int i = 0; i < selectionOffset * 10; i++)
+        toShowOnSelected.gameObject.SetActive(true);
+        float movePerFrame = selectionOffset / 10;
+        for (int i = 0; i < 10; i++)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y + 0.01f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, transform.position.y + movePerFrame, transform.position.z);
             yield return new WaitForSeconds(0.001f);
         }
         yield return new WaitForSeconds(0.1f);
@@ -73,12 +114,17 @@ public class Tile : MonoBehaviour
 
     public IEnumerator unselectTile(GameObject tile)
     {
-        for (int i = 0; i < selectionOffset * 10; i++)
+        toShowOnSelected.gameObject.SetActive(false);
+        float movePerFrame = selectionOffset / 10;
+        for (int i = 0; i < 10; i++)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y - 0.01f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, transform.position.y - movePerFrame, transform.position.z);
             yield return new WaitForSeconds(0.001f);
         }
         yield return new WaitForSeconds(0.1f);
     }
+
+
+
 
 }
