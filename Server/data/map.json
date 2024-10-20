@@ -2,7 +2,7 @@
     "0:0": {
         "owner": "Lenitra",
         "type": "HQ:1",
-        "units": 1086988
+        "units": 1086919
     },
     "0:1": {
         "owner": "Lenitra",
@@ -167,10 +167,10 @@
     "1:1": {
         "owner": "Lenitra",
         "type": "",
-        "units": 0
+        "units": 5
     },
     "1:2": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -320,29 +320,29 @@
         "units": 0
     },
     "2:0": {
-        "owner": "",
-        "type": "",
-        "units": 0
-    },
-    "2:1": {
-        "owner": "",
-        "type": "",
-        "units": 0
-    },
-    "2:2": {
         "owner": "Lenitra",
         "type": "",
         "units": 0
     },
+    "2:1": {
+        "owner": "Lenitra",
+        "type": "",
+        "units": 5
+    },
+    "2:2": {
+        "owner": "Lenitra",
+        "type": "",
+        "units": 45
+    },
     "2:3": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
     "2:4": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
-        "units": 0
+        "units": 5
     },
     "2:5": {
         "owner": "",
@@ -480,7 +480,7 @@
         "units": 0
     },
     "3:0": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -490,12 +490,12 @@
         "units": 0
     },
     "3:2": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
-        "units": 0
+        "units": 15
     },
     "3:3": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -505,7 +505,7 @@
         "units": 0
     },
     "3:5": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -650,7 +650,7 @@
         "units": 0
     },
     "4:2": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -975,7 +975,7 @@
         "units": 0
     },
     "6:3": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },

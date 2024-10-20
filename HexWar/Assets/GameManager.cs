@@ -1,19 +1,33 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using System.Linq;
 using System;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GridGenerator gridGenerator;
-    [SerializeField] private CamControler camControler;
+    private GridGenerator gridGenerator;
+    private CamControler camControler;
     private ServerClient serverClient;
 
     private string username = "Lenitra";
 
+
+    // EFFECTS
+    [SerializeField] private LineRenderer moveUnitsLine;
+
+
+    void Start(){
+        // get the 
+        serverClient = GetComponent<ServerClient>();
+        gridGenerator = GetComponent<GridGenerator>();
+        camControler = Camera.main.GetComponent<CamControler>();
+    }
+
     private void OnEnable()
     {
-        serverClient = FindObjectOfType<ServerClient>();
+        
         ServerClient.OnGameDataReceived += SetupTiles; // Abonnement de l'événement
 
     }
@@ -62,6 +76,65 @@ public class GameManager : MonoBehaviour
         // send a http request to the server
         serverClient.moveUnits(origin, destination, units);
     }
+
+
+
+public IEnumerator moveUnitsAnimation(string from, string to)
+{
+    // get the origin and destination hexagons
+    GameObject originHex = gridGenerator.getHex(int.Parse(from.Split(":")[0]), int.Parse(from.Split(":")[1]));
+    GameObject destinationHex = gridGenerator.getHex(int.Parse(to.Split(":")[0]), int.Parse(to.Split(":")[1]));
+
+    // get the origin and destination positions
+    Vector3 originPos = new Vector3(originHex.transform.position.x, originHex.transform.position.y + 0.25f, originHex.transform.position.z);
+    Vector3 destinationPos = new Vector3(destinationHex.transform.position.x, destinationHex.transform.position.y + 0.25f, destinationHex.transform.position.z);
+
+    // Set the initial position of the line
+    moveUnitsLine.positionCount = 2;
+    moveUnitsLine.SetPosition(0, originPos);
+    moveUnitsLine.SetPosition(1, originPos); // Start with both points at the origin
+
+    float duration = 1.0f; // time to draw and erase the line (1 second each)
+    float elapsed = 0f;
+
+    // Animate the line drawing over the duration
+    while (elapsed < duration)
+    {
+        elapsed += Time.deltaTime;
+        float t = Mathf.Clamp01(elapsed / duration); // t goes from 0 to 1 over the duration
+        Vector3 currentPos = Vector3.Lerp(originPos, destinationPos, t); // Interpolate position
+        moveUnitsLine.SetPosition(1, currentPos); // Update the end position of the line
+
+        yield return null; // Wait until the next frame
+    }
+
+    // Ensure the line is fully drawn at the end
+    moveUnitsLine.SetPosition(1, destinationPos);
+
+
+    // Reset the elapsed time for the fade out
+    elapsed = 0f;
+
+    // Animate the line fading out progressively from origin to destination
+    while (elapsed < duration)
+    {
+        elapsed += Time.deltaTime;
+        float t = Mathf.Clamp01(elapsed / duration); // t goes from 0 to 1 over the duration
+        Vector3 currentPos = Vector3.Lerp(originPos, destinationPos, t); // Interpolate position from origin to destination
+        moveUnitsLine.SetPosition(0, currentPos); // Update the start position of the line progressively towards the destination
+
+        yield return null; // Wait until the next frame
+    }
+
+    // Ensure the line is fully erased at the end
+    moveUnitsLine.SetPosition(0, destinationPos);
+
+    // Remove the line completely
+    moveUnitsLine.positionCount = 0;
+}
+
+
+
 
 }
 

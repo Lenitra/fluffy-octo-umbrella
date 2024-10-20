@@ -8,14 +8,14 @@ using UnityEngine.EventSystems;
 public class PlayerControler : MonoBehaviour
 {
 
-    // TODO: Ajouter de l'UI pour afficher les informations des hexagones sélectionnés
+    // Ajouter de l'UI pour afficher les informations des hexagones sélectionnés
     [SerializeField] private RectTransform tileInfoPanel;
-
     [SerializeField] private Button moveUnitsBtn;
+    [SerializeField] private Button buildBtn;
 
-    [SerializeField] private GridGenerator gridGenerator;
-    [SerializeField] private GameManager gameManager;
-    [SerializeField] private CamControler camControler;
+    private GridGenerator gridGenerator;
+    private GameManager gameManager;
+    private CamControler camControler;
 
 
     private string state = "";
@@ -25,13 +25,19 @@ public class PlayerControler : MonoBehaviour
 
 
     void Start(){
+
+        gridGenerator = GetComponent<GridGenerator>();
+        gameManager = GetComponent<GameManager>();
+        camControler = Camera.main.GetComponent<CamControler>();
+
+
         // add event listener to moveUnitsBtn
         moveUnitsBtn.onClick.AddListener(moveUnitsBtnClic);
         // set playerpref username 
 
         // TODO: Pour débug
         PlayerPrefs.SetString("username", "Lenitra");
-        PlayerPrefs.SetString("color", "255, 72, 0");
+        PlayerPrefs.SetString("color", "105, 5, 133");
 
 
     }

@@ -5,11 +5,10 @@ using UnityEngine;
 public class GridGenerator : MonoBehaviour
 {
 
-    public GameObject hexPrefab;
-    public int gridSize = 16;
-    public float hexSize = 0.5f;
-    public float animmYOffset = 1f; 
-    public float gridGap = 0.02f;
+    [SerializeField] private GameObject hexPrefab;
+    private float hexSize = 0.5f;
+    private float animmYOffset = 1.5f; 
+    private float gridGap = 0.02f;
 
 
     public GameObject getHex(int x, int z){
@@ -24,34 +23,24 @@ public class GridGenerator : MonoBehaviour
 
     public void UpdateGrid(List<Dictionary<string, object>> tilesData)
     {
-        // loop through all tilesData
         foreach (Dictionary<string, object> tileData in tilesData)
         {
-            // get the tile position
             int x = int.Parse(tileData["key"].ToString().Split(':')[0]);
             int z = int.Parse(tileData["key"].ToString().Split(':')[1]);
-            // check if the tile already with good attributes
+            
             GameObject tile = getHex(x, z);
             if (tile != null)
             {
                 Tile tileComponent = tile.GetComponent<Tile>();
-                
+
                 int units = (int)tileData["units"];
-                if (tileComponent.units != units)
-                {
-                    tileComponent.setupTile(units, tileComponent.owner, tileComponent.type);
-                }
-
                 string owner = (string)tileData["owner"];
-                if (tileComponent.owner != owner)
-                {
-                    tileComponent.setupTile(tileComponent.units, owner, tileComponent.type);
-                }
-
                 string type = (string)tileData["type"];
-                if (tileComponent.type != type)
+
+                // Regrouper les mises à jour dans setupTile si nécessaire
+                if (tileComponent.units != units || tileComponent.owner != owner || tileComponent.type != type)
                 {
-                    tileComponent.setupTile(tileComponent.units, tileComponent.owner, type);
+                    tileComponent.setupTile(units, owner, type); // Appel unique si quelque chose a changé
                 }
             
             }
@@ -106,23 +95,28 @@ public class GridGenerator : MonoBehaviour
 
 
     // Permet de récupérer les coordonnées dans unity à partir de la position dans le tableau
-    public float[] GetHexCoordinates(int x, int z){
-        int[] coords = new int[2];
-        float hexWidth = hexSize * 2f; // La largeur de l'hexagone est deux fois la taille (diamètre)
-        float hexHeight = Mathf.Sqrt(3) * hexSize; // La hauteur est sqrt(3) * hexSize (environ 1.732)
-        float offsetX = (hexWidth + gridGap) * 0.75f; // Décalage horizontal pour les colonnes impaires avec gridGap
-
+    public float[] GetHexCoordinates(int x, int z) 
+    {
+        // Calculer les dimensions d'un hexagone
+        float hexWidth = hexSize * 2f; // Largeur (diamètre) de l'hexagone
+        float hexHeight = Mathf.Sqrt(3) * hexSize; // Hauteur de l'hexagone (sqrt(3) * taille)
+        
+        // Décalage horizontal entre les colonnes avec le gridGap
+        float offsetX = (hexWidth + gridGap) * 0.75f; 
+        
+        // Calcul de la position X et Z en fonction des coordonnées x et z
         float xPos = x * offsetX;
-        float zPos = z * (hexHeight + gridGap); // Prendre en compte le gridGap sur l'axe Z
+        float zPos = z * (hexHeight + gridGap); // Prendre en compte le gridGap dans la position verticale
 
         // Décaler les hexagones sur les lignes impaires
         if (x % 2 == 1) {
-            zPos += (hexHeight + gridGap) / 2f; // Prendre en compte le gridGap aussi ici
+            zPos += (hexHeight + gridGap) / 2f; // Décalage pour les lignes impaires
         }
 
-        return new float[] {xPos, zPos};
-
+        // Retourner les coordonnées X et Z sous forme de tableau
+        return new float[] { xPos, zPos };
     }
+
 
     // IEnumerator GenerateGridCoroutine() {
     //     float hexWidth = hexSize * 2f; // La largeur de l'hexagone est deux fois la taille (diamètre)

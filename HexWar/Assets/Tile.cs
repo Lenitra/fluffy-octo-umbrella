@@ -7,12 +7,13 @@ using TMPro;
 
 public class Tile : MonoBehaviour
 {
-        
-    public int units = 0;
-    public string owner = "";
-    public bool hq = false;
-    public int[] position = new int[2];
-    public string type = "";
+    // private with getters and setters
+    public int units { get; set; } = 0;
+    public string owner { get; set; } = "";
+    public bool hq { get; set; } = false;
+    public int[] position { get; set; } = new int[2];
+    public string type { get; set; } = "";
+
 
 
     public GameObject hqObject;

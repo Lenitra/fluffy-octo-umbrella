@@ -5,6 +5,8 @@ using System;
 
 public class ServerClient : MonoBehaviour
 {
+    private GameManager gameManager;
+
     public static event Action<string> OnGameDataReceived; // Déclaration de l'événement
 
     private float pollInterval = 5.0f; // Interval en secondes
@@ -13,6 +15,7 @@ public class ServerClient : MonoBehaviour
 
     void Start()
     {
+        gameManager = GetComponent<GameManager>();
         StartCoroutine(PollGameState());
     }
 
@@ -21,8 +24,8 @@ public class ServerClient : MonoBehaviour
         while (true)
         {
             Debug.Log("Polling game state...");
-            yield return new WaitForSeconds(pollInterval);
             StartCoroutine(GetGameState());
+            yield return new WaitForSeconds(pollInterval);
         }
     }
 
@@ -61,6 +64,14 @@ public class ServerClient : MonoBehaviour
         else
         {
             Debug.Log("Received: " + request.downloadHandler.text);
+            if (request.downloadHandler.text == "OK")
+            {
+                StartCoroutine(gameManager.moveUnitsAnimation(from, to));
+            }
+            else
+            {
+                Debug.Log("Error moving units");
+            }
         }
     }
     
