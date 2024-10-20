@@ -46,15 +46,14 @@ public class GridGenerator : MonoBehaviour
             }
             else
             {
-
-
-                // if the tile is not created, create it
                 StartCoroutine(InstantiateHexagon(x, z, tileData));
-                // GameObject hex = GameObject.Instantiate(hexPrefab);
-                // hex.name = "Hexagon " + x + ":" + z;
-                // hex.transform.SetParent(this.transform);
-                // hex.transform.position = new Vector3(GetHexCoordinates(x, z)[0], 0, GetHexCoordinates(x, z)[1]);
-                // hex.GetComponent<Tile>().setupTile((int)tileData["units"], (string)tileData["owner"], (string)tileData["type"]);
+            }
+        }
+        
+        // delete the hexagons that are not in the tilesData
+        foreach (Transform child in transform){
+            if (child.name.Contains("Hexagon") && !tilesData.Exists(tile => tile["key"].ToString() == child.name.Split(' ')[1])){
+                Destroy(child.gameObject);
             }
         }
     }
@@ -118,35 +117,6 @@ public class GridGenerator : MonoBehaviour
     }
 
 
-    // IEnumerator GenerateGridCoroutine() {
-    //     float hexWidth = hexSize * 2f; // La largeur de l'hexagone est deux fois la taille (diamètre)
-    //     float hexHeight = Mathf.Sqrt(3) * hexSize; // La hauteur est sqrt(3) * hexSize (environ 1.732)
-    //     float offsetX = (hexWidth + gridGap) * 0.75f; // Décalage horizontal pour les colonnes impaires avec gridGap
-
-    //     for (int x = 0; x < gridSize; x++) {
-    //         for (int z = 0; z < gridSize; z++) {
-    //             GameObject hex = Instantiate(hexPrefab);
-
-    //             // Déterminer le décalage pour les lignes impaires
-    //             float xPos = x * offsetX;
-    //             float zPos = z * (hexHeight + gridGap); // Prendre en compte le gridGap sur l'axe Z
-
-    //             // Décaler les hexagones sur les lignes impaires
-    //             if (x % 2 == 1) {
-    //                 zPos += (hexHeight + gridGap) / 2f; // Prendre en compte le gridGap aussi ici
-    //             }
-
-    //             hex.transform.position = new Vector3(xPos, -animmYOffset, zPos);
-    //             hex.name = "Hexagon " + x + ", " + z;
-    //             hex.transform.SetParent(this.transform);
-    //             StartCoroutine(AnimateHexagon(hex));
-
-    //             // Attendre avant de passer à l'hexagone suivant
-    //             yield return new WaitForSeconds(0.001f);
-    //         }
-    //     }
-    // }
-
 
     IEnumerator AnimateHexagon(GameObject hex){
         for (int i = 0; i < animmYOffset*10+1; i++){
@@ -159,48 +129,6 @@ public class GridGenerator : MonoBehaviour
         }
     }
 
-        
-
-
-
-    // void GenerateGrid() {
-    //     float hexWidth = hexSize * 2f; // La largeur de l'hexagone est deux fois la taille (diamètre)
-    //     float hexHeight = Mathf.Sqrt(3) * hexSize; // La hauteur est sqrt(3) * hexSize (environ 1.732)
-    //     float offsetX = (hexWidth + gridGap) * 0.75f; // Décalage horizontal pour les colonnes impaires avec gridGap
-
-    //     for (int x = 0; x < gridSize; x++) {
-    //         for (int z = 0; z < gridSize; z++) {
-    //             GameObject hex = Instantiate(hexPrefab);
-
-    //             // Déterminer le décalage pour les lignes impaires
-    //             float xPos = x * offsetX;
-    //             float zPos = z * (hexHeight + gridGap); // Prendre en compte le gridGap sur l'axe Z
-
-    //             // Décaler les hexagones sur les lignes impaires
-    //             if (x % 2 == 1) {
-    //                 zPos += (hexHeight + gridGap) / 2f; // Prendre en compte le gridGap aussi ici
-    //             }
-
-    //             hex.transform.position = new Vector3(xPos, 0, zPos);
-    //             hex.name = "Hexagon " + x + ", " + z;
-    //             hex.transform.SetParent(this.transform);
-    //         }
-    //     }
-    // }
-
-
-
-
-
-    // void Update(){
-    //     // on press space, generate a new grid
-    //     if (Input.GetKeyDown(KeyCode.Space)){
-    //         foreach (Transform child in transform){
-    //             Destroy(child.gameObject);
-    //         }
-    //         StartCoroutine(GenerateGridCoroutine());
-    //     }
-    // }
 
 
 }

@@ -79,59 +79,93 @@ public class GameManager : MonoBehaviour
 
 
 
-public IEnumerator moveUnitsAnimation(string from, string to)
+
+
+
+public IEnumerator moveUnitsAnimation(string[] moves, float animationDuration = 0.1f, float retractDuration = 0.01f)
 {
-    // get the origin and destination hexagons
-    GameObject originHex = gridGenerator.getHex(int.Parse(from.Split(":")[0]), int.Parse(from.Split(":")[1]));
-    GameObject destinationHex = gridGenerator.getHex(int.Parse(to.Split(":")[0]), int.Parse(to.Split(":")[1]));
+    // moves is an array of strings with the format ["x:z","x:z","x:z",...]
+    moveUnitsLine.positionCount = moves.Length;
 
-    // get the origin and destination positions
-    Vector3 originPos = new Vector3(originHex.transform.position.x, originHex.transform.position.y + 0.25f, originHex.transform.position.z);
-    Vector3 destinationPos = new Vector3(destinationHex.transform.position.x, destinationHex.transform.position.y + 0.25f, destinationHex.transform.position.z);
+    Vector3[] positions = new Vector3[moves.Length];
 
-    // Set the initial position of the line
-    moveUnitsLine.positionCount = 2;
-    moveUnitsLine.SetPosition(0, originPos);
-    moveUnitsLine.SetPosition(1, originPos); // Start with both points at the origin
-
-    float duration = 1.0f; // time to draw and erase the line (1 second each)
-    float elapsed = 0f;
-
-    // Animate the line drawing over the duration
-    while (elapsed < duration)
+    // Get the positions of the tiles based on grid coordinates
+    for (int i = 0; i < moves.Length; i++)
     {
-        elapsed += Time.deltaTime;
-        float t = Mathf.Clamp01(elapsed / duration); // t goes from 0 to 1 over the duration
-        Vector3 currentPos = Vector3.Lerp(originPos, destinationPos, t); // Interpolate position
-        moveUnitsLine.SetPosition(1, currentPos); // Update the end position of the line
+        string[] coords = moves[i].Split(':');
+        Debug.Log("Coords: " + coords[0] + " " + coords[1]);
 
-        yield return null; // Wait until the next frame
+        int x = int.Parse(coords[0]);
+        int z = int.Parse(coords[1]);
+        float x1 = gridGenerator.GetHexCoordinates(x, z)[0];
+        float z1 = gridGenerator.GetHexCoordinates(x, z)[1];
+
+        positions[i] = new Vector3(x1, 0.5f, z1); // Store each position
     }
 
-    // Ensure the line is fully drawn at the end
-    moveUnitsLine.SetPosition(1, destinationPos);
-
-
-    // Reset the elapsed time for the fade out
-    elapsed = 0f;
-
-    // Animate the line fading out progressively from origin to destination
-    while (elapsed < duration)
+    // Animate the drawing of the line
+    for (int i = 0; i < positions.Length - 1; i++)
     {
-        elapsed += Time.deltaTime;
-        float t = Mathf.Clamp01(elapsed / duration); // t goes from 0 to 1 over the duration
-        Vector3 currentPos = Vector3.Lerp(originPos, destinationPos, t); // Interpolate position from origin to destination
-        moveUnitsLine.SetPosition(0, currentPos); // Update the start position of the line progressively towards the destination
+        Vector3 startPosition = positions[i];
+        Vector3 endPosition = positions[i + 1];
+        float elapsedTime = 0f;
 
-        yield return null; // Wait until the next frame
+        // Interpolate between startPosition and endPosition over time
+        while (elapsedTime < animationDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / animationDuration); // Ensure t is between 0 and 1
+            Vector3 currentPosition = Vector3.Lerp(startPosition, endPosition, t);
+            
+            // Set the line renderer positions dynamically
+            moveUnitsLine.positionCount = i + 2; // Update position count for smooth transition
+            moveUnitsLine.SetPosition(i, startPosition); // Set the initial position
+            moveUnitsLine.SetPosition(i + 1, currentPosition); // Update the current position
+
+            yield return null; // Wait for the next frame
+        }
+
+        // Once the interpolation is complete, set the end position of the current segment
+        moveUnitsLine.SetPosition(i + 1, endPosition);
     }
 
-    // Ensure the line is fully erased at the end
-    moveUnitsLine.SetPosition(0, destinationPos);
+    yield return new WaitForSeconds(0.5f); // Optional delay after the line is fully drawn
 
-    // Remove the line completely
+    // Animate the retraction of the line (from origin to destination)
+    for (int i = 1; i < positions.Length; i++) // Start from 1 to retract from origin
+    {
+        float elapsedTime = 0f;
+
+        // Interpolate the retraction between the first and the next point
+        while (elapsedTime < retractDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / retractDuration); // Ensure t is between 0 and 1
+            
+            // Gradually move the first point to the second point
+            Vector3 currentPosition = Vector3.Lerp(positions[i - 1], positions[i], t);
+
+            // Update the first segment to retract the line from the origin
+            moveUnitsLine.SetPosition(0, currentPosition); 
+
+            // Keep the remaining part of the line as it is
+            for (int j = 1; j < positions.Length - i; j++)
+            {
+                moveUnitsLine.SetPosition(j, positions[j + i]);
+            }
+
+            yield return null; // Wait for the next frame
+        }
+
+        // After the retraction, reduce the position count to remove the retracted point
+        moveUnitsLine.positionCount -= 1;
+    }
+
+    // Finally, clear the line renderer completely
     moveUnitsLine.positionCount = 0;
 }
+
+
 
 
 
