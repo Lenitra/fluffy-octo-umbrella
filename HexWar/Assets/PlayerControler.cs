@@ -10,9 +10,14 @@ public class PlayerControler : MonoBehaviour
 
     // Ajouter de l'UI pour afficher les informations des hexagones sélectionnés
     [SerializeField] private RectTransform tileInfoPanel;
+    [SerializeField] private GameObject movePanel;
     [SerializeField] private Button moveUnitsBtn;
     [SerializeField] private Button buildBtn;
 
+    [SerializeField] private TextMeshProUGUI tileInfoText;
+
+
+    private int selectedUnits = 0;
     private GridGenerator gridGenerator;
     private GameManager gameManager;
     private CamControler camControler;
@@ -53,6 +58,7 @@ public class PlayerControler : MonoBehaviour
             {
                 return; 
             }
+
             if (state == ""){
                 // move units
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -92,16 +98,12 @@ public class PlayerControler : MonoBehaviour
                 if (Physics.Raycast(ray, out hit))
                 {
                     if (hit.collider.gameObject.tag == "Tile"){
-                        gameManager.moveUnitsBtnClic(selectedTile.name.Split(' ')[1], hit.collider.gameObject.name.Split(' ')[1]);
+                        gameManager.moveUnitsBtnClic(selectedTile.name.Split(' ')[1], hit.collider.gameObject.name.Split(' ')[1], selectedUnits);
                         state = "";
-
-                        // StartCoroutine(selectedTile.GetComponent<Tile>().unselectTile(selectedTile));
-                        // StartCoroutine(animateTileInfoPanelBack());
-
-                        // selectedTile = null;
                     }
                 }
             }
+
         }
     }
 
@@ -110,6 +112,7 @@ public class PlayerControler : MonoBehaviour
         if (selectedTile != null){
             if (selectedTile.GetComponent<Tile>().units > 0){
                 state = "move";
+                movePanel.SetActive(true);
             }
         }
     }
