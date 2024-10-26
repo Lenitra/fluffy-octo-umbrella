@@ -1,69 +1,72 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CamControler : MonoBehaviour
 {
-    public float moveSpeed = 10f;   // Vitesse de déplacement de la caméra
-    public float zoomSpeed = 15f;   // Vitesse de zoom avec la molette
-    public float minZoom = 5f;      // Limite minimale du zoom
-    public float maxZoom = 60f;     // Limite maximale du zoom
+    private float moveSpeed = 100f;       // Vitesse de déplacement de la caméra
+    private float zoomSpeed = 150f;       // Vitesse de zoom avec la molette
+    private float minZoom = 5f;          // Limite minimale du zoom
+    private float maxZoom = 60f;         // Limite maximale du zoom
+    private float smoothTime = 0.2f;     // Temps de lissage pour les mouvements et zooms
 
-    void FixedUpdate()
+    private Vector3 velocity = Vector3.zero;  // Vitesse pour le SmoothDamp
+    private Coroutine moveCoroutine = null;   // Coroutine pour l'animation de translation
+
+    void LateUpdate()
     {
         HandleMovement();
         HandleZoom();
     }
 
-    // Gestion du mouvement horizontal et vertical de la caméra
     void HandleMovement()
     {
-        // Obtenir les entrées des axes
-        float horizontal = Input.GetAxis("Horizontal");  // Par défaut sur les touches A/D ou flèches gauche/droite
-        float vertical = Input.GetAxis("Vertical");      // Par défaut sur les touches W/S ou flèches haut/bas
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
 
-        // Calcul du déplacement
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+        Vector3 targetPosition = transform.position + new Vector3(horizontal, 0f, vertical).normalized * moveSpeed * Time.deltaTime;
 
-        // Appliquer le déplacement à la caméra
-        if (direction.magnitude >= 0.1f)
-        {
-            transform.position += direction * moveSpeed * Time.deltaTime;
-        }
+        // Lissage du mouvement
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
     }
 
-    // Gestion du zoom avec la molette de la souris
     void HandleZoom()
     {
-        // Obtenir l'entrée de la molette de la souris
         float scroll = Input.GetAxis("Mouse ScrollWheel");
-
-        // Si on détecte un défilement
-        if (scroll != 0f)
+        if (Mathf.Abs(scroll) > 0.01f)
         {
-            // Calcul du nouveau champ de vision (zoom) de la caméra
-            float newFov = Camera.main.fieldOfView - scroll * zoomSpeed;
+            float targetFov = Camera.main.fieldOfView - scroll * zoomSpeed;
+            targetFov = Mathf.Clamp(targetFov, minZoom, maxZoom);
 
-            // Limiter le champ de vision entre minZoom et maxZoom
-            Camera.main.fieldOfView = Mathf.Clamp(newFov, minZoom, maxZoom);
+            // Interpolation du zoom pour un effet de lissage
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, targetFov, Time.deltaTime / smoothTime);
         }
     }
 
-    public void lookTile(GameObject tile){
-        // transform.position = new Vector3(tilePos.x, transform.position.y, tilePos.z-3);
-
+    public void lookTile(GameObject tile)
+    {
         Vector3 tilePos = tile.transform.position;
-        // move the camera to the tile smoothly with transform.translate
-        StartCoroutine(translateToTile(tilePos));
+
+        // Arrêter la coroutine en cours si elle existe
+        if (moveCoroutine != null)
+        {
+            StopCoroutine(moveCoroutine);
+        }
+        moveCoroutine = StartCoroutine(TranslateToTile(tilePos));
     }
 
-    IEnumerator translateToTile(Vector3 tilePos){
-        float timespeed = 0.25f;
-        // go to new Vector3(tilePos.x, transform.position.y, tilePos.z-3) smoothly in timespeed seconds
-        for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / timespeed)
+    IEnumerator TranslateToTile(Vector3 tilePos)
+    {
+        Vector3 targetPos = new Vector3(tilePos.x, transform.position.y, tilePos.z - 3);
+        float elapsed = 0f;
+
+        while (Vector3.Distance(transform.position, targetPos) > 0.01f)
         {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(tilePos.x, transform.position.y, tilePos.z-3), t);
+            transform.position = Vector3.Lerp(transform.position, targetPos, elapsed / smoothTime);
+            elapsed += Time.deltaTime;
             yield return null;
         }
+
+        transform.position = targetPos; // Ajustement final pour une position précise
     }
 }
+

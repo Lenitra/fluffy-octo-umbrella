@@ -14,7 +14,6 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] private Button moveUnitsBtn;
     [SerializeField] private Button buildBtn;
 
-    [SerializeField] private TextMeshProUGUI tileInfoText;
 
 
     private int selectedUnits = 0;
