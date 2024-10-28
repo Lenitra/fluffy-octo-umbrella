@@ -21,6 +21,8 @@ public class PlayerControler : MonoBehaviour
     private GameManager gameManager;
     private CamControler camControler;
 
+    private float timeClicked = 0;
+
 
     private string state = "";
 
@@ -49,60 +51,73 @@ public class PlayerControler : MonoBehaviour
 
     void Update()
     {
-        // lancer de raycast
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
-            // check if the click is on a UI element
-            if (EventSystem.current.IsPointerOverGameObject())
-            {
-                return; 
-            }
+            timeClicked += Time.deltaTime;
+        }
 
-            if (state == ""){
-                // move units
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
+
+
+
+        // lancer de raycast
+        if (Input.GetMouseButtonUp(0))
+        {
+            
+            if (timeClicked < 0.4f) {
+            
+                // check if the click is on a UI element
+                if (EventSystem.current.IsPointerOverGameObject())
                 {
+                    return; 
+                }
 
-
-
-                    if (selectedTile == null)
+                if (state == ""){
+                    // move units
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray, out hit))
                     {
-                        selectedTile = hit.collider.gameObject;
-                        camControler.lookTile(selectedTile);
-                        StartCoroutine(selectedTile.GetComponent<Tile>().selectTile());
-                        StartCoroutine(animateTileInfoPanel());
 
-                    } else {
-                        StartCoroutine(selectedTile.GetComponent<Tile>().unselectTile(selectedTile));
-                        StartCoroutine(animateTileInfoPanelBack());
-                        if (hit.collider.gameObject == selectedTile){
-                            selectedTile = null;
-                            return;
-                        } else {
+
+
+                        if (selectedTile == null)
+                        {
                             selectedTile = hit.collider.gameObject;
-                            StartCoroutine(selectedTile.GetComponent<Tile>().selectTile());
                             camControler.lookTile(selectedTile);
+                            StartCoroutine(selectedTile.GetComponent<Tile>().selectTile());
                             StartCoroutine(animateTileInfoPanel());
+
+                        } else {
+                            StartCoroutine(selectedTile.GetComponent<Tile>().unselectTile(selectedTile));
+                            StartCoroutine(animateTileInfoPanelBack());
+                            if (hit.collider.gameObject == selectedTile){
+                                selectedTile = null;
+                                return;
+                            } else {
+                                selectedTile = hit.collider.gameObject;
+                                StartCoroutine(selectedTile.GetComponent<Tile>().selectTile());
+                                camControler.lookTile(selectedTile);
+                                StartCoroutine(animateTileInfoPanel());
+                            }
                         }
                     }
                 }
-            }
 
-            else if (state == "move"){
-                // move units
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
-                {
-                    if (hit.collider.gameObject.tag == "Tile"){
-                        gameManager.moveUnitsBtnClic(selectedTile.name.Split(' ')[1], hit.collider.gameObject.name.Split(' ')[1], selectedUnits);
-                        state = "";
+                else if (state == "move"){
+                    // move units
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        if (hit.collider.gameObject.tag == "Tile"){
+                            gameManager.moveUnitsBtnClic(selectedTile.name.Split(' ')[1], hit.collider.gameObject.name.Split(' ')[1], selectedUnits);
+                            state = "";
+                        }
                     }
                 }
-            }
 
+            }   
+            timeClicked = 0;
         }
     }
 

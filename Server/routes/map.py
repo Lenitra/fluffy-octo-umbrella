@@ -1,4 +1,4 @@
-from general import HERE  # pylint: disable=import-error
+from general import HERE, MAPSIZE  # pylint: disable=import-error
 from __main__ import app
 import json
 from flask import jsonify
@@ -14,7 +14,7 @@ def game_state():
     game_data = {"hexes": game_data}
     return jsonify(game_data)
 
-
+# ! TODO ! Régler 
 # bouger les unités d'un hexagone à un autre
 # @param origin: hexagone d'origine sous forme de string "x:z"
 # @param destination: hexagone de destination sous forme de string "x:z"
@@ -60,9 +60,9 @@ def move_units(origin, destination, units):
 
 # Pemret de récupérer les hexagones d'un joueur et ses adjacents en fonction de ses batiments
 # ROUTE APPELEE PAR LE CLIENT REGULIEREMENT
+# Route pour récupérer les hexagones d'un joueur et ses adjacents en fonction de ses bâtiments
 @app.route("/get_hex/<string:player>")
 def get_hex(player):
-    radius = 2
     update_resources(player)
 
     # Charger les hexagones
@@ -78,14 +78,19 @@ def get_hex(player):
             result[k] = v
 
     # Parcourir les hexagones du joueur et ajouter les hexagones adjacents
-    for _ in range(radius):
-        tmp = result.copy()
-        for k, v in tmp.items():
-            x, z = map(int, k.split(":"))
-            for adj in get_adjacent_hexes(x, z):
-                key = f"{adj['x']}:{adj['z']}"
-                if key not in result:
-                    result[key] = hexes[key]
+    tmp = result.copy()
+    for k, v in tmp.items():
+        current_radius = 2
+        x, z = map(int, k.split(":"))
+        
+        if v["type"].startswith("radar:"):
+            current_radius = int(v["type"].split(":")[1])+2
+
+        # Obtenir les hexagones adjacents en fonction du rayon
+        for adj in get_adjacent_hexes(x, z, radius=current_radius):
+            key = f"{adj['x']}:{adj['z']}"
+            if key not in result and key in hexes:
+                result[key] = hexes[key]
 
     return jsonify(format_json_hexes(result))
 
@@ -122,7 +127,9 @@ def find_path(origin, destination, player=""):
             visited.append(node)
             if hexes[node]["owner"] != player:
                 continue
-            # Ajouter les hexagones adjacents à la liste des hexagones à visiter
+
+                
+                
             for k in get_adjacent_hexes(*map(int, node.split(":"))):
                 if k not in visited:
                     new_path = list(path)
@@ -182,25 +189,32 @@ def update_resources(player):
         return True
 
 
-# Fonction auxiliaire pour obtenir les hexagones adjacents
-def get_adjacent_hexes(x, z):
+# Fonction auxiliaire pour obtenir les hexagones adjacents avec un rayon variable
+# Fonctions de conversion entre les coordonnées offset (grille) et cubiques
+def evenq_offset_to_cube(col, row):
+    x = col
+    z = row - (col // 2)
+    y = -x - z
+    return (x, y, z)
+
+def cube_to_evenq_offset(x, y, z):
+    col = x
+    row = z + (x // 2)
+    return (col, row)
+
+# Fonction pour obtenir tous les hexagones dans un rayon donné
+def get_adjacent_hexes(x, z, radius=1):
     toret = []
-    toret.append({"x": x + 1, "z": z})
-    toret.append({"x": x - 1, "z": z})
-    toret.append({"x": x, "z": z + 1})
-    toret.append({"x": x, "z": z - 1})
-    if x % 2 != 0:
-        toret.append({"x": x + 1, "z": z + 1})
-        toret.append({"x": x - 1, "z": z + 1})
-    else:
-        toret.append({"x": x + 1, "z": z - 1})
-        toret.append({"x": x - 1, "z": z - 1})
-
-    # Filtrer les hexagones hors de la map
-    toret = list(
-        filter(
-            lambda x: x["x"] >= 0 and x["z"] >= 0 and x["x"] < 32 and x["z"] < 32, toret
-        )
-    )
-
+    cx, cy, cz = evenq_offset_to_cube(x, z)
+    for dx in range(-radius, radius + 1):
+        for dy in range(-radius, radius + 1):
+            dz = -dx - dy
+            if abs(dz) > radius:
+                continue
+            nx = cx + dx
+            ny = cy + dy
+            nz = cz + dz
+            col_offset, row_offset = cube_to_evenq_offset(nx, ny, nz)
+            if 0 <= col_offset < MAPSIZE and 0 <= row_offset < MAPSIZE:
+                toret.append({'x': col_offset, 'z': row_offset})
     return toret

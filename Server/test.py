@@ -4,19 +4,21 @@ import datetime
 
 # this file path
 here = os.path.dirname(os.path.abspath(__file__))
+now = datetime.datetime.now()
 
 
 # WHAT TO REGENERATE
-DEBUG = "users" # "users" or "map" or "both"
+DEBUG = "map" # "users" or "map" or "both"
 
-if DEBUG == "users" or DEBUG == "both":
+if DEBUG == "map" or DEBUG == "both":
+    mapsize = 32
     map = {}
 
 
 
 
-    for i in range (32):
-        for j in range(32):
+    for i in range (mapsize):
+        for j in range(mapsize):
             map[f"{i}:{j}"] = {
                 "owner": "",
                 "type": "",
@@ -27,8 +29,6 @@ if DEBUG == "users" or DEBUG == "both":
     with open(here+"/data/map.json", "w") as f:
         json.dump(map, f, indent=4)
 
-now = datetime.datetime.now()
-print(now.strftime("%Y-%m-%d %H:%M:%S"))
 
 if DEBUG == "users" or DEBUG == "both":
     users = {

@@ -10,20 +10,27 @@ public class Tile : MonoBehaviour
     // private with getters and setters
     public int units = 0;
     public string owner = "";
-    public bool hq = false;
     public int[] position = new int[2];
     public string type = "";
 
 
 
-    public GameObject hqObject;
     private float selectionOffset = 0.8f;
 
     // textmeshpro for info on the tile
     [SerializeField] private GameObject toShowOnSelected;
     [SerializeField] private TextMeshPro tileInfo;
     [SerializeField] private GameObject hoverOwner;
+
+
+    [Header("Prefabs")]
+    [SerializeField] private GameObject hqPrefab;
+    [SerializeField] private GameObject moneyPrefab;
+    [SerializeField] private GameObject radarPrefab;
+    [SerializeField] private GameObject barrackPrefab;
     
+
+    private GameObject infrastrucutre;
 
 
 
@@ -79,13 +86,44 @@ public class Tile : MonoBehaviour
             hoverOwner.SetActive(false);
         }
 
-        if(type.Split(":")[0] == "HQ") {
-            hq = true;
-            hqObject.SetActive(true);
-        }
-        else {
-            hq = false;
-            hqObject.SetActive(false);
+
+        // switch pour configurer l'objet à instancier en fonction du type en minuscule
+        Destroy(infrastrucutre);
+        infrastrucutre = null;
+
+        switch (type.ToLower().Split(":")[0])
+        {
+            case "hq":
+                infrastrucutre = Instantiate(hqPrefab, Vector3.zero, Quaternion.identity, transform);
+                infrastrucutre.transform.localPosition = Vector3.zero;
+                break;
+
+            case "money":
+                infrastrucutre = Instantiate(moneyPrefab, Vector3.zero, Quaternion.identity, transform);
+                infrastrucutre.transform.localPosition = Vector3.zero;
+                break;
+
+            case "radar":
+                infrastrucutre = Instantiate(radarPrefab, Vector3.zero, Quaternion.identity, transform);
+                infrastrucutre.transform.localPosition = Vector3.zero;
+                break;
+
+            case "barrack":
+                infrastrucutre = Instantiate(barrackPrefab, Vector3.zero, Quaternion.identity, transform);
+                infrastrucutre.transform.localPosition = Vector3.zero;
+                break;
+
+            case "defensive":
+                // Ajouter des actions spécifiques pour "defensive" si nécessaire
+                break;
+
+            case "offensive":
+                // Ajouter des actions spécifiques pour "offensive" si nécessaire
+                break;
+
+            default:
+                Debug.LogWarning("Type non reconnu : " + type);
+                break;
         }
 
 

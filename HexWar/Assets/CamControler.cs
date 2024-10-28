@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class CamControler : MonoBehaviour
 {
-    private float moveSpeed = 100f;       // Vitesse de déplacement de la caméra
-    private float zoomSpeed = 150f;       // Vitesse de zoom avec la molette
+    private float moveSpeed = 500f;       // Vitesse de déplacement de la caméra
+    private float zoomSpeed = 1000f;       // Vitesse de zoom avec la molette
     private float minZoom = 5f;          // Limite minimale du zoom
     private float maxZoom = 60f;         // Limite maximale du zoom
     private float smoothTime = 0.2f;     // Temps de lissage pour les mouvements et zooms
@@ -20,13 +20,20 @@ public class CamControler : MonoBehaviour
 
     void HandleMovement()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        if (Input.GetMouseButton(0))  // Vérifie si le bouton gauche de la souris est enfoncé
+        {
+            float mouseX = Input.GetAxis("Mouse X");
+            float mouseY = Input.GetAxis("Mouse Y");
 
-        Vector3 targetPosition = transform.position + new Vector3(horizontal, 0f, vertical).normalized * moveSpeed * Time.deltaTime;
+            // Crée un vecteur de direction basé sur le mouvement de la souris
+            Vector3 direction = new Vector3(-mouseX, 0f, -mouseY).normalized;
 
-        // Lissage du mouvement
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+            // Calcule la position cible en fonction du mouvement de la souris
+            Vector3 targetPosition = transform.position + direction * moveSpeed * Time.deltaTime;
+
+            // Lissage du mouvement
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+        }
     }
 
     void HandleZoom()
@@ -68,5 +75,7 @@ public class CamControler : MonoBehaviour
 
         transform.position = targetPos; // Ajustement final pour une position précise
     }
+
+    
 }
 
