@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 public class CamControler : MonoBehaviour
 {
-    private float moveSpeed = 500f;       // Vitesse de déplacement de la caméra
+    private float moveSpeed = 400f;       // Vitesse de déplacement de la caméra
     private float zoomSpeed = 1000f;       // Vitesse de zoom avec la molette
     private float minZoom = 5f;          // Limite minimale du zoom
     private float maxZoom = 60f;         // Limite maximale du zoom
@@ -20,14 +20,15 @@ public class CamControler : MonoBehaviour
     }
 
     void HandleMovement()
-    {
+    {           
+        // check if the click is on a UI element
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return; 
+        }
         if (Input.GetMouseButton(0))  // Vérifie si le bouton gauche de la souris est enfoncé
         {
-            // check if the click is on a UI element
-            if (EventSystem.current.IsPointerOverGameObject())
-            {
-                return; 
-            }
+
             float mouseX = Input.GetAxis("Mouse X");
             float mouseY = Input.GetAxis("Mouse Y");
 

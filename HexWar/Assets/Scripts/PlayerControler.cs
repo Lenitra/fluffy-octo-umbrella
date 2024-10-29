@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using System;
 
 public class PlayerControler : MonoBehaviour
 {
@@ -14,12 +15,15 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] private Button moveUnitsBtn;
     [SerializeField] private Button buildBtn;
 
+    [SerializeField] private TextMeshProUGUI tileInfo;
+
 
 
     private GridGenerator gridGenerator;
     private GameManager gameManager;
     private CamControler camControler;
 
+    private Vector3 previousMousePosition;
     private float timeClicked = 0;
 
 
@@ -27,7 +31,8 @@ public class PlayerControler : MonoBehaviour
 
     private GameObject selectedTile;
     private int selectedUnits;
-    // Update is called once per frame
+
+    public float tmpdist = 0;
 
 
     void Start(){
@@ -35,7 +40,7 @@ public class PlayerControler : MonoBehaviour
         gridGenerator = GetComponent<GridGenerator>();
         gameManager = GetComponent<GameManager>();
         camControler = Camera.main.GetComponent<CamControler>();
-
+        previousMousePosition = Input.mousePosition;
 
         // add event listener to moveUnitsBtn
         moveUnitsBtn.onClick.AddListener(moveUnitsBtnClic);
@@ -53,16 +58,23 @@ public class PlayerControler : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             timeClicked += Time.deltaTime;
+            tmpdist += Vector3.Distance(Input.mousePosition, previousMousePosition);
+            previousMousePosition = Input.mousePosition; // Met à jour la position précédente de la souris
         }
 
-
+        if (selectedTile != null){
+            tileInfo.text = "<sprite=36>" + selectedTile.GetComponent<Tile>().position[0] + ":" + selectedTile.GetComponent<Tile>().position[1] + "\n<sprite=112>" + selectedTile.GetComponent<Tile>().owner + "\n" + "<sprite=91>" + selectedTile.GetComponent<Tile>().units;
+        } else {
+            tileInfo.text = "";
+        }
 
 
         // lancer de raycast
         if (Input.GetMouseButtonUp(0))
         {
             
-            if (timeClicked < 0.4f) {
+            
+            if (timeClicked < 0.4f && tmpdist < 100) {
             
                 // check if the click is on a UI element
                 if (EventSystem.current.IsPointerOverGameObject())
@@ -121,6 +133,7 @@ public class PlayerControler : MonoBehaviour
 
             }   
             timeClicked = 0;
+            tmpdist = 0;
         }
     }
 

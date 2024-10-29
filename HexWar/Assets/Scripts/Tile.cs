@@ -19,7 +19,6 @@ public class Tile : MonoBehaviour
 
     // textmeshpro for info on the tile
     [SerializeField] private GameObject toShowOnSelected;
-    [SerializeField] private TextMeshPro tileInfo;
     [SerializeField] private GameObject hoverOwner;
 
 
@@ -43,18 +42,6 @@ public class Tile : MonoBehaviour
         
         toShowOnSelected.gameObject.SetActive(false);
 
-        // set the text of the tileInfo
-        string msg = "" ;
-        // msg = "<sprite=36> " + position[0] + ":" + position[1] + "\n";
-        if (owner != "") {
-            msg += "<sprite=112>" + owner + "\n";
-        }
-        
-        msg += "<sprite=91>" + units + "\n";
-        // if (type != ""){
-        //     msg += "<sprite=45>" + type.Split(":")[0] + " " + type.Split(":")[1];
-        // }
-        tileInfo.text = msg;
 
         // add a material to the hoverOwner
         // set renderinmode to transparent
@@ -120,6 +107,9 @@ public class Tile : MonoBehaviour
 
             case "offensive":
                 // Ajouter des actions spécifiques pour "offensive" si nécessaire
+                break;
+
+            case "":
                 break;
 
             default:

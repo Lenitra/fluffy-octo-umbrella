@@ -41,6 +41,7 @@ Material:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53,9 +54,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84a92b25f83d49b9bc132d206b370281, type: 3}
   m_Name: 'icons collection '
   m_EditorClassIdentifier: 
-  hashCode: -2044135826
-  material: {fileID: -532735153109916008}
-  materialHashCode: 0
   m_Version: 1.1.0
   m_FaceInfo:
     m_FaceIndex: 0
@@ -79,6 +77,7 @@ MonoBehaviour:
     m_StrikethroughOffset: 0
     m_StrikethroughThickness: 0
     m_TabWidth: 0
+  m_Material: {fileID: -532735153109916008}
   spriteSheet: {fileID: 2800000, guid: 6ff74875f1d8ab2b58ebac8d50d67f94, type: 3}
   m_SpriteCharacterTable:
   - m_ElementType: 2
@@ -86,716 +85,597 @@ MonoBehaviour:
     m_GlyphIndex: 0
     m_Scale: 1
     m_Name: icons collection _3
-    m_HashCode: -1270852958
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 1
     m_Scale: 1
     m_Name: icons collection _4
-    m_HashCode: -1270852955
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 2
     m_Scale: 1
     m_Name: icons collection _5
-    m_HashCode: -1270852956
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 3
     m_Scale: 1
     m_Name: icons collection _6
-    m_HashCode: -1270852953
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 4
     m_Scale: 1
     m_Name: icons collection _7
-    m_HashCode: -1270852954
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 5
     m_Scale: 1
     m_Name: icons collection _8
-    m_HashCode: -1270852951
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 6
     m_Scale: 1
     m_Name: icons collection _0
-    m_HashCode: -1270852959
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 7
     m_Scale: 1
     m_Name: icons collection _1
-    m_HashCode: -1270852960
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 8
     m_Scale: 1
     m_Name: icons collection _2
-    m_HashCode: -1270852957
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 9
     m_Scale: 1
     m_Name: icons collection _9
-    m_HashCode: -1270852952
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 10
     m_Scale: 1
     m_Name: icons collection _10
-    m_HashCode: 1011525264
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 11
     m_Scale: 1
     m_Name: icons collection _11
-    m_HashCode: 1011525265
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 12
     m_Scale: 1
     m_Name: icons collection _12
-    m_HashCode: 1011525266
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 13
     m_Scale: 1
     m_Name: icons collection _13
-    m_HashCode: 1011525267
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 14
     m_Scale: 1
     m_Name: icons collection _14
-    m_HashCode: 1011525268
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 15
     m_Scale: 1
     m_Name: icons collection _15
-    m_HashCode: 1011525269
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 16
     m_Scale: 1
     m_Name: icons collection _16
-    m_HashCode: 1011525270
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 17
     m_Scale: 1
     m_Name: icons collection _17
-    m_HashCode: 1011525271
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 18
     m_Scale: 1
     m_Name: icons collection _19
-    m_HashCode: 1011525273
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 19
     m_Scale: 1
     m_Name: icons collection _25
-    m_HashCode: 1011525430
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 20
     m_Scale: 1
     m_Name: icons collection _21
-    m_HashCode: 1011525426
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 21
     m_Scale: 1
     m_Name: icons collection _24
-    m_HashCode: 1011525431
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 22
     m_Scale: 1
     m_Name: icons collection _26
-    m_HashCode: 1011525429
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 23
     m_Scale: 1
     m_Name: icons collection _18
-    m_HashCode: 1011525272
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 24
     m_Scale: 1
     m_Name: icons collection _20
-    m_HashCode: 1011525427
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 25
     m_Scale: 1
     m_Name: icons collection _22
-    m_HashCode: 1011525425
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 26
     m_Scale: 1
     m_Name: icons collection _23
-    m_HashCode: 1011525424
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 27
     m_Scale: 1
     m_Name: icons collection _35
-    m_HashCode: 1011525335
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 28
     m_Scale: 1
     m_Name: icons collection _30
-    m_HashCode: 1011525330
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 29
     m_Scale: 1
     m_Name: icons collection _31
-    m_HashCode: 1011525331
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 30
     m_Scale: 1
     m_Name: icons collection _32
-    m_HashCode: 1011525328
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 31
     m_Scale: 1
     m_Name: icons collection _33
-    m_HashCode: 1011525329
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 32
     m_Scale: 1
     m_Name: icons collection _29
-    m_HashCode: 1011525434
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 33
     m_Scale: 1
     m_Name: icons collection _36
-    m_HashCode: 1011525332
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 34
     m_Scale: 1
     m_Name: icons collection _34
-    m_HashCode: 1011525334
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 35
     m_Scale: 1
     m_Name: icons collection _27
-    m_HashCode: 1011525428
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 36
     m_Scale: 1
     m_Name: icons collection _28
-    m_HashCode: 1011525435
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 37
     m_Scale: 1
     m_Name: icons collection _37
-    m_HashCode: 1011525333
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 38
     m_Scale: 1
     m_Name: icons collection _45
-    m_HashCode: 1011525488
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 39
     m_Scale: 1
     m_Name: icons collection _42
-    m_HashCode: 1011525495
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 40
     m_Scale: 1
     m_Name: icons collection _43
-    m_HashCode: 1011525494
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 41
     m_Scale: 1
     m_Name: icons collection _50
-    m_HashCode: 1011525396
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 42
     m_Scale: 1
     m_Name: icons collection _38
-    m_HashCode: 1011525338
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 43
     m_Scale: 1
     m_Name: icons collection _49
-    m_HashCode: 1011525500
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 44
     m_Scale: 1
     m_Name: icons collection _51
-    m_HashCode: 1011525397
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 45
     m_Scale: 1
     m_Name: icons collection _47
-    m_HashCode: 1011525490
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 46
     m_Scale: 1
     m_Name: icons collection _39
-    m_HashCode: 1011525339
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 47
     m_Scale: 1
     m_Name: icons collection _40
-    m_HashCode: 1011525493
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 48
     m_Scale: 1
     m_Name: icons collection _44
-    m_HashCode: 1011525489
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 49
     m_Scale: 1
     m_Name: icons collection _46
-    m_HashCode: 1011525491
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 50
     m_Scale: 1
     m_Name: icons collection _48
-    m_HashCode: 1011525501
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 51
     m_Scale: 1
     m_Name: icons collection _41
-    m_HashCode: 1011525492
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 52
     m_Scale: 1
     m_Name: icons collection _61
-    m_HashCode: 1011525558
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 53
     m_Scale: 1
     m_Name: icons collection _63
-    m_HashCode: 1011525556
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 54
     m_Scale: 1
     m_Name: icons collection _64
-    m_HashCode: 1011525555
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 55
     m_Scale: 1
     m_Name: icons collection _62
-    m_HashCode: 1011525557
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 56
     m_Scale: 1
     m_Name: icons collection _60
-    m_HashCode: 1011525559
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 57
     m_Scale: 1
     m_Name: icons collection _57
-    m_HashCode: 1011525395
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 58
     m_Scale: 1
     m_Name: icons collection _52
-    m_HashCode: 1011525398
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 59
     m_Scale: 1
     m_Name: icons collection _54
-    m_HashCode: 1011525392
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 60
     m_Scale: 1
     m_Name: icons collection _58
-    m_HashCode: 1011525404
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 61
     m_Scale: 1
     m_Name: icons collection _53
-    m_HashCode: 1011525399
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 62
     m_Scale: 1
     m_Name: icons collection _55
-    m_HashCode: 1011525393
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 63
     m_Scale: 1
     m_Name: icons collection _56
-    m_HashCode: 1011525394
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 64
     m_Scale: 1
     m_Name: icons collection _59
-    m_HashCode: 1011525405
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 65
     m_Scale: 1
     m_Name: icons collection _65
-    m_HashCode: 1011525554
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 66
     m_Scale: 1
     m_Name: icons collection _66
-    m_HashCode: 1011525553
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 67
     m_Scale: 1
     m_Name: icons collection _67
-    m_HashCode: 1011525552
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 68
     m_Scale: 1
     m_Name: icons collection _68
-    m_HashCode: 1011525567
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 69
     m_Scale: 1
     m_Name: icons collection _69
-    m_HashCode: 1011525566
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 70
     m_Scale: 1
     m_Name: icons collection _70
-    m_HashCode: 1011525462
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 71
     m_Scale: 1
     m_Name: icons collection _71
-    m_HashCode: 1011525463
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 72
     m_Scale: 1
     m_Name: icons collection _73
-    m_HashCode: 1011525461
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 73
     m_Scale: 1
     m_Name: icons collection _72
-    m_HashCode: 1011525460
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 74
     m_Scale: 1
     m_Name: icons collection _74
-    m_HashCode: 1011525458
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 75
     m_Scale: 1
     m_Name: icons collection _77
-    m_HashCode: 1011525457
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 76
     m_Scale: 1
     m_Name: icons collection _78
-    m_HashCode: 1011525470
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 77
     m_Scale: 1
     m_Name: icons collection _79
-    m_HashCode: 1011525471
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 78
     m_Scale: 1
     m_Name: icons collection _80
-    m_HashCode: 1011525625
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 79
     m_Scale: 1
     m_Name: icons collection _75
-    m_HashCode: 1011525459
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 80
     m_Scale: 1
     m_Name: icons collection _76
-    m_HashCode: 1011525456
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 81
     m_Scale: 1
     m_Name: icons collection _81
-    m_HashCode: 1011525624
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 82
     m_Scale: 1
     m_Name: icons collection _82
-    m_HashCode: 1011525627
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 83
     m_Scale: 1
     m_Name: icons collection _86
-    m_HashCode: 1011525631
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 84
     m_Scale: 1
     m_Name: icons collection _87
-    m_HashCode: 1011525630
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 85
     m_Scale: 1
     m_Name: icons collection _88
-    m_HashCode: 1011525617
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 86
     m_Scale: 1
     m_Name: icons collection _89
-    m_HashCode: 1011525616
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 87
     m_Scale: 1
     m_Name: icons collection _84
-    m_HashCode: 1011525629
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 88
     m_Scale: 1
     m_Name: icons collection _83
-    m_HashCode: 1011525626
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 89
     m_Scale: 1
     m_Name: icons collection _90
-    m_HashCode: 1011525528
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 90
     m_Scale: 1
     m_Name: icons collection _91
-    m_HashCode: 1011525529
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 91
     m_Scale: 1
     m_Name: icons collection _85
-    m_HashCode: 1011525628
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 92
     m_Scale: 1
     m_Name: icons collection _99
-    m_HashCode: 1011525521
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 93
     m_Scale: 1
     m_Name: icons collection _95
-    m_HashCode: 1011525533
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 94
     m_Scale: 1
     m_Name: icons collection _96
-    m_HashCode: 1011525534
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 95
     m_Scale: 1
     m_Name: icons collection _97
-    m_HashCode: 1011525535
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 96
     m_Scale: 1
     m_Name: icons collection _98
-    m_HashCode: 1011525520
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 97
     m_Scale: 1
     m_Name: icons collection _100
-    m_HashCode: -979404640
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 98
     m_Scale: 1
     m_Name: icons collection _92
-    m_HashCode: 1011525530
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 99
     m_Scale: 1
     m_Name: icons collection _93
-    m_HashCode: 1011525531
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 100
     m_Scale: 1
     m_Name: icons collection _108
-    m_HashCode: -979404632
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 101
     m_Scale: 1
     m_Name: icons collection _103
-    m_HashCode: -979404637
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 102
     m_Scale: 1
     m_Name: icons collection _94
-    m_HashCode: 1011525532
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 103
     m_Scale: 1
     m_Name: icons collection _104
-    m_HashCode: -979404636
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 104
     m_Scale: 1
     m_Name: icons collection _105
-    m_HashCode: -979404635
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 105
     m_Scale: 1
     m_Name: icons collection _106
-    m_HashCode: -979404634
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 106
     m_Scale: 1
     m_Name: icons collection _107
-    m_HashCode: -979404633
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 107
     m_Scale: 1
     m_Name: icons collection _109
-    m_HashCode: -979404631
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 108
     m_Scale: 1
     m_Name: icons collection _101
-    m_HashCode: -979404639
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 109
     m_Scale: 1
     m_Name: icons collection _102
-    m_HashCode: -979404638
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 110
     m_Scale: 1
     m_Name: icons collection _116
-    m_HashCode: -979404665
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 111
     m_Scale: 1
     m_Name: icons collection _110
-    m_HashCode: -979404671
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 112
     m_Scale: 1
     m_Name: icons collection _111
-    m_HashCode: -979404672
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 113
     m_Scale: 1
     m_Name: icons collection _112
-    m_HashCode: -979404669
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 114
     m_Scale: 1
     m_Name: icons collection _113
-    m_HashCode: -979404670
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 115
     m_Scale: 1
     m_Name: icons collection _114
-    m_HashCode: -979404667
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 116
     m_Scale: 1
     m_Name: icons collection _115
-    m_HashCode: -979404668
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 117
     m_Scale: 1
     m_Name: icons collection _117
-    m_HashCode: -979404666
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 118
     m_Scale: 1
     m_Name: icons collection _118
-    m_HashCode: -979404663
-  m_SpriteGlyphTable:
+  m_GlyphTable:
   - m_Index: 0
     m_Metrics:
       m_Width: 79.12839
@@ -2213,9 +2093,9 @@ MonoBehaviour:
       m_HorizontalAdvance: 56.52028
     m_GlyphRect:
       m_X: 159
-      m_Y: 447
+      m_Y: 429
       m_Width: 56
-      m_Height: 71
+      m_Height: 89
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0

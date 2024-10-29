@@ -38,7 +38,7 @@ def move_units(origin, destination, units):
         return "NOPE"
 
     # si l'hexagone de destination est un HQ et n'appartient pas au joueur
-    if hexes[destination]["type"].split(":")[0] == "HQ" and hexes[destination]["owner"] != hexes[origin]["owner"]:
+    if hexes[destination]["type"].split(":")[0] == "hq" and hexes[destination]["owner"] != hexes[origin]["owner"]:
         return "NOPE"
 
 
@@ -180,9 +180,10 @@ def update_resources(player):
         for k, v in hexes.items():
             if v["owner"] == player:
 
-                # si c'est une HQ, on ajoute des unités
-                if v["type"].split(":")[0] == "HQ":
-                    v["units"] += int(deltatimehours)
+                # si c'est une barrack, on ajoute des unités
+                # une unité par heure
+                if v["type"].split(":")[0] == "barrack":
+                    v["units"] += int(deltatimehours)*int(v["type"].split(":")[1])
                     print("added", int(deltatimehours), "units to", k)
 
         # on laisse les minutes restantes (en gros division euclidienne)
