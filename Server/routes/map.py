@@ -25,32 +25,41 @@ def move_units(origin, destination, units):
     with open(HERE + "/data/map.json", "r") as f:
         hexes = json.load(f)
 
+    # si les hexagones n'existent pas
     if origin not in hexes or destination not in hexes:
         return "NOPE"
 
+    # si l'hexagone d'origine n'appartient pas au joueur
     if hexes[origin]["units"] < units:
         return "NOPE"
 
+    # si le chemin n'existe pas
     if find_path(origin, destination, hexes[origin]["owner"]) == []:
         return "NOPE"
 
-    # si les owner sont différents, on attaque
-    if (
-        hexes[origin]["owner"] != hexes[destination]["owner"]
-        and hexes[destination]["type"].split(":")[0] != "HQ"
-    ):
-        if hexes[origin]["units"] > hexes[destination]["units"]:
-            hexes[origin]["units"] -= hexes[destination]["units"]
-            hexes[destination]["units"] = 0
-            hexes[destination]["owner"] = hexes[origin]["owner"]
-        else:
-            hexes[destination]["units"] -= hexes[origin]["units"]
-            hexes[origin]["units"] = 0
+    # si l'hexagone de destination est un HQ et n'appartient pas au joueur
+    if hexes[destination]["type"].split(":")[0] == "HQ" and hexes[destination]["owner"] != hexes[origin]["owner"]:
+        return "NOPE"
 
+
+    # un déplacement d'unités va se faire
+    hexes[origin]["units"] -= units
+
+    # ATTAQUE
+    # si les owner sont différents
+    if (hexes[origin]["owner"] != hexes[destination]["owner"]):
+
+        hexes[destination]["units"] -= units
+        
+        if hexes[destination]["units"] < 0:
+            hexes[destination]["units"] = abs(hexes[destination]["units"])
+            hexes[destination]["owner"] = hexes[origin]["owner"]
+
+    # DEPLACEMENT
     # sinon on déplace les unités
     else:
         hexes[destination]["units"] += units
-        hexes[origin]["units"] -= units
+
 
     with open(HERE + "/data/map.json", "w") as f:
         json.dump(hexes, f, indent=4)

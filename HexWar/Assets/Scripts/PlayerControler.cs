@@ -16,7 +16,6 @@ public class PlayerControler : MonoBehaviour
 
 
 
-    private int selectedUnits = 0;
     private GridGenerator gridGenerator;
     private GameManager gameManager;
     private CamControler camControler;
@@ -27,6 +26,7 @@ public class PlayerControler : MonoBehaviour
     private string state = "";
 
     private GameObject selectedTile;
+    private int selectedUnits;
     // Update is called once per frame
 
 
@@ -42,7 +42,6 @@ public class PlayerControler : MonoBehaviour
         // set playerpref username 
 
         // TODO: Pour débug
-        PlayerPrefs.SetString("username", "Lenitra");
         PlayerPrefs.SetString("color", "105, 5, 133");
 
 
@@ -112,6 +111,10 @@ public class PlayerControler : MonoBehaviour
                         if (hit.collider.gameObject.tag == "Tile"){
                             gameManager.moveUnitsBtnClic(selectedTile.name.Split(' ')[1], hit.collider.gameObject.name.Split(' ')[1], selectedUnits);
                             state = "";
+                            StartCoroutine(selectedTile.GetComponent<Tile>().unselectTile(selectedTile));
+                            StartCoroutine(animateTileInfoPanelBack());
+                            selectedTile = null;
+
                         }
                     }
                 }
@@ -125,10 +128,16 @@ public class PlayerControler : MonoBehaviour
     private void moveUnitsBtnClic(){
         if (selectedTile != null){
             if (selectedTile.GetComponent<Tile>().units > 0){
-                state = "move";
-                movePanel.SetActive(true);
+                movePanel.gameObject.SetActive(true);
+                movePanel.GetComponent<MovePanel>().init(selectedTile.GetComponent<Tile>().units);
             }
         }
+    }
+
+    public void getFromMovePanel(int units){
+        movePanel.gameObject.SetActive(false);
+        state = "move";
+        selectedUnits = units;
     }
 
     

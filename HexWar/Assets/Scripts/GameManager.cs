@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     private CamControler camControler;
     private ServerClient serverClient;
 
-    private string username = "Lenitra";
 
 
     // EFFECTS
@@ -70,7 +69,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void moveUnitsBtnClic(string origin , string destination, int units = 5)
+    public void moveUnitsBtnClic(string origin , string destination, int units)
     {
         Debug.Log("Move units from " + origin + " to " + destination + " with " + units + " units.");
         // send a http request to the server

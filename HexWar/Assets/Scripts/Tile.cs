@@ -41,18 +41,19 @@ public class Tile : MonoBehaviour
         position[1] = int.Parse(gameObject.name.Split("Hexagon ")[1].Split(":")[1]);
 
         
+        toShowOnSelected.gameObject.SetActive(false);
 
         // set the text of the tileInfo
-        toShowOnSelected.gameObject.SetActive(false);
-        string msg;
-        msg = "<sprite=36> " + position[0] + ":" + position[1] + "\n";
+        string msg = "" ;
+        // msg = "<sprite=36> " + position[0] + ":" + position[1] + "\n";
         if (owner != "") {
             msg += "<sprite=112>" + owner + "\n";
         }
         
         msg += "<sprite=91>" + units + "\n";
-        if (type != "")
-            msg += "<sprite=45>" + type.Split(":")[0] + " " + type.Split(":")[1];
+        // if (type != ""){
+        //     msg += "<sprite=45>" + type.Split(":")[0] + " " + type.Split(":")[1];
+        // }
         tileInfo.text = msg;
 
         // add a material to the hoverOwner

@@ -11,6 +11,11 @@ public class MovePanel : MonoBehaviour
     [SerializeField] private Button cancelBtn;
     [SerializeField] private InputField selectedUnitsInputField;
 
+    [SerializeField] private PlayerControler playerControler;
+
+    private string origin;
+    private string destination;
+
 
     void Start(){
         // add event listener to cancelBtn
@@ -18,6 +23,14 @@ public class MovePanel : MonoBehaviour
         // on value change on moveSlider change the value of selectedUnitsInputField et inversement
         selectedUnitsInputField.onValueChanged.AddListener(inputChange);
         moveSlider.onValueChanged.AddListener(sliderChange);
+        moveBtn.onClick.AddListener(() => playerControler.getFromMovePanel(int.Parse(moveSlider.value.ToString())));
+    }
+
+    public void init(int maxUnits){
+        gameObject.SetActive(true);
+        selectedUnitsInputField.text = "0";
+        moveSlider.value = 0;
+        moveSlider.maxValue = maxUnits;
     }
 
     void cancelBtnClic(){
@@ -29,7 +42,17 @@ public class MovePanel : MonoBehaviour
         if (value == ""){
             moveSlider.value = 0;
         } else {
-            moveSlider.value = int.Parse(value);
+            if (int.Parse(value) < 0){
+                selectedUnitsInputField.text = "0";
+                moveSlider.value = 0;
+            }
+            
+            if (int.Parse(value) > moveSlider.maxValue){
+                selectedUnitsInputField.text = moveSlider.maxValue.ToString();
+                moveSlider.value = moveSlider.maxValue;
+            }
+
+            moveSlider.value = int.Parse(selectedUnitsInputField.text);
         }
     }
 
