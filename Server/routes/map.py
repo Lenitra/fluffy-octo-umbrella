@@ -14,7 +14,7 @@ def game_state():
     game_data = {"hexes": game_data}
     return jsonify(game_data)
 
-# ! TODO ! Régler 
+
 # bouger les unités d'un hexagone à un autre
 # @param origin: hexagone d'origine sous forme de string "x:z"
 # @param destination: hexagone de destination sous forme de string "x:z"
