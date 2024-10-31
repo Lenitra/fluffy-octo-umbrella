@@ -12,6 +12,7 @@ public class Tile : MonoBehaviour
     public string owner = "";
     public int[] position = new int[2];
     public string type = "";
+    public TextMeshPro tileInfos;
 
 
 
@@ -21,6 +22,7 @@ public class Tile : MonoBehaviour
     [SerializeField] private GameObject toShowOnSelected;
     [SerializeField] private GameObject hoverOwner;
 
+    public GameObject moreInfo;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject hqPrefab;
@@ -56,9 +58,9 @@ public class Tile : MonoBehaviour
         material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
 
         // set the color of the hoverOwner
-        float r = float.Parse(PlayerPrefs.GetString("color").Split(',')[0])/255;
-        float g = float.Parse(PlayerPrefs.GetString("color").Split(',')[1])/255;
-        float b = float.Parse(PlayerPrefs.GetString("color").Split(',')[2])/255;
+        float r = float.Parse(PlayerPrefs.GetString("color").Split('|')[0])/255;
+        float g = float.Parse(PlayerPrefs.GetString("color").Split('|')[1])/255;
+        float b = float.Parse(PlayerPrefs.GetString("color").Split('|')[2])/255;
         float a = 20f / 255f;
         material.color = new Color(r,g,b,a); 
 
@@ -118,6 +120,7 @@ public class Tile : MonoBehaviour
         }
 
 
+
     }
 
 
@@ -126,6 +129,11 @@ public class Tile : MonoBehaviour
         this.units = units;
         this.owner = owner;
         this.type = type;
+        if (owner == ""){
+            tileInfos.text = "<sprite=91>" + units;
+        } else {
+            tileInfos.text = "<sprite=112>" + owner + "\n" + "<sprite=91>" + units;
+        }
         Start();
     }
 
@@ -133,26 +141,47 @@ public class Tile : MonoBehaviour
     public IEnumerator selectTile()
     {
         toShowOnSelected.gameObject.SetActive(true);
-        float movePerFrame = selectionOffset / 10;
-        for (int i = 0; i < 10; i++)
+        float animationDuration = 0.25f; // Durée de l'animation en secondes
+        float elapsedTime = 0f;
+        float startPositionY = transform.position.y;
+        float targetPositionY = startPositionY + selectionOffset;
+        
+        while (elapsedTime < animationDuration)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y + movePerFrame, transform.position.z);
-            yield return new WaitForSeconds(0.001f);
+            float moveStep = (selectionOffset / animationDuration) * Time.deltaTime; // Déplacement par frame basé sur le temps
+            transform.position = new Vector3(transform.position.x, transform.position.y + moveStep, transform.position.z);
+            
+            elapsedTime += Time.deltaTime;
+            yield return null; // Attend jusqu'au prochain frame
         }
-        yield return new WaitForSeconds(0.1f);
+        
+        // Assure que la position finale est atteinte
+        transform.position = new Vector3(transform.position.x, targetPositionY, transform.position.z);
+        yield return new WaitForSeconds(0.1f); // Attente après l'animation
     }
 
     public IEnumerator unselectTile(GameObject tile)
     {
         toShowOnSelected.gameObject.SetActive(false);
-        float movePerFrame = selectionOffset / 10;
-        for (int i = 0; i < 10; i++)
+        float animationDuration = 0.25f; // Durée de l'animation en secondes
+        float elapsedTime = 0f;
+        float startPositionY = transform.position.y;
+        float targetPositionY = startPositionY - selectionOffset;
+
+        while (elapsedTime < animationDuration)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y - movePerFrame, transform.position.z);
-            yield return new WaitForSeconds(0.001f);
+            float moveStep = (selectionOffset / animationDuration) * Time.deltaTime; // Déplacement par frame basé sur le temps
+            transform.position = new Vector3(transform.position.x, transform.position.y - moveStep, transform.position.z);
+            
+            elapsedTime += Time.deltaTime;
+            yield return null; // Attend jusqu'au prochain frame
         }
-        yield return new WaitForSeconds(0.1f);
+
+        // Assure que la position finale est atteinte
+        transform.position = new Vector3(transform.position.x, targetPositionY, transform.position.z);
+        yield return new WaitForSeconds(0.1f); // Attente après l'animation
     }
+
 
 
 

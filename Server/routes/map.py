@@ -1,7 +1,7 @@
 from general import HERE, MAPSIZE  # pylint: disable=import-error
 from __main__ import app
 import json
-from flask import jsonify
+from flask import jsonify, session
 from os import path
 import datetime
 
@@ -22,6 +22,10 @@ def game_state():
 # @return: True si le déplacement a réussi, False sinon
 @app.route("/move_units/<string:origin>/<string:destination>/<int:units>")
 def move_units(origin, destination, units):
+
+    if 'username' not in session:
+        return "error : login"   
+    
     with open(HERE + "/data/map.json", "r") as f:
         hexes = json.load(f)
 
@@ -29,8 +33,11 @@ def move_units(origin, destination, units):
     if origin not in hexes or destination not in hexes:
         return "NOPE"
 
-    # si l'hexagone d'origine n'appartient pas au joueur
+    # si le nombre d'unités est suffisant sur l'hexagone d'origine
     if hexes[origin]["units"] < units:
+        return "NOPE"
+    
+    if hexes[origin]["owner"] != session.get("username"):
         return "NOPE"
 
     # si le chemin n'existe pas
@@ -72,8 +79,11 @@ def move_units(origin, destination, units):
 # Route pour récupérer les hexagones d'un joueur et ses adjacents en fonction de ses bâtiments
 @app.route("/get_hex/<string:player>")
 def get_hex(player):
-    update_resources(player)
 
+    if session.get("username") != player:
+        return "error : login"
+    
+    update_resources(player)
     # Charger les hexagones
     with open(HERE + "/data/map.json", "r") as f:
         hexes = json.load(f)

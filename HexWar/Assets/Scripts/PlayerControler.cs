@@ -46,8 +46,6 @@ public class PlayerControler : MonoBehaviour
         moveUnitsBtn.onClick.AddListener(moveUnitsBtnClic);
         // set playerpref username 
 
-        // TODO: Pour débug
-        PlayerPrefs.SetString("color", "105, 5, 133");
 
 
     }

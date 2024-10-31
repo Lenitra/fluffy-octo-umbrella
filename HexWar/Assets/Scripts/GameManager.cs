@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,7 +12,9 @@ public class GameManager : MonoBehaviour
     private CamControler camControler;
     private ServerClient serverClient;
 
-
+    // tmp button to see all units
+    [SerializeField] private Button seeAllUnitsBtn;
+    private bool seeAllUnitsBool = false;
 
     // EFFECTS
     [SerializeField] private LineRenderer moveUnitsLine;
@@ -22,19 +25,18 @@ public class GameManager : MonoBehaviour
         serverClient = GetComponent<ServerClient>();
         gridGenerator = GetComponent<GridGenerator>();
         camControler = Camera.main.GetComponent<CamControler>();
-    }
-
-    private void OnEnable()
-    {
-        
-        ServerClient.OnGameDataReceived += SetupTiles; // Abonnement de l'événement
+        seeAllUnitsBtn.onClick.AddListener(seeAllUnits);
 
     }
 
-    private void OnDisable()
-    {
-        ServerClient.OnGameDataReceived -= SetupTiles; // Désabonnement de l'événement
+    public void seeAllUnits(){
+        seeAllUnitsBool = !seeAllUnitsBool;
+        // loop through all children 
+        foreach (Transform child in transform){
+            child.gameObject.GetComponent<Tile>().moreInfo.SetActive(seeAllUnitsBool);
+        }
     }
+
 
     public void SetupTiles(string jsonData)
     {
@@ -92,7 +94,6 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < moves.Length; i++)
         {
             string[] coords = moves[i].Split(':');
-            Debug.Log("Coords: " + coords[0] + " " + coords[1]);
 
             int x = int.Parse(coords[0]);
             int z = int.Parse(coords[1]);

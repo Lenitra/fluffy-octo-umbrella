@@ -1,6 +1,8 @@
 {
     "Lenitra": {
-        "password": "password",
-        "recdatetime": "2024-10-29 17:17:49"
+        "password": "123",
+        "recdatetime": "2024-10-31 15:30:20",
+        "color": "105|5|133",
+        "money": 1000
     }
 }

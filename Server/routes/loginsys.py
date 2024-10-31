@@ -1,7 +1,7 @@
 from general import HERE
 from __main__ import app
 import json
-from flask import jsonify, request
+from flask import jsonify, request, session
 import datetime
 
 @app.route("/login", methods=["POST"])
@@ -11,5 +11,9 @@ def login():
 
     data = request.get_json()
     if data["username"] in users and users[data["username"]]["password"] == data["password"]:
-        return "OK"
+        session['username'] = data["username"]
+        username = data["username"]
+        color = users[username]["color"]
+        money = users[username]["money"]
+        return jsonify({"username": username, "color": color, "money": money})
     return "NOPE"

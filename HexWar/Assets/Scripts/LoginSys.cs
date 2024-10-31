@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class LoginSys : MonoBehaviour
 {
@@ -54,20 +55,54 @@ public class LoginSys : MonoBehaviour
             string responseText = request.downloadHandler.text;
             Debug.Log("Réponse du serveur: " + responseText);
             LOGINloading.gameObject.SetActive(false);
-            if (responseText == "OK")
-            {
-                // Connexion réussie
-                Debug.Log("Connexion réussie");
-                // ajouter le username dans les PlayerPrefs
-                PlayerPrefs.SetString("username", username);
-                // changement de scene
-                UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
-            }
-            else
-            {
+
+            if (responseText == "NOPE")
+            {                
                 // Connexion échouée
                 Debug.Log("Connexion échouée");
                 StartCoroutine(shakeUI());
+            }
+            else
+            {
+                responseText = responseText.Replace("{", ""); // Supprimer les accolades
+                responseText = responseText.Replace("}", ""); // Supprimer les accolades
+                responseText = responseText.Replace("\"", ""); // Supprimer les guillemets
+                responseText = responseText.Replace(" ", ""); // Supprimer les espaces
+                responseText = responseText.Replace("\n", ""); // Supprimer les retours à la ligne
+
+
+                // Diviser en paires clé-valeur
+                string[] keyValuePairs = responseText.Split(',');
+
+                // Créer un dictionnaire pour stocker les valeurs extraites
+                Dictionary<string, string> responseJson = new Dictionary<string, string>();
+
+                // Parcourir les paires clé-valeur
+                foreach (string pair in keyValuePairs)
+                {
+                    // Ajouter la clé et la valeur au dictionnaire
+                    responseJson.Add(pair.Split(':')[0], pair.Split(':')[1]);
+                }
+
+                // debug all response
+                string tmp = "";
+                foreach (KeyValuePair<string, string> pair in responseJson)
+                {
+                    tmp += pair.Key + " : " + pair.Value + "\n";
+                }
+                Debug.Log(tmp);
+
+                
+
+
+                // ajouter le username dans les PlayerPrefs
+                PlayerPrefs.SetString("username", responseJson["username"]);
+                PlayerPrefs.SetString("color", responseJson["color"]);
+                PlayerPrefs.SetInt("money", int.Parse(responseJson["money"]));
+
+
+                // changement de scene
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
             }
         }
     }

@@ -76,9 +76,10 @@ MonoBehaviour:
   owner: none
   position: 0000000000000000
   type: 
+  tileInfos: {fileID: 6875343273113787766}
   toShowOnSelected: {fileID: 4769094978415170158}
-  tileInfo: {fileID: 0}
   hoverOwner: {fileID: 145790472456440742}
+  moreInfo: {fileID: 4252236680203504150}
   hqPrefab: {fileID: 1520387732827577120, guid: 8a305b827acabc249abcb098c740869d, type: 3}
   moneyPrefab: {fileID: 3659580844162061774, guid: faa7af72f7e6794438a936beff41f2d8, type: 3}
   radarPrefab: {fileID: 8674176847597691436, guid: 0dd93b810dd981a478a1014ba9454cd1, type: 3}
@@ -435,7 +436,7 @@ Transform:
   m_GameObject: {fileID: 4252236680203504150}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.16723722, y: 0.9065148, z: -0.14064059}
+  m_LocalPosition: {x: 0.16723722, y: 0.092, z: -0.519}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -597,7 +598,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8739464301330457528}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0.14064059}
+  m_LocalPosition: {x: 0, y: 0, z: 0.102}
   m_LocalScale: {x: 0.05, y: 0.050000016, z: 0.050000016}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -605,7 +606,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.16723722, y: 0.09348518}
+  m_AnchoredPosition: {x: -0.16723722, y: 0.217}
   m_SizeDelta: {x: 127.6, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &3237671457028455567
