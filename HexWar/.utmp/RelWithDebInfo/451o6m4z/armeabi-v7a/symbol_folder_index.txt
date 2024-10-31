@@ -1,0 +1,1 @@
+C:\Users\thoma\Desktop\fluffy-octo-umbrella\HexWar\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\451o6m4z\obj\armeabi-v7a

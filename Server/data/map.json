@@ -7,7 +7,7 @@
     "0:1": {
         "owner": "Lenitra",
         "type": "money:1",
-        "units": 13
+        "units": 0
     },
     "0:2": {
         "owner": "Lenitra",
@@ -1462,12 +1462,12 @@
     "9:4": {
         "owner": "Lenitra",
         "type": "",
-        "units": 1
+        "units": 0
     },
     "9:5": {
         "owner": "Lenitra",
         "type": "",
-        "units": 1
+        "units": 0
     },
     "9:6": {
         "owner": "Lenitra",
@@ -1477,7 +1477,7 @@
     "9:7": {
         "owner": "Lenitra",
         "type": "",
-        "units": 1
+        "units": 0
     },
     "9:8": {
         "owner": "",
@@ -1642,7 +1642,7 @@
     "10:8": {
         "owner": "Lenitra",
         "type": "",
-        "units": 4
+        "units": 0
     },
     "10:9": {
         "owner": "",
@@ -1792,12 +1792,12 @@
     "11:6": {
         "owner": "Lenitra",
         "type": "",
-        "units": 10
+        "units": 0
     },
     "11:7": {
         "owner": "Lenitra",
         "type": "",
-        "units": 8
+        "units": 0
     },
     "11:8": {
         "owner": "",
@@ -1935,22 +1935,22 @@
         "units": 0
     },
     "12:3": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
     "12:4": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
     "12:5": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
     "12:6": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -2090,7 +2090,7 @@
         "units": 0
     },
     "13:2": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -2250,7 +2250,7 @@
         "units": 0
     },
     "14:2": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -2410,9 +2410,9 @@
         "units": 0
     },
     "15:2": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
-        "units": 0
+        "units": 41
     },
     "15:3": {
         "owner": "",

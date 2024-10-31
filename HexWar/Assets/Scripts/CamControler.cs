@@ -13,11 +13,11 @@ public class CamControler : MonoBehaviour
     private Vector3 velocity = Vector3.zero;  // Vitesse pour le SmoothDamp
     private Coroutine moveCoroutine = null;   // Coroutine pour l'animation de translation
 
-    void LateUpdate()
-    {
-        HandleMovement();
-        HandleZoom();
-    }
+    // void LateUpdate()
+    // {
+    //     HandleMovement();
+    //     HandleZoom();
+    // }
 
     void HandleMovement()
     {           
