@@ -88,6 +88,10 @@ def get_hex(player):
     with open(HERE + "/data/map.json", "r") as f:
         hexes = json.load(f)
 
+    with open(HERE + "/data/users.json", "r") as f:
+        users = json.load(f)
+    money = users[player]["money"]
+
     # Créer une liste pour les hexagones du joueur
     result = {}
 
@@ -111,7 +115,8 @@ def get_hex(player):
             if key not in result and key in hexes:
                 result[key] = hexes[key]
 
-    return jsonify(format_json_hexes(result))
+    # return jsonify(format_json_hexes(result))
+    return jsonify(money, format_json_hexes(result))
 
 
 # Fonction permettant de trouver un chemin vers une tile en bfs
@@ -195,6 +200,10 @@ def update_resources(player):
                 if v["type"].split(":")[0] == "barrack":
                     v["units"] += int(deltatimehours)*int(v["type"].split(":")[1])
                     print("added", int(deltatimehours), "units to", k)
+
+                # si c'est une mine, on ajoute des ressources au joueur
+                if v["type"].split(":")[0] == "money":
+                    users[player]["money"] += int(deltatimehours) * int(v["type"].split(":")[1])
 
         # on laisse les minutes restantes (en gros division euclidienne)
         deltatime = deltatimehours - int(deltatimehours)

@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System;
 using UnityEngine.SceneManagement;
+using System.Linq;
+
 
 public class ServerClient : MonoBehaviour
 {
@@ -54,7 +56,22 @@ public class ServerClient : MonoBehaviour
             }
             else
             {
-                gameManager.SetupTiles(request.downloadHandler.text);
+                string hexes = request.downloadHandler.text;
+                // delete characters jusqu'à la première virgule
+                hexes = hexes.Substring(hexes.IndexOf(",") + 1);
+                // supprimer les derniers caractères jusqu'à la dernière parenthèse fermante
+                hexes = hexes.Substring(0, hexes.LastIndexOf("}") + 1);
+
+
+                string money = request.downloadHandler.text;
+                // garder les caractères jusqu'à la première virgule
+                money = money.Substring(0, money.IndexOf(","));
+                // garder uniquement les chiffres
+                money = new string(money.Where(char.IsDigit).ToArray());
+
+
+                gameManager.UpdateMoney(money);
+                gameManager.SetupTiles(hexes);
             }
         }
         Debug.Log("PollGameState took: " + (Time.time - startTime) + " seconds");

@@ -12,11 +12,17 @@ public class GameManager : MonoBehaviour
     private CamController camControler;
     private ServerClient serverClient;
 
-    // tmp button to see all units
+    // UI
+    [Header("UI")]
     [SerializeField] private Button seeAllUnitsBtn;
+    [SerializeField] private TMP_Text moneyText;
+
+    
     private bool seeAllUnitsBool = false;
 
+
     // EFFECTS
+    [Header("Effects")]
     [SerializeField] private LineRenderer moveUnitsLine;
 
 
@@ -29,12 +35,21 @@ public class GameManager : MonoBehaviour
 
     }
 
+
     public void seeAllUnits(){
         seeAllUnitsBool = !seeAllUnitsBool;
         // loop through all children 
         foreach (Transform child in transform){
             child.gameObject.GetComponent<Tile>().moreInfo.SetActive(seeAllUnitsBool);
         }
+    }
+
+
+    public void UpdateMoney(string money)
+    {
+        // Mettre à jour l'argent du joueur
+        moneyText.text = "¤ " + money;
+        PlayerPrefs.SetInt("money", int.Parse(money));
     }
 
 
