@@ -1,7 +1,7 @@
 from general import HERE, MAPSIZE  # pylint: disable=import-error
 from __main__ import app
 import json
-from flask import jsonify, session
+from flask import jsonify, session, request
 from os import path
 import datetime
 
@@ -13,6 +13,63 @@ def game_state():
         game_data = json.load(f)
     game_data = {"hexes": game_data}
     return jsonify(game_data)
+
+
+
+@app.route("/buildbat", methods=["POST", "GET"])
+def build_bat():
+    username = request.form.get("username")
+
+    if 'username' not in session:
+        return "error : login"
+    
+    bat_type = request.form.get("bat_type")
+    hex_x = request.form.get("hex_x")
+    hex_z = request.form.get("hex_z")
+
+
+    with open(HERE + "/data/map.json", "r") as f:
+        hexes = json.load(f)
+
+    with open(HERE + "/data/users.json", "r") as f:
+        users = json.load(f)
+
+    # Vérifier si l'hexagone appartient au joueur
+    if hexes[f"{hex_x}:{hex_z}"]["owner"] != session.get("username"):
+        return "NOPE"
+    
+    # Vérifier si l'hexagone est vide
+    if hexes[f"{hex_x}:{hex_z}"]["type"] != "":
+        return "NOPE"
+    
+
+    if bat_type == "barrack":
+        if users[session.get("username")]["money"] < 100:
+            return "NOPE"
+        users[session.get("username")]["money"] -= 100
+        hexes[f"{hex_x}:{hex_z}"]["type"] = "barrack:1"
+
+    if bat_type == "mine":
+        if users[session.get("username")]["money"] < 100:
+            return "NOPE"
+        users[session.get("username")]["money"] -= 100
+        hexes[f"{hex_x}:{hex_z}"]["type"] = "mine:1"
+
+    if bat_type == "radar":
+        if users[session.get("username")]["money"] < 100:
+            return "NOPE"
+        users[session.get("username")]["money"] -= 100
+        hexes[f"{hex_x}:{hex_z}"]["type"] = "radar:1"
+
+
+    with open(HERE + "/data/map.json", "w") as f:
+        json.dump(hexes, f, indent=4)
+    with open(HERE + "/data/users.json", "w") as f:
+        json.dump(users, f, indent=4)
+        
+    return "OK"
+    
+
 
 
 # bouger les unités d'un hexagone à un autre
@@ -173,7 +230,7 @@ def format_json_hexes(hexes):
     }
 
 
-# update les ressources de toutes les tiles d'un joueur
+# update les ressources de toutes les tiles d'un joueur ainsi que son argent
 # @param player: nom du joueur
 def update_resources(player):
 

@@ -7,12 +7,12 @@
     "0:1": {
         "owner": "Lenitra",
         "type": "money:1",
-        "units": 0
+        "units": 71
     },
     "0:2": {
         "owner": "Lenitra",
         "type": "barrack:1",
-        "units": 65
+        "units": 1
     },
     "0:3": {
         "owner": "",
@@ -2140,7 +2140,7 @@
         "units": 0
     },
     "13:12": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
