@@ -12,6 +12,7 @@ public class PlayerControler : MonoBehaviour
     // Ajouter de l'UI pour afficher les informations des hexagones sélectionnés
     [SerializeField] private RectTransform tileInfoPanel;
     [SerializeField] private GameObject movePanel;
+    [SerializeField] private GameObject buildPanel;
     [SerializeField] private Button moveUnitsBtn;
     [SerializeField] private Button buildBtn;
 
@@ -44,10 +45,9 @@ public class PlayerControler : MonoBehaviour
 
         // add event listener to moveUnitsBtn
         moveUnitsBtn.onClick.AddListener(moveUnitsBtnClic);
-        // set playerpref username 
 
-
-
+        movePanel.gameObject.SetActive(false);
+        buildPanel.gameObject.SetActive(false);
     }
 
 

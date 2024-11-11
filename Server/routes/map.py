@@ -23,10 +23,10 @@ def build_bat():
     if 'username' not in session:
         return "error : login"
     
-    bat_type = request.form.get("bat_type")
+    
     hex_x = request.form.get("hex_x")
     hex_z = request.form.get("hex_z")
-
+    bat_type = request.form.get("bat_type")
 
     with open(HERE + "/data/map.json", "r") as f:
         hexes = json.load(f)
@@ -38,28 +38,32 @@ def build_bat():
     if hexes[f"{hex_x}:{hex_z}"]["owner"] != session.get("username"):
         return "NOPE"
     
+
     # Vérifier si l'hexagone est vide
-    if hexes[f"{hex_x}:{hex_z}"]["type"] != "":
-        return "NOPE"
-    
+    if hexes[f"{hex_x}:{hex_z}"]["type"] == "":
 
-    if bat_type == "barrack":
-        if users[session.get("username")]["money"] < 100:
+        if users[username]["money"] < get_price(bat_type, 1):
             return "NOPE"
-        users[session.get("username")]["money"] -= 100
-        hexes[f"{hex_x}:{hex_z}"]["type"] = "barrack:1"
+        
+        users[username]["money"] -= get_price(bat_type, 1)
+        hexes[f"{hex_x}:{hex_z}"]["type"] = f"{bat_type}:1"
+        hexes[f"{hex_x}:{hex_z}"]["owner"] = username
 
-    if bat_type == "mine":
-        if users[session.get("username")]["money"] < 100:
+    # Si il y a déjà un batiment
+    else:
+        lvl = int(hexes[f"{hex_x}:{hex_z}"]["type"].split(":")[1])
+        bat_type = hexes[f"{hex_x}:{hex_z}"]["type"].split(":")[0].lower()
+        if lvl >= 5:
             return "NOPE"
-        users[session.get("username")]["money"] -= 100
-        hexes[f"{hex_x}:{hex_z}"]["type"] = "mine:1"
 
-    if bat_type == "radar":
-        if users[session.get("username")]["money"] < 100:
+        if users[username]["money"] < get_price(bat_type, lvl+1):
             return "NOPE"
-        users[session.get("username")]["money"] -= 100
-        hexes[f"{hex_x}:{hex_z}"]["type"] = "radar:1"
+        
+        users[username]["money"] -= get_price(bat_type, lvl+1)
+        hexes[f"{hex_x}:{hex_z}"]["type"] = f"{bat_type}:{lvl+1}"
+        hexes[f"{hex_x}:{hex_z}"]["owner"] = username
+
+
 
 
     with open(HERE + "/data/map.json", "w") as f:
@@ -69,6 +73,55 @@ def build_bat():
         
     return "OK"
     
+
+
+def get_price(type, lvl):
+    type = type.lower()
+    if type == "barrack":
+        if lvl == 1:
+            return 100
+        if lvl == 2:
+            return 300
+        if lvl == 3:
+            return 500
+        if lvl == 4:
+            return 800
+        if lvl == 5:
+            return 1500
+    if type == "mine":
+        if lvl == 1:
+            return 100
+        if lvl == 2:
+            return 300
+        if lvl == 3:
+            return 500
+        if lvl == 4:
+            return 800
+        if lvl == 5:
+            return 1500
+    if type == "radar":
+        if lvl == 1:
+            return 100
+        if lvl == 2:
+            return 300
+        if lvl == 3:
+            return 500
+        if lvl == 4:
+            return 800
+        if lvl == 5:
+            return 1500
+    if type == "hq":
+        if lvl == 1:
+            return 0
+        if lvl == 2:
+            return 500
+        if lvl == 3:
+            return 1500
+        if lvl == 4:
+            return 3000
+        if lvl == 5:
+            return 5000
+    return 0
 
 
 
