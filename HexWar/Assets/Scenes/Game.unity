@@ -969,7 +969,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &295422345
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1041,7 +1041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   title: {fileID: 1503920675}
-  description: {fileID: 0}
+  description: {fileID: 116653020}
   next: {fileID: 782035052}
   previous: {fileID: 274959634}
   buildingParent: {fileID: 778829004}
