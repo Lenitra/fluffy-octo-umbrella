@@ -15,24 +15,33 @@ def game_state():
     return jsonify(game_data)
 
 
+@app.route("/get_price/<string:type>/<int:lvl>")
+def get_price(type, lvl):
+    return jsonify(get_price(type, lvl))
 
-@app.route("/buildbat", methods=["POST", "GET"])
-def build_bat():
-    username = request.form.get("username")
+
+@app.route("/buildbat/<string:tile>/<string:type>")
+def build_bat(tile, type):
+    username = session.get("username")
 
     if 'username' not in session:
         return "error : login"
     
     
-    hex_x = request.form.get("hex_x")
-    hex_z = request.form.get("hex_z")
-    bat_type = request.form.get("bat_type")
+    hex_x = tile.split(":")[0]
+    hex_z = tile.split(":")[1]
+    bat_type = type.lower()
 
     with open(HERE + "/data/map.json", "r") as f:
         hexes = json.load(f)
 
     with open(HERE + "/data/users.json", "r") as f:
         users = json.load(f)
+
+
+    if bat_type == "":
+        bat_type = hexes[f"{hex_x}:{hex_z}"]["type"].split(":")[0].lower()
+
 
     # Vérifier si l'hexagone appartient au joueur
     if hexes[f"{hex_x}:{hex_z}"]["owner"] != session.get("username"):
@@ -72,7 +81,6 @@ def build_bat():
         json.dump(users, f, indent=4)
         
     return "OK"
-    
 
 
 def get_price(type, lvl):
@@ -88,7 +96,7 @@ def get_price(type, lvl):
             return 800
         if lvl == 5:
             return 1500
-    if type == "mine":
+    if type == "money":
         if lvl == 1:
             return 100
         if lvl == 2:
@@ -122,7 +130,6 @@ def get_price(type, lvl):
         if lvl == 5:
             return 5000
     return 0
-
 
 
 # bouger les unités d'un hexagone à un autre

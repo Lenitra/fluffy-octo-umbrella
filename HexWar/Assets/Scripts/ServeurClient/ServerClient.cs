@@ -128,9 +128,35 @@ public class ServerClient : MonoBehaviour
                 }
             }
         }
-
     }
     
+
+
+    public void build(string tile, string type, int lvl)
+    {
+        StartCoroutine(BuildCoro(tile, type, lvl));
+    }
+
+    IEnumerator BuildCoro(string tile, string type, int lvl)
+    {
+        UnityWebRequest request = UnityWebRequest.Get("http://localhost:5000/buildbat/" + tile + "/" + type);
+        yield return request.SendWebRequest();
+        // debug the response
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("Error: " + request.error);
+        }
+        else
+        {
+            if (request.downloadHandler.text.ToLower().StartsWith("error : "))
+            {
+                // change the scene to the login scene
+                SceneManager.LoadScene("Home");
+                Debug.LogError("error: " + request.downloadHandler.text);
+            }
+        }
+    }
+
     
     void OnApplicationQuit()
     {

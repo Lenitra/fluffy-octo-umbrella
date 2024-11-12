@@ -86,6 +86,14 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void buildBtnClic(string tile, string type)
+    {
+        Debug.Log("Build " + type);
+        // send a http request to the server
+        serverClient.build(tile, type, 1);
+    }
+
+
     public void moveUnitsBtnClic(string origin , string destination, int units)
     {
         Debug.Log("Move units from " + origin + " to " + destination + " with " + units + " units.");

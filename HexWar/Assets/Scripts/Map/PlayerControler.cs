@@ -13,6 +13,7 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] private RectTransform tileInfoPanel;
     [SerializeField] private GameObject movePanel;
     [SerializeField] private GameObject buildPanel;
+
     [SerializeField] private Button moveUnitsBtn;
     [SerializeField] private Button buildBtn;
 
@@ -45,6 +46,7 @@ public class PlayerControler : MonoBehaviour
 
         // add event listener to moveUnitsBtn
         moveUnitsBtn.onClick.AddListener(moveUnitsBtnClic);
+        buildBtn.onClick.AddListener(buildBtnClic);
 
         movePanel.gameObject.SetActive(false);
         buildPanel.gameObject.SetActive(false);
@@ -136,6 +138,15 @@ public class PlayerControler : MonoBehaviour
     }
 
 
+    private void buildBtnClic(){
+        if (selectedTile != null){
+            if(selectedTile.GetComponent<Tile>().type == ""){
+                buildPanel.gameObject.SetActive(true);
+            }
+        }
+    }
+
+
     private void moveUnitsBtnClic(){
         if (selectedTile != null){
             if (selectedTile.GetComponent<Tile>().units > 0){
@@ -151,6 +162,10 @@ public class PlayerControler : MonoBehaviour
         selectedUnits = units;
     }
 
+    public void getFromBuildPanel(string type){
+        buildPanel.gameObject.SetActive(false);
+        gameManager.buildBtnClic(selectedTile.name.Split(' ')[1], type); 
+    }
     
 
     // annimation : translate the panel to the right
