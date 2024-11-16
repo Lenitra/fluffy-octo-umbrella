@@ -96,7 +96,7 @@ def get_price(type, lvl):
             return 800
         if lvl == 5:
             return 1500
-    if type == "money":
+    if type == "miner":
         if lvl == 1:
             return 100
         if lvl == 2:
@@ -319,7 +319,7 @@ def update_resources(player):
                     print("added", int(deltatimehours), "units to", k)
 
                 # si c'est une mine, on ajoute des ressources au joueur
-                if v["type"].split(":")[0] == "money":
+                if v["type"].split(":")[0] == "miner":
                     users[player]["money"] += int(deltatimehours) * int(v["type"].split(":")[1])
 
         # on laisse les minutes restantes (en gros division euclidienne)

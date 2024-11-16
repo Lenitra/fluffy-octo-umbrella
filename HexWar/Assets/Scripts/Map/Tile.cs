@@ -15,7 +15,6 @@ public class Tile : MonoBehaviour
     public TextMeshPro tileInfos;
 
 
-
     private float selectionOffset = 0.8f;
 
     // textmeshpro for info on the tile
@@ -88,7 +87,7 @@ public class Tile : MonoBehaviour
                 infrastrucutre.transform.localPosition = Vector3.zero;
                 break;
 
-            case "money":
+            case "miner":
                 infrastrucutre = Instantiate(moneyPrefab, Vector3.zero, Quaternion.identity, transform);
                 infrastrucutre.transform.localPosition = Vector3.zero;
                 break;

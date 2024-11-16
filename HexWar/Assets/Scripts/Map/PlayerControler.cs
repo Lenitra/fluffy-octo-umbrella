@@ -13,6 +13,7 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] private RectTransform tileInfoPanel;
     [SerializeField] private GameObject movePanel;
     [SerializeField] private GameObject buildPanel;
+    [SerializeField] private GameObject upgradePanel;
 
     [SerializeField] private Button moveUnitsBtn;
     [SerializeField] private Button buildBtn;
@@ -74,7 +75,7 @@ public class PlayerControler : MonoBehaviour
         {
             
             
-            if (timeClicked < 0.1f) {
+            if (timeClicked < 0.5f) {
             
                 // check if the click is on a UI element
                 if (EventSystem.current.IsPointerOverGameObject())
@@ -142,6 +143,10 @@ public class PlayerControler : MonoBehaviour
         if (selectedTile != null){
             if(selectedTile.GetComponent<Tile>().type == ""){
                 buildPanel.gameObject.SetActive(true);
+            }
+            else if (!selectedTile.GetComponent<Tile>().type.EndsWith("5")){
+                upgradePanel.gameObject.GetComponent<UpgradePanel>().Initialise(selectedTile.GetComponent<Tile>());
+                upgradePanel.gameObject.SetActive(true);
             }
         }
     }

@@ -38,12 +38,12 @@ public class ServerClient : MonoBehaviour
     IEnumerator GetGameState()
     {
         float startTime = Time.time;
-        UnityWebRequest request = UnityWebRequest.Get("http://localhost:5000/get_hex/"+ PlayerPrefs.GetString("username"));
+        UnityWebRequest request = UnityWebRequest.Get("http://"+DataManager.Instance.GetData("serverIP")+"/get_hex/"+ PlayerPrefs.GetString("username"));
         yield return request.SendWebRequest();
 
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError("Error: " + request.error);
+            // Debug.LogError("Error: " + request.error);
         }
         else
         {
@@ -52,7 +52,7 @@ public class ServerClient : MonoBehaviour
             {
                 // change the scene to the login scene
                 SceneManager.LoadScene("Home");
-                Debug.LogError("error: " + request.downloadHandler.text);
+                // Debug.LogError("error: " + request.downloadHandler.text);
             }
             else
             {
@@ -74,7 +74,7 @@ public class ServerClient : MonoBehaviour
                 gameManager.SetupTiles(hexes);
             }
         }
-        Debug.Log("PollGameState took: " + (Time.time - startTime) + " seconds");
+        // Debug.Log("PollGameState took: " + (Time.time - startTime) + " seconds");
         gameManager.seeAllUnits();
         gameManager.seeAllUnits();
     }
@@ -88,12 +88,12 @@ public class ServerClient : MonoBehaviour
     
     IEnumerator MoveUnitsCoro(string from, string to, int units)
     {
-        UnityWebRequest request = UnityWebRequest.Get("http://localhost:5000/move_units/" + from + "/" + to + "/" + units);
+        UnityWebRequest request = UnityWebRequest.Get("http://"+DataManager.Instance.GetData("serverIP")+"/move_units/" + from + "/" + to + "/" + units);
         yield return request.SendWebRequest();
         // debug the response
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError("Error: " + request.error);
+            // Debug.LogError("Error: " + request.error);
         }
         else
         {
@@ -101,7 +101,7 @@ public class ServerClient : MonoBehaviour
             {
                 // change the scene to the login scene
                 SceneManager.LoadScene("Home");
-                Debug.LogError("error: " + request.downloadHandler.text);
+                // Debug.LogError("error: " + request.downloadHandler.text);
             }
 
             else
@@ -139,12 +139,12 @@ public class ServerClient : MonoBehaviour
 
     IEnumerator BuildCoro(string tile, string type, int lvl)
     {
-        UnityWebRequest request = UnityWebRequest.Get("http://localhost:5000/buildbat/" + tile + "/" + type);
+        UnityWebRequest request = UnityWebRequest.Get("http://" + DataManager.Instance.GetData("serverIP") + "/buildbat/" + tile + "/" + type);
         yield return request.SendWebRequest();
         // debug the response
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError("Error: " + request.error);
+            // Debug.LogError("Error: " + request.error);
         }
         else
         {
@@ -152,7 +152,7 @@ public class ServerClient : MonoBehaviour
             {
                 // change the scene to the login scene
                 SceneManager.LoadScene("Home");
-                Debug.LogError("error: " + request.downloadHandler.text);
+                // Debug.LogError("error: " + request.downloadHandler.text);
             }
         }
     }

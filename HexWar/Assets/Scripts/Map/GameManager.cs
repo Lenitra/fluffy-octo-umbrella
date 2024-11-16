@@ -61,7 +61,6 @@ public class GameManager : MonoBehaviour
         // Vérification que les données de jeu ne soient pas nulles
         if (gameData == null || gameData.hexes == null || gameData.hexes.Length == 0)
         {
-            Debug.LogError("Erreur: les données du jeu sont nulles ou vides.");
             return;
         }
 
@@ -78,7 +77,6 @@ public class GameManager : MonoBehaviour
         // Vérification de la taille de la liste
         if (tilesData.Count == 0)
         {
-            Debug.LogWarning("Aucun hex trouvé dans les données reçues.");
         }
 
         // Mettre à jour la grille
@@ -88,7 +86,6 @@ public class GameManager : MonoBehaviour
 
     public void buildBtnClic(string tile, string type)
     {
-        Debug.Log("Build " + type);
         // send a http request to the server
         serverClient.build(tile, type, 1);
     }
@@ -96,7 +93,6 @@ public class GameManager : MonoBehaviour
 
     public void moveUnitsBtnClic(string origin , string destination, int units)
     {
-        Debug.Log("Move units from " + origin + " to " + destination + " with " + units + " units.");
         // send a http request to the server
         serverClient.moveUnits(origin, destination, units);
     }
