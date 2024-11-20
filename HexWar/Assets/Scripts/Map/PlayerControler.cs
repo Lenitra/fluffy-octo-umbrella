@@ -20,7 +20,7 @@ public class PlayerControler : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI tileInfo;
 
-
+    private Coroutine activeCoroutine; // Référence à la coroutine active
 
     private GridGenerator gridGenerator;
     private GameManager gameManager;
@@ -97,11 +97,11 @@ public class PlayerControler : MonoBehaviour
                             selectedTile = hit.collider.gameObject;
                             camControler.lookTile(selectedTile);
                             StartCoroutine(selectedTile.GetComponent<Tile>().selectTile());
-                            StartCoroutine(animateTileInfoPanel());
+                            StartAnimatingTileInfoPanel(true);
 
                         } else {
                             StartCoroutine(selectedTile.GetComponent<Tile>().unselectTile(selectedTile));
-                            StartCoroutine(animateTileInfoPanelBack());
+                            StartAnimatingTileInfoPanel(false);
                             if (hit.collider.gameObject == selectedTile){
                                 selectedTile = null;
                                 return;
@@ -109,7 +109,7 @@ public class PlayerControler : MonoBehaviour
                                 selectedTile = hit.collider.gameObject;
                                 StartCoroutine(selectedTile.GetComponent<Tile>().selectTile());
                                 camControler.lookTile(selectedTile);
-                                StartCoroutine(animateTileInfoPanel());
+                                StartAnimatingTileInfoPanel(true);
                             }
                         }
                     }
@@ -125,7 +125,7 @@ public class PlayerControler : MonoBehaviour
                             gameManager.moveUnitsBtnClic(selectedTile.name.Split(' ')[1], hit.collider.gameObject.name.Split(' ')[1], selectedUnits);
                             state = "";
                             StartCoroutine(selectedTile.GetComponent<Tile>().unselectTile(selectedTile));
-                            StartCoroutine(animateTileInfoPanelBack());
+                            StartAnimatingTileInfoPanel(false);
                             selectedTile = null;
 
                         }
@@ -173,25 +173,93 @@ public class PlayerControler : MonoBehaviour
     }
     
 
-    // annimation : translate the panel to the right
-    private IEnumerator animateTileInfoPanel(){
-        // translate the panel to the right 
-        for (int i = 0; i < 10; i++)
+
+
+    private IEnumerator animateTileInfoPanel()
+    {
+        // Position cible en X relative (par rapport à l'ancrage)
+        float targetX = 100f;
+
+        // Récupération du RectTransform
+        RectTransform rectTransform = tileInfoPanel.GetComponent<RectTransform>();
+
+        // Tant que la position relative actuelle est inférieure à la cible
+        while (rectTransform.anchoredPosition.x < targetX)
         {
-            tileInfoPanel.position = new Vector3(tileInfoPanel.position.x + 20, tileInfoPanel.position.y, tileInfoPanel.position.z);
-            yield return new WaitForSeconds(0.001f);
+            // Lerp pour une transition fluide
+            rectTransform.anchoredPosition = Vector2.Lerp(
+                rectTransform.anchoredPosition, 
+                new Vector2(targetX, rectTransform.anchoredPosition.y), 
+                Time.deltaTime * 10 // Ajustez la vitesse
+            );
+
+            // Vérification de proximité pour éviter une boucle infinie
+            if (Mathf.Abs(rectTransform.anchoredPosition.x - targetX) < 0.01f)
+            {
+                rectTransform.anchoredPosition = new Vector2(targetX, rectTransform.anchoredPosition.y);
+                break;
+            }
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        // La coroutine est terminée, réinitialisation de la référence
+        activeCoroutine = null;
+    }
+
+    private IEnumerator animateTileInfoPanelBack()
+    {
+        // Position cible en X relative (par rapport à l'ancrage)
+        float targetX = -100f;
+
+        // Récupération du RectTransform
+        RectTransform rectTransform = tileInfoPanel.GetComponent<RectTransform>();
+
+        // Tant que la position relative actuelle est supérieure à la cible
+        while (rectTransform.anchoredPosition.x > targetX)
+        {
+            // Lerp pour une transition fluide
+            rectTransform.anchoredPosition = Vector2.Lerp(
+                rectTransform.anchoredPosition, 
+                new Vector2(targetX, rectTransform.anchoredPosition.y), 
+                Time.deltaTime * 10 // Ajustez la vitesse
+            );
+
+            // Vérification de proximité pour éviter une boucle infinie
+            if (Mathf.Abs(rectTransform.anchoredPosition.x - targetX) < 0.01f)
+            {
+                rectTransform.anchoredPosition = new Vector2(targetX, rectTransform.anchoredPosition.y);
+                break;
+            }
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        // La coroutine est terminée, réinitialisation de la référence
+        activeCoroutine = null;
+    }
+
+    public void StartAnimatingTileInfoPanel(bool moveForward)
+    {
+        // Si une coroutine est déjà active, on l'arrête
+        if (activeCoroutine != null)
+        {
+            StopCoroutine(activeCoroutine);
+            activeCoroutine = null;
+        }
+
+        // Démarrer la nouvelle coroutine
+        if (moveForward)
+        {
+            activeCoroutine = StartCoroutine(animateTileInfoPanel());
+        }
+        else
+        {
+            activeCoroutine = StartCoroutine(animateTileInfoPanelBack());
         }
     }
 
 
-    // annimation : translate the panel to the left
-    private IEnumerator animateTileInfoPanelBack(){
-        // translate the panel to the right
-        for (int i = 0; i < 10; i++)
-        {
-            tileInfoPanel.position = new Vector3(tileInfoPanel.position.x - 20, tileInfoPanel.position.y, tileInfoPanel.position.z);
-            yield return new WaitForSeconds(0.001f);
-        }
-    }
+
 
 }

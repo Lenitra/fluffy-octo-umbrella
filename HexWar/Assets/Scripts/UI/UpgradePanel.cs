@@ -26,14 +26,12 @@ public class UpgradePanel : MonoBehaviour
     {
         this.selectedTile = selectedTile;
         
-        Debug.Log("build : " + selectedTile.type.Split(':')[0]);
         
         string build = selectedTile.type.Split(':')[0];
         int lvl = int.Parse(selectedTile.type.Split(':')[1]);
         string completedesc = build.ToLower() + "Infos" + (lvl + 1);
-        title.text = DataManager.Instance.GetData(build.ToLower());
+        title.text = DataManager.Instance.GetData(build.ToLower()) + " lvl." + (lvl);
         description.text = DataManager.Instance.GetData(completedesc);
-
 
     }
 }
