@@ -20,6 +20,7 @@ public class Tile : MonoBehaviour
     // textmeshpro for info on the tile
     [SerializeField] private GameObject toShowOnSelected;
     [SerializeField] private GameObject hoverOwner;
+    [SerializeField] private GameObject glow;
 
     public GameObject moreInfo;
 
@@ -48,7 +49,7 @@ public class Tile : MonoBehaviour
 
         // add a material to the hoverOwner
         // set renderinmode to transparent
-        Material material = hoverOwner.GetComponent<Renderer>().material;
+        Material material = glow.GetComponent<Renderer>().material;
         material.SetFloat("_Mode", 2);
         material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
         material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
@@ -57,25 +58,42 @@ public class Tile : MonoBehaviour
         material.EnableKeyword("_ALPHABLEND_ON");
         material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
         material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
-
-        // set the color of the hoverOwner
-        float r = float.Parse(PlayerPrefs.GetString("color").Split('|')[0])/255;
-        float g = float.Parse(PlayerPrefs.GetString("color").Split('|')[1])/255;
-        float b = float.Parse(PlayerPrefs.GetString("color").Split('|')[2])/255;
-        float a = 20f / 255f;
-        material.color = new Color(r,g,b,a); 
-
-
-
-        //  if the owner is the same as the username from playerprefs, show the hoverOwner 
+        material.color = new Color(1,1,1,1); 
+        material.EnableKeyword("_EMISSION");
         if (owner == PlayerPrefs.GetString("username"))
         {
-            hoverOwner.SetActive(true);
+            float r = float.Parse(PlayerPrefs.GetString("color").Split('|')[0])/255;
+            float g = float.Parse(PlayerPrefs.GetString("color").Split('|')[1])/255;
+            float b = float.Parse(PlayerPrefs.GetString("color").Split('|')[2])/255;
+            float a = 1;
+            material.SetColor("_EmissionColor", new Color(r,g,b,a));
+            material.color = new Color(r,g,b,a);
+            transform.position = new Vector3(transform.position.x, transform.position.y + 0.015f, transform.position.z);
         }
         else
         {
-            hoverOwner.SetActive(false);
+            material.SetColor("_EmissionColor", new Color(1,1,1,1));
         }
+        // setup intensity of the emission
+        material.SetFloat("_EmissionScaleUI", 2f);
+
+
+        
+        
+
+
+
+
+
+        // //  if the owner is the same as the username from playerprefs, show the hoverOwner 
+        // if (owner == PlayerPrefs.GetString("username"))
+        // {
+        //     hoverOwner.SetActive(true);
+        // }
+        // else
+        // {
+            hoverOwner.SetActive(false);
+        // }
 
 
         // switch pour configurer l'objet à instancier en fonction du type en minuscule

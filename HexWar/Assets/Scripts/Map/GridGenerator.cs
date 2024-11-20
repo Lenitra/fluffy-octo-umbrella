@@ -8,7 +8,7 @@ public class GridGenerator : MonoBehaviour
     [SerializeField] private GameObject hexPrefab;
     private float hexSize = 0.5f;
     private float animmYOffset = 1.5f; 
-    private float gridGap = 0.05f;
+    private float gridGap = 0.1f;
 
 
     public GameObject getHex(int x, int z){
