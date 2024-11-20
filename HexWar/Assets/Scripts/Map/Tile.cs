@@ -28,6 +28,8 @@ public class Tile : MonoBehaviour
     [SerializeField] private GameObject moneyPrefab;
     [SerializeField] private GameObject radarPrefab;
     [SerializeField] private GameObject barrackPrefab;
+
+    private Coroutine activeCoroutine; // Référence à la coroutine active
     
 
     private GameObject infrastrucutre;
@@ -136,8 +138,28 @@ public class Tile : MonoBehaviour
         Start();
     }
 
+    // start the coroutine to select the tile
+    public void select()
+    {
+        if (activeCoroutine != null)
+        {
+            StopCoroutine(activeCoroutine);
+        }
+        activeCoroutine = StartCoroutine(selectTile());
+    }
 
-    public IEnumerator selectTile()
+    // start the coroutine to unselect the tile
+    public void unselect()
+    {
+        if (activeCoroutine != null)
+        {
+            StopCoroutine(activeCoroutine);
+        }
+        activeCoroutine = StartCoroutine(unselectTile());
+    }
+
+
+    private IEnumerator selectTile()
     {
         toShowOnSelected.gameObject.SetActive(true);
         float animationDuration = 0.25f; // Durée de l'animation en secondes
@@ -159,7 +181,7 @@ public class Tile : MonoBehaviour
         yield return new WaitForSeconds(0.1f); // Attente après l'animation
     }
 
-    public IEnumerator unselectTile(GameObject tile)
+    private IEnumerator unselectTile()
     {
         toShowOnSelected.gameObject.SetActive(false);
         float animationDuration = 0.25f; // Durée de l'animation en secondes

@@ -96,18 +96,18 @@ public class PlayerControler : MonoBehaviour
                         {
                             selectedTile = hit.collider.gameObject;
                             camControler.lookTile(selectedTile);
-                            StartCoroutine(selectedTile.GetComponent<Tile>().selectTile());
+                            selectedTile.GetComponent<Tile>().select();
                             StartAnimatingTileInfoPanel(true);
 
                         } else {
-                            StartCoroutine(selectedTile.GetComponent<Tile>().unselectTile(selectedTile));
+                            selectedTile.GetComponent<Tile>().unselect();
                             StartAnimatingTileInfoPanel(false);
                             if (hit.collider.gameObject == selectedTile){
                                 selectedTile = null;
                                 return;
                             } else {
                                 selectedTile = hit.collider.gameObject;
-                                StartCoroutine(selectedTile.GetComponent<Tile>().selectTile());
+                                selectedTile.GetComponent<Tile>().select();
                                 camControler.lookTile(selectedTile);
                                 StartAnimatingTileInfoPanel(true);
                             }
@@ -124,7 +124,7 @@ public class PlayerControler : MonoBehaviour
                         if (hit.collider.gameObject.tag == "Tile"){
                             gameManager.moveUnitsBtnClic(selectedTile.name.Split(' ')[1], hit.collider.gameObject.name.Split(' ')[1], selectedUnits);
                             state = "";
-                            StartCoroutine(selectedTile.GetComponent<Tile>().unselectTile(selectedTile));
+                            selectedTile.GetComponent<Tile>().unselect();
                             StartAnimatingTileInfoPanel(false);
                             selectedTile = null;
 
