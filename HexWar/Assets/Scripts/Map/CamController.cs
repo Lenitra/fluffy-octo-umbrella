@@ -5,7 +5,7 @@ using System.Collections;
 public class CamController : MonoBehaviour
 {    
     private Coroutine moveCoroutine = null;   // Coroutine pour l'animation de translation
-    private float smoothTime = 2; 
+    private float smoothTime = 4; 
     private Plane groundPlane;
     private bool isDragging = false;
     private Vector3 initialMousePosition;

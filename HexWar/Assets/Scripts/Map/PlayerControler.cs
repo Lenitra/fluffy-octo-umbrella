@@ -255,6 +255,14 @@ public class PlayerControler : MonoBehaviour
             buildBtn.interactable = true;
         }
 
+        // Désactiver le bouton de déplacement si la tile n'a pas d'unités
+        if (selectedTile.GetComponent<Tile>().units == 0){
+            moveUnitsBtn.interactable = false;
+        }
+        else {
+            moveUnitsBtn.interactable = true;
+        }
+
         // Si une coroutine est déjà active, on l'arrête
         if (activeCoroutine != null)
         {

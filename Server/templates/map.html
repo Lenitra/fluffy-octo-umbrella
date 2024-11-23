@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>HexWar Map</title>
+    
+
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Empêche le défilement de la page */
+        }
+        /* Ajoutez ce code CSS pour définir le style du conteneur et du canvas */
+        #canvasContainer {
+            width: 100vw;
+            height: 100vh;
+            overflow: scroll; /* Affiche des barres de défilement si le contenu dépasse la taille du conteneur */
+        }
+
+        #hexCanvas {
+            display: block;
+        }
+    </style>
+
+
+    
+</head>
+
+
+<body>
+
+    <div id="customModal" style="
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        border: 2px solid #ccc;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        z-index: 1000;">
+        <h2>Message</h2>
+        <p>Ceci est une modale personnalisée.</p>
+        <button onclick="closeModal()">Fermer</button>
+    </div>
+    <script>
+        function dialog(title, message) {
+            const modal = document.getElementById('customModal');
+            modal.style.display = 'block';
+            modal.querySelector('#customModal>p').innerHTML = message;
+            modal.querySelector('#customModal>h2').textContent = title;
+        }
+
+        function closeModal() {
+            document.getElementById('customModal').style.display = 'none';
+        }
+    </script>
+
+    <!-- Ajoutez ce code HTML pour envelopper le canvas dans un conteneur avec des barres de défilement -->
+    <div id="canvasContainer">
+        <canvas id="hexCanvas"></canvas>
+    </div>
+
+
+
+
+
+    <script>
+
+        const data = JSON.parse('{{data | tojson}}');
+        console.log(data);
+
+        const canvas = document.getElementById('hexCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const hexRadius = 30; // Rayon de chaque hexagone
+        let gridWidth = 1; // Nombre de colonnes
+        let gridHeight = 1; // Nombre de rangées
+
+        let tmpx = 0;
+        let tmpy = 0;
+        //get the last hex from the data
+        for (let hex in data) {
+            tmpx = parseInt(hex.split(":")[0]);
+            tmpy = parseInt(hex.split(":")[1]);
+            if (tmpx > gridWidth) {
+                gridWidth = tmpx;
+            }
+            if (tmpy > gridHeight) {
+                gridHeight = tmpy;
+            }
+        }
+
+        gridWidth++;
+        gridHeight++;
+
+        console.log("Taille de grille : " + gridWidth + "x" + gridHeight); 
+
+
+
+        const hexHeight = hexRadius * Math.sqrt(3);
+
+        // Calculez la taille totale nécessaire pour le canvas
+        const canvasWidth = 50 + (hexRadius * 3 / 2) * (gridWidth - 1) + hexRadius;
+        const canvasHeight = 50 + hexHeight * (gridHeight + 0.5);
+
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
+
+
+        // Stocker les positions des hexagones
+        let hexagons = [];
+
+        // Fonction pour convertir une chaîne "r|g|b" en format hexadécimal
+        function rgbToHex(rgb) {
+            // Séparer la chaîne "r|g|b" en composants individuels
+            const [r, g, b] = rgb.split('|').map(Number);
+        
+            // Vérifier que les valeurs sont valides
+            if (
+                isNaN(r) || isNaN(g) || isNaN(b) ||
+                r < 0 || r > 255 ||
+                g < 0 || g > 255 ||
+                b < 0 || b > 255
+            ) {
+                throw new Error("Invalid RGB format: " + rgb);
+            }
+        
+            // Convertir chaque composant en hexadécimal à deux chiffres
+            const hex = (component) => component.toString(16).padStart(2, '0');
+        
+            return `#${hex(r)}${hex(g)}${hex(b)}`;
+        }
+        
+
+
+        // Fonction pour dessiner un hexagone à sommet plat
+        function drawHexagon(x, y, q, r) {
+            const path = new Path2D();
+            for (let i = 0; i < 6; i++) {
+                const angle_deg = 60 * i; // Sommet plat
+                const angle_rad = Math.PI / 180 * angle_deg;
+                const x_i = x + hexRadius * Math.cos(angle_rad);
+                const y_i = y + hexRadius * Math.sin(angle_rad);
+                if (i === 0) {
+                    path.moveTo(x_i, y_i);
+                } else {
+                    path.lineTo(x_i, y_i);
+                }
+            }
+            path.closePath();
+
+            // Récupérer la couleur depuis les données
+            let fillStyle = "#FFFFFF";
+            try {
+                fillStyle = rgbToHex(data[q + ":" + r]["color"]);
+            } catch (error) {}
+
+            ctx.fillStyle = fillStyle; // Assigner la couleur pour remplir l'hexagone
+            ctx.fill(path);
+            ctx.stroke(path);
+
+            // Stocker l'hexagone pour les interactions
+            hexagons.push({ path, q, r, fillStyle });
+        }
+
+
+        // Générer la grille hexagonale à sommet plat avec (0,0) en bas à gauche
+        function generateHexGrid() {
+            const hexHeight = hexRadius * Math.sqrt(3);
+            const startX = 50;
+            const startY = canvas.height - 50; // Commencer en bas de l'écran
+
+            hexagons = []; // Réinitialiser la liste des hexagones
+
+            // Effacer le canvas avant de dessiner
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let r = 0; r < gridHeight; r++) {
+                for (let q = 0; q < gridWidth; q++) {
+                    const x = startX + hexRadius * 3 / 2 * q;
+                    const y = startY - hexHeight * (r + 0.5 * (q % 2));
+                    drawHexagon(x, y, q, r);
+                }
+            }
+        }
+
+
+
+        // Gérer les interactions de la souris
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            let hexFound = false;
+
+            // Vérifier si la souris survole un hexagone
+            for (let hex of hexagons) {
+                if (ctx.isPointInPath(hex.path, x, y)) {
+                    canvas.style.cursor = 'pointer';
+                    hexFound = true;
+                    break;
+                }
+            }
+
+            if (!hexFound) {
+                canvas.style.cursor = 'default';
+            }
+        });
+
+        // Mise à jour de l'événement de clic
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left; // Position X dans le canvas
+            const y = e.clientY - rect.top;  // Position Y dans le canvas
+        
+            // Vérifier si un hexagone est cliqué
+            for (let hex of hexagons) {
+                if (ctx.isPointInPath(hex.path, x, y)) {
+                    // Récupération des données du propriétaire
+                    const hexData = data[hex.q + ":" + hex.r];
+                    const owner = hexData && hexData["owner"] ? hexData["owner"] : "Aucun";
+        
+                    // Construire le message d'information
+                    const msg = `
+                        <b>- Hexagone :</b> (${hex.q}, ${hex.r})<br>
+                        <b>- Propriétaire :</b> ${owner}
+                    `;
+        
+                    // Afficher le dialogue avec les informations
+                    dialog("INFORMATION", msg);
+                    return;
+                }
+            }
+        });
+        
+
+        // Initialiser la grille
+        generateHexGrid();
+
+        // Gérer le redimensionnement de la fenêtre
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            generateHexGrid();
+        });
+
+
+
+
+
+        window.addEventListener('load', () => {
+            const canvasContainer = document.getElementById('canvasContainer');
+            if (canvasContainer) {
+                // Défiler vers le bas et à gauche du conteneur
+                canvasContainer.scrollLeft = 0; // Extrême gauche
+                canvasContainer.scrollTop = canvasContainer.scrollHeight; // Bas
+            }
+        });
+
+        
+
+
+
+
+        // Ajoutez un écouteur pour détecter les changements de taille
+        window.addEventListener('resize', () => {
+            
+            location.reload();
+        });
+
+
+        
+    </script>
+</body>
+</html>
