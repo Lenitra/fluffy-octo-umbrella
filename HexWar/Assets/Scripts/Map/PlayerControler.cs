@@ -84,32 +84,34 @@ public class PlayerControler : MonoBehaviour
                 }
 
                 if (state == ""){
-                    // move units
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     RaycastHit hit;
                     if (Physics.Raycast(ray, out hit))
                     {
 
 
+                        if (PlayerPrefs.GetString("username") == hit.collider.gameObject.GetComponent<Tile>().owner){
 
-                        if (selectedTile == null)
-                        {
-                            selectedTile = hit.collider.gameObject;
-                            camControler.lookTile(selectedTile);
-                            selectedTile.GetComponent<Tile>().select();
-                            StartAnimatingTileInfoPanel(true);
-
-                        } else {
-                            selectedTile.GetComponent<Tile>().unselect();
-                            StartAnimatingTileInfoPanel(false);
-                            if (hit.collider.gameObject == selectedTile){
-                                selectedTile = null;
-                                return;
-                            } else {
+                            if (selectedTile == null)
+                            {
                                 selectedTile = hit.collider.gameObject;
-                                selectedTile.GetComponent<Tile>().select();
                                 camControler.lookTile(selectedTile);
+                                selectedTile.GetComponent<Tile>().select();
                                 StartAnimatingTileInfoPanel(true);
+                            } 
+                            
+                            else {
+                                selectedTile.GetComponent<Tile>().unselect();
+                                StartAnimatingTileInfoPanel(false);
+                                if (hit.collider.gameObject == selectedTile){
+                                    selectedTile = null;
+                                    return;
+                                } else {
+                                    selectedTile = hit.collider.gameObject;
+                                    selectedTile.GetComponent<Tile>().select();
+                                    camControler.lookTile(selectedTile);
+                                    StartAnimatingTileInfoPanel(true);
+                                }
                             }
                         }
                     }
@@ -141,9 +143,13 @@ public class PlayerControler : MonoBehaviour
 
     private void buildBtnClic(){
         if (selectedTile != null){
+
+            // Si la tile est vide
             if(selectedTile.GetComponent<Tile>().type == ""){
                 buildPanel.gameObject.SetActive(true);
             }
+
+            // Si il y a un batiment au niveau inférieur à 5
             else if (!selectedTile.GetComponent<Tile>().type.EndsWith("5")){
                 upgradePanel.gameObject.GetComponent<UpgradePanel>().Initialise(selectedTile.GetComponent<Tile>());
                 upgradePanel.gameObject.SetActive(true);
