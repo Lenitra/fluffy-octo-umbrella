@@ -75,7 +75,7 @@ public class PlayerControler : MonoBehaviour
         {
             
             
-            if (timeClicked < 0.4f) {
+            if (timeClicked < 0.25f) {
             
                 // check if the click is on a UI element
                 if (EventSystem.current.IsPointerOverGameObject())
