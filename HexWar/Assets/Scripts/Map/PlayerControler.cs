@@ -241,6 +241,14 @@ public class PlayerControler : MonoBehaviour
 
     public void StartAnimatingTileInfoPanel(bool moveForward)
     {
+        // Désactiver le bouton de construction si la tile est lvl 5
+        if (selectedTile.GetComponent<Tile>().type.EndsWith("5")){
+            buildBtn.interactable = false;
+        }
+        else {
+            buildBtn.interactable = true;
+        }
+
         // Si une coroutine est déjà active, on l'arrête
         if (activeCoroutine != null)
         {
