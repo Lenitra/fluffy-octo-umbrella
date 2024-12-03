@@ -15,10 +15,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <!-- AOS pour les animations -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <!-- favicon -->
+  <link rel="icon" type="image/png" href="../static/media/logo.png" />
+
   
   <!-- Style personnalisé -->
   <style>
     /* Style personnalisé */
+    html{
+          scroll-behavior: smooth;
+    }
     body {
       background-color: #0A0A0A;
       color: #FFFFFF;
@@ -45,7 +51,7 @@
       transition: color 0.3s;
     }
     .navbar-nav .nav-link:hover {
-      color: #FF4081;
+      color : #00C9FF
     }
     /* Section Héroïque */
     .hero {
@@ -110,7 +116,7 @@
       display: block;
       width: 60px;
       height: 3px;
-      background: #FF4081;
+      background: linear-gradient(90deg, #00C9FF, #92FE9D);
       margin: 10px auto 0;
     }
     /* Section Le Jeu */
@@ -126,7 +132,7 @@
     }
     .features .feature i {
       font-size: 3rem;
-      color: #FF4081;
+      color : #00C9FF;
       margin-bottom: 20px;
     }
     .features .feature h3 {
@@ -160,7 +166,7 @@
       transition: color 0.3s;
     }
     footer .social-icons a:hover {
-      color: #FF4081;
+      color : #00C9FF;
     }
     /* Animations */
     [data-aos] {
@@ -190,8 +196,8 @@
         <ul class="navbar-nav">
           <li class="nav-item"><a class="nav-link" href="#accueil">Accueil</a></li>
           <li class="nav-item"><a class="nav-link" href="#le-jeu">Le Jeu</a></li>
-          <li class="nav-item"><a class="nav-link" href="#bande-annonce">Bande-annonce</a></li>
-          <li class="nav-item"><a class="nav-link" href="#communaute">Communauté</a></li>
+          <li class="nav-item"><a class="nav-link" href="#top">Classements</a></li>
+          <li class="nav-item"><a class="nav-link" href="/map">La carte <small>(beta)</small></a></li>
           <li class="nav-item"><a class="nav-link" href="#support">Support</a></li>
         </ul>
       </div>
@@ -239,30 +245,130 @@
     </div>
   </section>
 
-  <!-- Section Communauté -->
-  <section id="communaute">
-    <div class="container">
-      <div class="section-title">
-        <h2>Communauté</h2>
+
+  <style>
+    /* Styles pour la section Classements */
+    .leaderboard {
+      background-color: #000; /* Fond noir */
+      color: #fff; /* Texte blanc */
+      padding: 50px 0;
+    }
+
+    .leaderboard .section-title h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .leaderboard .nav-tabs .nav-link {
+      color: #fff; /* Couleur du texte des onglets */
+      background-color: transparent; /* Fond transparent */
+      border: 1px solid #444; /* Bordure grise */
+      margin-right: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .leaderboard .nav-tabs .nav-link.active {
+      color: #000; /* Texte noir */
+      background-color: #00C9FF; /* Fond doré pour l'onglet actif */
+      border-color: #444; /* Bordure dorée */
+    }
+
+    .leaderboard .nav-tabs .nav-link:hover {
+      background-color: #00C9FF;
+      color: #000; /* Texte noir */
+    }
+
+    .leaderboard .table {
+      color: #fff; /* Texte blanc dans les tableaux */
+      background-color: #222; /* Fond gris foncé pour le tableau */
+      border: 1px solid #444; /* Bordure grise */
+    }
+
+    .leaderboard .table th, .leaderboard .table td {
+      border-color: #444; /* Bordures grises pour les cellules */
+    }
+
+    .leaderboard .table-striped tbody tr:nth-of-type(odd) {
+      background-color: #333; /* Fond pour les lignes impaires */
+    }
+
+  .leaderboard .table-striped tbody tr:nth-of-type(even) {
+    background-color: #444; /* Fond pour les lignes paires */
+  }
+
+  .leaderboard .table tbody tr:hover {
+    background-color: #555; /* Fond plus clair au survol */*
+  }
+
+
+
+  </style>
+
+  <!-- Section Classements -->
+<!-- Section Classements -->
+<section id="top" class="leaderboard">
+  <div class="container">
+    <div class="section-title">
+      <h2>Classements</h2>
+    </div>
+    <ul class="nav nav-tabs" id="leaderboardTabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="territoires-tab" data-toggle="tab" href="#territoires" role="tab" aria-controls="territoires" aria-selected="false">Territoires</a>
+      </li> 
+      <li class="nav-item">
+        <a class="nav-link" id="argent-tab" data-toggle="tab" href="#argent" role="tab" aria-controls="argent" aria-selected="true">Argent</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="unites-tab" data-toggle="tab" href="#unites" role="tab" aria-controls="unites" aria-selected="false">Unités</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="leaderboardTabsContent">
+
+        <!-- Onglet Territoires -->
+        <div class="tab-pane fade show active" id="territoires" role="tabpanel" aria-labelledby="territoires-tab">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Rang</th>
+                <th>Nom du Joueur</th>
+                <th>Nombre de Territoires</th>
+              </tr>
+            </thead>
+            <tbody id="territory"></tbody>
+          </table>
+        </div>
+
+      <!-- Onglet Argent -->
+      <div class="tab-pane fade show" id="argent" role="tabpanel" aria-labelledby="argent-tab">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Rang</th>
+              <th>Nom du Joueur</th>
+              <th>Argent</th>
+            </tr>
+          </thead>
+          <tbody id="money"></tbody>
+        </table>
       </div>
-      <div class="row" data-aos="fade-up">
-        <div class="col-md-6">
-          <h3>Rejoignez la Communauté</h3>
-          <p>Participez aux discussions, partagez vos stratégies et rencontrez d'autres joueurs.</p>
-          <a href="#" class="btn">Accéder au Forum</a>
-        </div>
-        <div class="col-md-6">
-          <h3>Suivez-nous</h3>
-          <p>Restez informé des dernières actualités et événements.</p>
-          <div class="social-icons">
-            <!-- <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a> -->
-            <a href="#"><i class="fab fa-discord"></i></a>
-          </div>
-        </div>
+      <!-- Onglet Unités -->
+      <div class="tab-pane fade" id="unites" role="tabpanel" aria-labelledby="unites-tab">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Rang</th>
+              <th>Nom du Joueur</th>
+              <th>Nombre d'Unités</th>
+            </tr>
+          </thead>
+          <tbody id="units"></tbody>
+        </table>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
+
   
   <!-- Section Support -->
   <section id="support">
@@ -277,22 +383,11 @@
           <a href="#" class="btn">FAQ</a>
         </div>
         <div class="col-md-6">
-          <h3>Contactez-nous</h3>
-          <form>
-            <div class="form-group">
-              <label for="name">Nom</label>
-              <input type="text" class="form-control" id="name" placeholder="Votre nom">
-            </div>
-            <div class="form-group">
-              <label for="email">Adresse e-mail</label>
-              <input type="email" class="form-control" id="email" placeholder="Votre e-mail">
-            </div>
-            <div class="form-group">
-              <label for="message">Message</label>
-              <textarea class="form-control" id="message" rows="3" placeholder="Votre message"></textarea>
-            </div>
-            <button type="submit" class="btn">Envoyer</button>
-          </form>
+          <h3>Contactez nous !</h3>
+          <p>Venez directement nous rapporter votre problème, l'équipe se fera un plaisir de vous répondre.</p>
+          <div class="social-icons">
+            <a href="https://discord.gg/7sgXasv9Y" target="_blank"><i class="fab fa-discord"></i></a>
+          </div>
         </div>
       </div>
     </div>
@@ -305,7 +400,7 @@
       <div class="social-icons">
         <!-- <a href="#"><i class="fab fa-facebook-f"></i></a>
         <a href="#"><i class="fab fa-twitter"></i></a> -->
-        <a href="#"><i class="fab fa-discord"></i></a>
+        <a href="https://discord.gg/7sgXasv9Y" target="_blank"><i class="fab fa-discord"></i></a>
       </div>
     </div>
   </footer>
@@ -332,5 +427,49 @@
       }
     });
   </script>
+
+<!-- ACTUALISATION DU LEADERBOARD -->
+<script>
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const leaderboardTabs = ["money", "territory", "units"];
+
+    // Fonction pour charger les données du leaderboard
+    async function loadLeaderboard() {
+      try {
+        const response = await fetch("/leaderboard/all");
+        const data = await response.json();
+
+        leaderboardTabs.forEach((category) => {
+          const tableBody = document.querySelector(`#${category}`);
+
+          if (!tableBody) {
+            console.error(`Table body for category "${category}" not found.`);
+            return;
+          }
+
+          tableBody.innerHTML = ""; // Efface le contenu existant
+
+          data[category].forEach(([player, score], index) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${player}</td>
+            <td>${score}</td>
+          `;
+            tableBody.appendChild(row);
+          });
+        });
+      } catch (error) {
+        console.error("Erreur lors du chargement des données :", error);
+      }
+    }
+
+    // Charger les données à l'ouverture de la page
+    loadLeaderboard();
+  });
+
+
+</script>
 </body>
 </html>

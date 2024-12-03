@@ -23,6 +23,9 @@ public class BuildPanel : MonoBehaviour
     [SerializeField] private Button buildBtn;
 
     [SerializeField] private PlayerControler playerControler;
+    [SerializeField] private ServerClient serverClient;
+
+
 
 
 
@@ -36,6 +39,7 @@ public class BuildPanel : MonoBehaviour
             buildings[currentBuilding].SetActive(true);
             title.text = buildings[currentBuilding].GetComponent<BuildUI>().name;
             description.text = buildings[currentBuilding].GetComponent<BuildUI>().description;
+            updatePrice();
         });
 
         previous.onClick.AddListener(() => {
@@ -44,6 +48,7 @@ public class BuildPanel : MonoBehaviour
             buildings[currentBuilding].SetActive(true);
             title.text = buildings[currentBuilding].GetComponent<BuildUI>().name;
             description.text = buildings[currentBuilding].GetComponent<BuildUI>().description;
+            updatePrice();
         });
 
         maxBuilding = buildingParent.transform.childCount;
@@ -60,8 +65,16 @@ public class BuildPanel : MonoBehaviour
         buildings[currentBuilding].SetActive(true);
 
         title.text = buildings[currentBuilding].GetComponent<BuildUI>().name;
-
+        updatePrice();
         buildBtn.onClick.AddListener(() => playerControler.getFromBuildPanel(buildings[currentBuilding].GetComponent<BuildUI>().type));
+    }
+
+    void updatePrice(){
+        serverClient.GetPrice(buildings[currentBuilding].GetComponent<BuildUI>().type, 1, (price) =>
+        {
+            buildBtn.transform.GetChild(0).GetComponent<TMP_Text>().text = "¤" + price;
+        });
+
     }
 
 }

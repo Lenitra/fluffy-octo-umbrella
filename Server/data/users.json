@@ -2,9 +2,25 @@
     "Lenitra": {
         "mail": "lenitramc@gmail.com",
         "password": "123",
-        "recdatetime": "2024-11-23 17:54:32",
+        "recdatetime": "2024-11-27 21:13:54",
         "color": "52|235|225",
-        "money": 440,
+        "money": 285622,
+        "guild": ""
+    },
+    "Maule": {
+        "mail": "maul@gmail.com",
+        "password": "123",
+        "recdatetime": "2024-11-27 17:13:54",
+        "color": "0|0|0",
+        "money": 5,
+        "guild": ""
+    },
+    "TheRock": {
+        "mail": "trk@gmail.com",
+        "password": "123",
+        "recdatetime": "2024-11-27 17:13:54",
+        "color": "255|0|0",
+        "money": 10,
         "guild": ""
     }
 }

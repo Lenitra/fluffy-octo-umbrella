@@ -173,9 +173,15 @@ public class PlayerControler : MonoBehaviour
         selectedUnits = units;
     }
 
-    public void getFromBuildPanel(string type){
+    public void getFromBuildPanel(string type = ""){
+        if (type == ""){
+            type = selectedTile.GetComponent<Tile>().type.Split(":")[0];
+        }
+
         buildPanel.gameObject.SetActive(false);
+        upgradePanel.gameObject.SetActive(false);
         gameManager.buildBtnClic(selectedTile.name.Split(' ')[1], type); 
+        
     }
     
 
@@ -280,8 +286,5 @@ public class PlayerControler : MonoBehaviour
             activeCoroutine = StartCoroutine(animateTileInfoPanelBack());
         }
     }
-
-
-
 
 }

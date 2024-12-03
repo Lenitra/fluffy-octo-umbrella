@@ -36,11 +36,12 @@ public class GridGenerator : MonoBehaviour
                 int units = (int)tileData["units"];
                 string owner = (string)tileData["owner"];
                 string type = (string)tileData["type"];
+                string color = (string)tileData["color"];
 
                 // Regrouper les mises à jour dans setupTile si nécessaire
                 if (tileComponent.units != units || tileComponent.owner != owner || tileComponent.type != type)
                 {
-                    tileComponent.setupTile(units, owner, type); // Appel unique si quelque chose a changé
+                    tileComponent.setupTile(units, owner, type, color); // Appel unique si quelque chose a changé
                 }
             
             }
@@ -67,7 +68,7 @@ public class GridGenerator : MonoBehaviour
         hex.transform.position = new Vector3(GetHexCoordinates(x, z)[0], 0, GetHexCoordinates(x, z)[1]);
 
         yield return new WaitForSeconds(0.1f);
-        hex.GetComponent<Tile>().setupTile((int)tileData["units"], (string)tileData["owner"], (string)tileData["type"]);
+        hex.GetComponent<Tile>().setupTile((int)tileData["units"], (string)tileData["owner"], (string)tileData["type"], (string)tileData["color"]);
 
 
     }
@@ -83,12 +84,13 @@ public class GridGenerator : MonoBehaviour
             string owner = (string)tileData["owner"];
             int units = (int)tileData["units"];
             string type_id = (string)tileData["type"];
+            string color = (string)tileData["color"];
 
             GameObject hex = GameObject.Instantiate(hexPrefab);
             hex.name = "Hexagon " + x + "" + z;
             hex.transform.SetParent(this.transform);
             hex.transform.position = new Vector3(GetHexCoordinates(x, z)[0], 0, GetHexCoordinates(x, z)[1]);
-            hex.GetComponent<Tile>().setupTile(units, owner, type_id);
+            hex.GetComponent<Tile>().setupTile(units, owner, type_id, color);
         }
     }
 

@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
     public void buildBtnClic(string tile, string type)
     {
         // send a http request to the server
-        serverClient.build(tile, type, 1);
+        serverClient.build(tile, type);
     }
 
 
@@ -96,7 +96,6 @@ public class GameManager : MonoBehaviour
         // send a http request to the server
         serverClient.moveUnits(origin, destination, units);
     }
-
 
 
 
@@ -210,6 +209,7 @@ public class HexData
     public int units;
     public string type;
     public string owner;
+    public string color;
 
     // La conversion en dictionnaire
     public Dictionary<string, object> ToDictionary()
@@ -219,7 +219,8 @@ public class HexData
             {"type", type},
             {"owner", owner},
             {"units", units},
-            {"key", key}
+            {"key", key},
+            {"color", color}
         };
         return dict;
     }

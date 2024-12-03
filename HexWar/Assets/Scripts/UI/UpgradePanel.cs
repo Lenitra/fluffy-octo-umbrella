@@ -11,6 +11,7 @@ public class UpgradePanel : MonoBehaviour
     [SerializeField] private TMP_Text description;
     [SerializeField] private Button buildBtn;
     [SerializeField] private PlayerControler playerControler;
+    [SerializeField] private ServerClient serverClient;
     [SerializeField] private Button closeBtn;
     private Tile selectedTile;
 
@@ -19,7 +20,7 @@ public class UpgradePanel : MonoBehaviour
 
         closeBtn.onClick.AddListener(() => gameObject.SetActive(false));
 
-        // buildBtn.onClick.AddListener(() => playerControler.getFromBuildPanel(buildings[currentBuilding].GetComponent<BuildUI>().type));
+        buildBtn.onClick.AddListener(() => playerControler.getFromBuildPanel());
     }
     
     public void Initialise(Tile selectedTile)
@@ -32,6 +33,15 @@ public class UpgradePanel : MonoBehaviour
         string completedesc = build.ToLower() + "Infos" + (lvl + 1);
         title.text = DataManager.Instance.GetData(build.ToLower()) + " lvl." + (lvl);
         description.text = DataManager.Instance.GetData(completedesc);
+        // playerControler.getPrice(build, lvl);
+        // update the first child's text of buildBtn
 
+        serverClient.GetPrice(build, lvl+1, (price) =>
+        {
+
+            buildBtn.transform.GetChild(0).GetComponent<TMP_Text>().text = "¤" + price;
+        });
+
+        title.text = build + " lvl " + lvl.ToString();
     }
 }

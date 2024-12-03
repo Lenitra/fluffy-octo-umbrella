@@ -40,3 +40,23 @@ Liste des bonus de cartes
 
 
 
+## Installation sur serveur 
+sauvegarder le dossier HexWarServer/data et le rename en tmpHexWar
+- cp ...
+supprimer le dossier serveur
+- rm -rf HexWarServer
+Cloner le repo git 
+- git clone ...
+Extraire le dosser Server et le renommer en HexWarServer
+- CP
+supprimer le dossier HexWarServer/data
+- rm -rf HexWarServer/data
+déplacer le dossier tmpHexWar et le renommer HexWarServer/data
+- cp ...
+
+
+################################################################################
+### Prochain git commit/push : 
+Sync repo sur pc portable
+Upgrades et get prices pour nouveaux builds
+Couleurs et batiments des autres joueurs

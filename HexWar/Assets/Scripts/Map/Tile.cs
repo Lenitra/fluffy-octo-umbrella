@@ -13,6 +13,7 @@ public class Tile : MonoBehaviour
     public int[] position = new int[2];
     public string type = "";
     public TextMeshPro tileInfos;
+    public string color;
 
 
     private float selectionOffset = 0.8f;
@@ -39,6 +40,8 @@ public class Tile : MonoBehaviour
 
     void Start()
     {
+        
+
         // name of the object is "Hexagon x, z"
         position[0] = int.Parse(gameObject.name.Split("Hexagon ")[1].Split(":")[0]);
         position[1] = int.Parse(gameObject.name.Split("Hexagon ")[1].Split(":")[1]);
@@ -60,15 +63,17 @@ public class Tile : MonoBehaviour
         material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
         material.color = new Color(1,1,1,1); 
         material.EnableKeyword("_EMISSION");
-        if (owner == PlayerPrefs.GetString("username"))
+
+
+        if (color != "")
         {
-            float r = float.Parse(PlayerPrefs.GetString("color").Split('|')[0])/255;
-            float g = float.Parse(PlayerPrefs.GetString("color").Split('|')[1])/255;
-            float b = float.Parse(PlayerPrefs.GetString("color").Split('|')[2])/255;
+            float r = float.Parse(color.Split('|')[0])/255;
+            float g = float.Parse(color.Split('|')[1])/255;
+            float b = float.Parse(color.Split('|')[2])/255;
             float a = 1;
             material.SetColor("_EmissionColor", new Color(r,g,b,a));
             material.color = new Color(r,g,b,a);
-            transform.position = new Vector3(transform.position.x, transform.position.y + 0.015f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, transform.position.y + 0.025f, transform.position.z);
         }
         else
         {
@@ -144,15 +149,20 @@ public class Tile : MonoBehaviour
 
 
 
-    public void setupTile(int units, string owner, string type) {
+    public void setupTile(int units, string owner, string type, string color) {
         this.units = units;
         this.owner = owner;
         this.type = type;
-        if (owner == ""){
-            tileInfos.text = "<sprite=91>" + units;
-        } else {
-            tileInfos.text = "<sprite=112>" + owner + "\n" + "<sprite=91>" + units;
+        this.color = color;
+        tileInfos.text = "";
+        if (owner != ""){
+            tileInfos.text += "<sprite=112>" + owner;
+        } 
+        if (owner == PlayerPrefs.GetString("username"))
+        {
+            tileInfos.text += "\n" + "<sprite=91>" + units;
         }
+
         Start();
     }
 

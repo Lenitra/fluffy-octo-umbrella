@@ -4,12 +4,16 @@ using UnityEngine.Networking;
 using System;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using System.Threading.Tasks;
 
 
 public class ServerClient : MonoBehaviour
 {
     private GameManager gameManager;
-    private float pollInterval = 2.5f; // Interval en secondes
+    private float pollInterval = 2.5f; // Interval d'update de la carte en secondes
+
+    private int tmpPrice = -1;
+    private Coroutine getPriceCoroVar;
 
 
     void Start()
@@ -125,6 +129,7 @@ public class ServerClient : MonoBehaviour
                     }
 
                     StartCoroutine(gameManager.moveUnitsAnimation(moves));
+                    updateMap();
                 }
             }
         }
@@ -132,19 +137,19 @@ public class ServerClient : MonoBehaviour
     
 
 
-    public void build(string tile, string type, int lvl)
+    public void build(string tile, string type)
     {
-        StartCoroutine(BuildCoro(tile, type, lvl));
+        StartCoroutine(BuildCoro(tile, type));
     }
 
-    IEnumerator BuildCoro(string tile, string type, int lvl)
+    IEnumerator BuildCoro(string tile, string type)
     {
         UnityWebRequest request = UnityWebRequest.Get("http://" + DataManager.Instance.GetData("serverIP") + "/buildbat/" + tile + "/" + type);
         yield return request.SendWebRequest();
         // debug the response
         if (request.result != UnityWebRequest.Result.Success)
         {
-            // Debug.LogError("Error: " + request.error);
+            updateMap();
         }
         else
         {
@@ -156,6 +161,30 @@ public class ServerClient : MonoBehaviour
             }
         }
     }
+
+
+    public void GetPrice(string build, int lvl, Action<int> onComplete)
+    {
+        StartCoroutine(GetPriceCoroutine(build, lvl, onComplete));
+    }
+
+    private IEnumerator GetPriceCoroutine(string build, int lvl, Action<int> onComplete)
+    {
+        UnityWebRequest request = UnityWebRequest.Get("http://" + DataManager.Instance.GetData("serverIP") + "/get_price/" + build + "/" + lvl);
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {   
+            int price = int.Parse(request.downloadHandler.text);
+            onComplete?.Invoke(price);
+        }
+        else
+        {
+            // Gérer les erreurs ici
+            onComplete?.Invoke(-1);
+        }
+    }
+
 
     
     void OnApplicationQuit()

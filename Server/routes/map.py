@@ -17,17 +17,17 @@ def game_state():
 
 @app.route("/get_price/<string:type>/<int:lvl>")
 def get_price(type, lvl):
-    return jsonify(get_price(type, lvl))
+    return jsonify(get_prices(type, lvl))
 
 
+# Permet de construire un nouveau batiment ou d'en améliorer
 @app.route("/buildbat/<string:tile>/<string:type>")
 def build_bat(tile, type):
     username = session.get("username")
 
-    if 'username' not in session:
+    if "username" not in session:
         return "error : login"
-    
-    
+
     hex_x = tile.split(":")[0]
     hex_z = tile.split(":")[1]
     bat_type = type.lower()
@@ -38,23 +38,20 @@ def build_bat(tile, type):
     with open(HERE + "/data/users.json", "r") as f:
         users = json.load(f)
 
-
     if bat_type == "":
         bat_type = hexes[f"{hex_x}:{hex_z}"]["type"].split(":")[0].lower()
-
 
     # Vérifier si l'hexagone appartient au joueur
     if hexes[f"{hex_x}:{hex_z}"]["owner"] != session.get("username"):
         return "NOPE"
-    
 
     # Vérifier si l'hexagone est vide
     if hexes[f"{hex_x}:{hex_z}"]["type"] == "":
 
-        if users[username]["money"] < get_price(bat_type, 1):
+        if users[username]["money"] < get_prices(bat_type, 1):
             return "NOPE"
-        
-        users[username]["money"] -= get_price(bat_type, 1)
+
+        users[username]["money"] -= get_prices(bat_type, 1)
         hexes[f"{hex_x}:{hex_z}"]["type"] = f"{bat_type}:1"
         hexes[f"{hex_x}:{hex_z}"]["owner"] = username
 
@@ -65,29 +62,26 @@ def build_bat(tile, type):
         if lvl >= 5:
             return "NOPE"
 
-        if users[username]["money"] < get_price(bat_type, lvl+1):
+        if users[username]["money"] < get_prices(bat_type, lvl + 1):
             return "NOPE"
-        
-        users[username]["money"] -= get_price(bat_type, lvl+1)
+
+        users[username]["money"] -= get_prices(bat_type, lvl + 1)
         hexes[f"{hex_x}:{hex_z}"]["type"] = f"{bat_type}:{lvl+1}"
         hexes[f"{hex_x}:{hex_z}"]["owner"] = username
-
-
-
 
     with open(HERE + "/data/map.json", "w") as f:
         json.dump(hexes, f, indent=4)
     with open(HERE + "/data/users.json", "w") as f:
         json.dump(users, f, indent=4)
-        
+
     return "OK"
 
 
-def get_price(type, lvl):
+def get_prices(type, lvl):
     type = type.lower()
     if type == "barrack":
         if lvl == 1:
-            return 100
+            return 150
         if lvl == 2:
             return 300
         if lvl == 3:
@@ -98,7 +92,7 @@ def get_price(type, lvl):
             return 1500
     if type == "miner":
         if lvl == 1:
-            return 100
+            return 75
         if lvl == 2:
             return 300
         if lvl == 3:
@@ -129,7 +123,7 @@ def get_price(type, lvl):
             return 3000
         if lvl == 5:
             return 5000
-    return 0
+    return -1
 
 
 # bouger les unités d'un hexagone à un autre
@@ -140,9 +134,9 @@ def get_price(type, lvl):
 @app.route("/move_units/<string:origin>/<string:destination>/<int:units>")
 def move_units(origin, destination, units):
 
-    if 'username' not in session:
-        return "error : login"   
-    
+    if "username" not in session:
+        return "error : login"
+
     with open(HERE + "/data/map.json", "r") as f:
         hexes = json.load(f)
 
@@ -153,7 +147,7 @@ def move_units(origin, destination, units):
     # si le nombre d'unités est suffisant sur l'hexagone d'origine
     if hexes[origin]["units"] < units:
         return "NOPE"
-    
+
     if hexes[origin]["owner"] != session.get("username"):
         return "NOPE"
 
@@ -162,19 +156,21 @@ def move_units(origin, destination, units):
         return "NOPE"
 
     # si l'hexagone de destination est un HQ et n'appartient pas au joueur
-    if hexes[destination]["type"].split(":")[0] == "hq" and hexes[destination]["owner"] != hexes[origin]["owner"]:
+    if (
+        hexes[destination]["type"].split(":")[0] == "hq"
+        and hexes[destination]["owner"] != hexes[origin]["owner"]
+    ):
         return "NOPE"
-
 
     # un déplacement d'unités va se faire
     hexes[origin]["units"] -= units
 
     # ATTAQUE
     # si les owner sont différents
-    if (hexes[origin]["owner"] != hexes[destination]["owner"]):
+    if hexes[origin]["owner"] != hexes[destination]["owner"]:
 
         hexes[destination]["units"] -= units
-        
+
         if hexes[destination]["units"] < 0:
             hexes[destination]["units"] = abs(hexes[destination]["units"])
             hexes[destination]["owner"] = hexes[origin]["owner"]
@@ -183,7 +179,6 @@ def move_units(origin, destination, units):
     # sinon on déplace les unités
     else:
         hexes[destination]["units"] += units
-
 
     with open(HERE + "/data/map.json", "w") as f:
         json.dump(hexes, f, indent=4)
@@ -199,7 +194,7 @@ def get_hex(player):
 
     if session.get("username") != player:
         return "error : login"
-    
+
     update_resources(player)
     # Charger les hexagones
     with open(HERE + "/data/map.json", "r") as f:
@@ -207,6 +202,7 @@ def get_hex(player):
 
     with open(HERE + "/data/users.json", "r") as f:
         users = json.load(f)
+
     money = users[player]["money"]
 
     # Créer une liste pour les hexagones du joueur
@@ -222,9 +218,9 @@ def get_hex(player):
     for k, v in tmp.items():
         current_radius = 2
         x, z = map(int, k.split(":"))
-        
+
         if v["type"].startswith("radar:"):
-            current_radius = int(v["type"].split(":")[1])+2
+            current_radius = int(v["type"].split(":")[1]) + 2
 
         # Obtenir les hexagones adjacents en fonction du rayon
         for adj in get_adjacent_hexes(x, z, radius=current_radius):
@@ -232,7 +228,6 @@ def get_hex(player):
             if key not in result and key in hexes:
                 result[key] = hexes[key]
 
-    # return jsonify(format_json_hexes(result))
     return jsonify(money, format_json_hexes(result))
 
 
@@ -269,8 +264,6 @@ def find_path(origin, destination, player=""):
             if hexes[node]["owner"] != player:
                 continue
 
-                
-                
             for k in get_adjacent_hexes(*map(int, node.split(":"))):
                 if k not in visited:
                     new_path = list(path)
@@ -282,12 +275,29 @@ def find_path(origin, destination, player=""):
 
 # Permet de formater les hexagones en JSON pour les envoyer au client
 def format_json_hexes(hexes):
-    return {
-        "hexes": [
-            {"key": k, "owner": v["owner"], "type": v["type"], "units": v["units"]}
-            for k, v in hexes.items()
-        ]
-    }
+
+    with open(HERE + "/data/users.json", "r") as f:
+        users = json.load(f)
+
+    toret = {"hexes": []}
+
+    for k, v in hexes.items():
+        color = ""
+        if v["owner"] != "":
+            color = users[v["owner"]]["color"]
+        
+
+        toret["hexes"].append(
+            {
+                "key": k,
+                "owner": v["owner"],
+                "type": v["type"],
+                "units": v["units"],
+                "color": color,
+            }
+        )
+
+    return toret
 
 
 # update les ressources de toutes les tiles d'un joueur ainsi que son argent
@@ -315,12 +325,14 @@ def update_resources(player):
                 # si c'est une barrack, on ajoute des unités
                 # une unité par heure
                 if v["type"].split(":")[0] == "barrack":
-                    v["units"] += int(deltatimehours)*int(v["type"].split(":")[1])
+                    v["units"] += int(deltatimehours) * int(v["type"].split(":")[1])
                     print("added", int(deltatimehours), "units to", k)
 
                 # si c'est une mine, on ajoute des ressources au joueur
                 if v["type"].split(":")[0] == "miner":
-                    users[player]["money"] += int(deltatimehours) * int(v["type"].split(":")[1])
+                    users[player]["money"] += int(deltatimehours) * int(
+                        v["type"].split(":")[1]
+                    )
 
         # on laisse les minutes restantes (en gros division euclidienne)
         deltatime = deltatimehours - int(deltatimehours)
@@ -343,10 +355,12 @@ def evenq_offset_to_cube(col, row):
     y = -x - z
     return (x, y, z)
 
+
 def cube_to_evenq_offset(x, y, z):
     col = x
     row = z + (x // 2)
     return (col, row)
+
 
 # Fonction pour obtenir tous les hexagones dans un rayon donné
 def get_adjacent_hexes(x, z, radius=1):
@@ -362,5 +376,5 @@ def get_adjacent_hexes(x, z, radius=1):
             nz = cz + dz
             col_offset, row_offset = cube_to_evenq_offset(nx, ny, nz)
             if 0 <= col_offset < MAPSIZE and 0 <= row_offset < MAPSIZE:
-                toret.append({'x': col_offset, 'z': row_offset})
+                toret.append({"x": col_offset, "z": row_offset})
     return toret

@@ -13,9 +13,10 @@ app.secret_key =  os.urandom(24)
 app.permanent_session_lifetime = timedelta(minutes=10080)
 # session.permanent = True  
 
-import routes.web
 import routes.map
 import routes.loginsys
+import routes.web
+import routes.leadder
 
 
 
