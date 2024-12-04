@@ -18,7 +18,7 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] private Button moveUnitsBtn;
     [SerializeField] private Button buildBtn;
 
-    [SerializeField] private TextMeshProUGUI tileInfo;
+    [SerializeField] private InfoPanelText tileInfo;
 
     private Coroutine activeCoroutine; // Référence à la coroutine active
 
@@ -64,9 +64,9 @@ public class PlayerControler : MonoBehaviour
         }
 
         if (selectedTile != null){
-            tileInfo.text = "<sprite=36>" + selectedTile.GetComponent<Tile>().position[0] + ":" + selectedTile.GetComponent<Tile>().position[1] + "\n<sprite=112>" + selectedTile.GetComponent<Tile>().owner + "\n" + "<sprite=91>" + selectedTile.GetComponent<Tile>().units;
+            tileInfo.SetText("<sprite=36>" + selectedTile.GetComponent<Tile>().position[0] + ":" + selectedTile.GetComponent<Tile>().position[1] + "\n<sprite=112>" + selectedTile.GetComponent<Tile>().owner + "\n" + "<sprite=91>" + selectedTile.GetComponent<Tile>().units);
         } else {
-            tileInfo.text = "";
+            tileInfo.SetText("");
         }
 
 
