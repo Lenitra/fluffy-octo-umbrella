@@ -2,7 +2,7 @@
     "0:0": {
         "owner": "Lenitra",
         "type": "hq:3",
-        "units": 233
+        "units": 239
     },
     "0:1": {
         "owner": "Lenitra",
@@ -12,7 +12,7 @@
     "0:2": {
         "owner": "Lenitra",
         "type": "barrack:1",
-        "units": 0
+        "units": 10
     },
     "0:3": {
         "owner": "Lenitra",
@@ -167,12 +167,12 @@
     "1:1": {
         "owner": "Lenitra",
         "type": "barrack:1",
-        "units": 19
+        "units": 35
     },
     "1:2": {
         "owner": "Lenitra",
         "type": "barrack:1",
-        "units": 1
+        "units": 17
     },
     "1:3": {
         "owner": "Lenitra",
@@ -327,7 +327,7 @@
     "2:1": {
         "owner": "Lenitra",
         "type": "barrack:2",
-        "units": 29
+        "units": 61
     },
     "2:2": {
         "owner": "Lenitra",
@@ -1302,7 +1302,7 @@
     "8:4": {
         "owner": "Lenitra",
         "type": "barrack:1",
-        "units": 11
+        "units": 27
     },
     "8:5": {
         "owner": "",
@@ -1985,7 +1985,7 @@
         "units": 0
     },
     "12:13": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },

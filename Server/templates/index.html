@@ -213,37 +213,78 @@
     </div>
   </section>
   
-  <!-- Section Le Jeu -->
-  <section id="le-jeu">
-    <div class="container">
-      <div class="section-title">
-        <h2>Le Jeu</h2>
+
+
+<style>
+  /* Section Téléchargement */
+.download-platform {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  transition: transform 0.3s;
+  margin-bottom: 30px;
+}
+.download-platform:hover {
+  transform: translateY(-10px);
+}
+.download-platform i {
+  color: #00C9FF;
+  margin-bottom: 15px;
+}
+.download-platform h3 {
+  color: #FFFFFF;
+  margin-bottom: 15px;
+}
+.download-platform .btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 50px;
+  background: linear-gradient(90deg, #00C9FF, #92FE9D);
+  color: #FFFFFF;
+  border: none;
+  transition: transform 0.3s;
+}
+.download-platform .btn:hover {
+  transform: scale(1.05);
+}
+
+</style>
+
+<!-- Section Téléchargement -->
+<section id="le-jeu">
+  <div class="container">
+    <div class="section-title">
+      <h2>Téléchargement</h2>
+    </div>
+    <div class="row">
+      <!-- Plateforme Windows -->
+      <div class="col-md-4" data-aos="fade-up">
+        <div class="download-platform text-center">
+          <i class="fab fa-windows fa-3x"></i>
+          <h3>Windows</h3>
+          <a href="#" class="btn">En développement</a>
+        </div>
       </div>
-      <div class="row features">
-        <div class="col-md-4" data-aos="fade-up">
-          <div class="feature">
-            <i class="fas fa-chess"></i>
-            <h3>Stratégie Profonde</h3>
-            <p>Planifiez vos mouvements et battez vos adversaires avec une stratégie bien pensée.</p>
-          </div>
+      <!-- Plateforme macOS -->
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="download-platform text-center">
+          <i class="fab fa-android fa-3x"></i>
+          <h3>Android</h3>
+          <a href="#" class="btn">En développement</a>
         </div>
-        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-          <div class="feature">
-            <i class="fas fa-users"></i>
-            <h3>Multijoueur Compétitif</h3>
-            <p>Affrontez des joueurs du monde entier et montez dans les classements.</p>
-          </div>
-        </div>
-        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-          <div class="feature">
-            <i class="fas fa-globe"></i>
-            <h3>Univers Immersif</h3>
-            <p>Explorez un monde riche et détaillé, rempli de défis et d'aventures.</p>
-          </div>
+      </div>
+      <!-- Plateforme Linux -->
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="download-platform text-center">
+          <i class="fab fa-linux fa-3x"></i>
+          <h3>Linux</h3>
+          <a href="#" class="btn">En développement</a>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
 
 
   <style>
@@ -304,7 +345,6 @@
 
   </style>
 
-  <!-- Section Classements -->
 <!-- Section Classements -->
 <section id="top" class="leaderboard">
   <div class="container">

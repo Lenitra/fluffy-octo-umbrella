@@ -527,6 +527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seeAllUnitsBtn: {fileID: 1469279411}
+  seeHQ: {fileID: 246162473}
   moneyText: {fileID: 33855299}
   moveUnitsLine: {fileID: 580222695}
 --- !u!114 &137831712

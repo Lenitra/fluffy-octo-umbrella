@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     // UI
     [Header("UI")]
     [SerializeField] private Button seeAllUnitsBtn;
+    [SerializeField] private Button seeHQ;
     [SerializeField] private TMP_Text moneyText;
 
     
@@ -32,9 +33,22 @@ public class GameManager : MonoBehaviour
         gridGenerator = GetComponent<GridGenerator>();
         camControler = Camera.main.GetComponent<CamController>();
         seeAllUnitsBtn.onClick.AddListener(seeAllUnits);
-
+        seeHQ.onClick.AddListener(seeHQBtnClic);
     }
 
+    public void seeHQBtnClic(){
+        // loop through all children
+        Debug.Log("seeHQBtnClic");
+        foreach (Transform child in transform){
+            if (child.gameObject.GetComponent<Tile>().type.Split(':')[0] == "hq" && child.gameObject.GetComponent<Tile>().owner == PlayerPrefs.GetString("username")){
+                camControler.lookTile(child.gameObject);
+                return;
+            }
+        }
+        Debug.Log("HQ not found");
+
+
+    }
 
     public void seeAllUnits(){
         seeAllUnitsBool = !seeAllUnitsBool;

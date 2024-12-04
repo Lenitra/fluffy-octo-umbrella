@@ -49,38 +49,42 @@ public class Tile : MonoBehaviour
         
         toShowOnSelected.gameObject.SetActive(false);
 
+        if (owner != ""){
+            glow.SetActive(true);
+            // add a material to the hoverOwner
+            // set renderinmode to transparent
+            Material material = glow.GetComponent<Renderer>().material;
+            material.SetFloat("_Mode", 2);
+            material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            material.SetInt("_ZWrite", 0);
+            material.DisableKeyword("_ALPHATEST_ON");
+            material.EnableKeyword("_ALPHABLEND_ON");
+            material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+            material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+            material.color = new Color(1,1,1,1); 
+            material.EnableKeyword("_EMISSION");
 
-        // add a material to the hoverOwner
-        // set renderinmode to transparent
-        Material material = glow.GetComponent<Renderer>().material;
-        material.SetFloat("_Mode", 2);
-        material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-        material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        material.SetInt("_ZWrite", 0);
-        material.DisableKeyword("_ALPHATEST_ON");
-        material.EnableKeyword("_ALPHABLEND_ON");
-        material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-        material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
-        material.color = new Color(1,1,1,1); 
-        material.EnableKeyword("_EMISSION");
 
-
-        if (color != "")
-        {
-            float r = float.Parse(color.Split('|')[0])/255;
-            float g = float.Parse(color.Split('|')[1])/255;
-            float b = float.Parse(color.Split('|')[2])/255;
-            float a = 1;
-            material.SetColor("_EmissionColor", new Color(r,g,b,a));
-            material.color = new Color(r,g,b,a);
-            transform.position = new Vector3(transform.position.x, transform.position.y + 0.025f, transform.position.z);
+            if (color != "")
+            {
+                float r = float.Parse(color.Split('|')[0])/255;
+                float g = float.Parse(color.Split('|')[1])/255;
+                float b = float.Parse(color.Split('|')[2])/255;
+                float a = 1;
+                material.SetColor("_EmissionColor", new Color(r,g,b,a));
+                material.color = new Color(r,g,b,a);
+                transform.position = new Vector3(transform.position.x, transform.position.y + 0.025f, transform.position.z);
+            }
+            else
+            {
+                material.SetColor("_EmissionColor", new Color(1,1,1,1));
+            }
+            // setup intensity of the emission
+            material.SetFloat("_EmissionScaleUI", 2f);
+        } else {
+            glow.SetActive(false);
         }
-        else
-        {
-            material.SetColor("_EmissionColor", new Color(1,1,1,1));
-        }
-        // setup intensity of the emission
-        material.SetFloat("_EmissionScaleUI", 2f);
 
 
         
