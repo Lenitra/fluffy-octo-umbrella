@@ -2,7 +2,7 @@
     "0:0": {
         "owner": "Lenitra",
         "type": "hq:5",
-        "units": 239
+        "units": 121
     },
     "0:1": {
         "owner": "Lenitra",
@@ -197,7 +197,7 @@
     "1:7": {
         "owner": "Lenitra",
         "type": "radar:1",
-        "units": 0
+        "units": 128
     },
     "1:8": {
         "owner": "Lenitra",
@@ -1492,7 +1492,7 @@
     "9:10": {
         "owner": "Lenitra",
         "type": "radar:5",
-        "units": 10
+        "units": 0
     },
     "9:11": {
         "owner": "",
