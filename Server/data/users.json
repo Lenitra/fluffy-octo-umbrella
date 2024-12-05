@@ -2,9 +2,9 @@
     "Lenitra": {
         "mail": "lenitramc@gmail.com",
         "password": "123",
-        "recdatetime": "2024-12-04 13:35:26",
-        "color": "52|235|225",
-        "money": 275100,
+        "recdatetime": "2024-12-05 20:53:12",
+        "color": "123|3|252",
+        "money": 274404,
         "guild": ""
     },
     "Maule": {
@@ -18,6 +18,14 @@
     "TheRock": {
         "mail": "trk@gmail.com",
         "password": "123",
+        "recdatetime": "2024-11-27 17:13:54",
+        "color": "100|100|0",
+        "money": 10,
+        "guild": ""
+    },
+    "IA": {
+        "mail": "",
+        "password": "hjfdoihfzidhipufhdsiouhds65f4d6s87f6d5s46f8ds98e765f4s68d4f984",
         "recdatetime": "2024-11-27 17:13:54",
         "color": "255|0|0",
         "money": 10,
