@@ -45,14 +45,14 @@ def aiCycle():
     # on vérifie si il y a une case appartenant à IA
     has_tile = 0
     for k, v in map.items():
-        if v["owner"] == "IA":
+        if v["owner"] == "Nyx":
             has_tile += 1 
 
     # si il n'y a pas de case appartenant à IA, on en place une aléatoirement sur la carte
     while has_tile <= 15:
 
         for k, v in map.items():
-            if v["owner"] == "IA":
+            if v["owner"] == "Nyx":
                 has_tile += 1 
 
         x = random.randint(0, MAPSIZE)
@@ -64,11 +64,11 @@ def aiCycle():
                     empty_zone = False
         
         if empty_zone:
-            map[f"{x}:{y}"]["owner"] = "IA"
+            map[f"{x}:{y}"]["owner"] = "Nyx"
             map[f"{x}:{y}"]["units"] = 5
             has_tile += 1
             for tile in get_adjacent_hexes(x, y):
-                map[f"{tile['x']}:{tile['z']}"]["owner"] = "IA"
+                map[f"{tile['x']}:{tile['z']}"]["owner"] = "Nyx"
                 map[f"{tile['x']}:{tile['z']}"]["units"] = 3
 
 
@@ -77,17 +77,29 @@ def aiCycle():
     # on récupère les cases appartenant à IA
     ia_tiles = {}
     for k, v in map.items():
-        if v["owner"] == "IA":
+        if v["owner"] == "Nyx":
             ia_tiles[k] = v
 
     for k, v in ia_tiles.items():
 
         # si toutes les tiles adjacentes sont déjà occupées par IA, on augmente leur nombre d'unités de 1 (75% de chance)
-        if all([map[f"{tile['x']}:{tile['z']}"]["owner"] == "IA" for tile in get_adjacent_hexes(int(k.split(":")[0]), int(k.split(":")[1]))]):
+        if all([map[f"{tile['x']}:{tile['z']}"]["owner"] == "Nyx" for tile in get_adjacent_hexes(int(k.split(":")[0]), int(k.split(":")[1]))]):
             if random.random() < 0.75:
                 map[k]["units"] += 1
 
-        # Si il y a des cases adjacentes vides on 
+        # on renforce toutes les cases appartenant à IA avec une certaine probabilité
+        if random.random() < 0.25:
+            map[k]["units"] += 1
+
+        # Si il y a des cases adjacentes vides on va en choisir une et avec une certaine probabilité on va envoyer des unités dessus
+        if any([map[f"{tile['x']}:{tile['z']}"]["owner"] == "" for tile in get_adjacent_hexes(int(k.split(":")[0]), int(k.split(":")[1]))]):
+            # get a random empty tile
+            empty_tiles = [tile for tile in get_adjacent_hexes(int(k.split(":")[0]), int(k.split(":")[1])) if map[f"{tile['x']}:{tile['z']}"]["owner"] == ""]
+            target_tile = random.choice(empty_tiles)
+            # len(empty_tiles) * 5 = entre 5 et 30 % de chance d'envoyer des unités
+            if random.random() < len(empty_tiles) * 0.05 and map[k]["units"] > 5:
+                map[f"{target_tile['x']}:{target_tile['z']}"]["owner"] = "Nyx"
+                map[f"{target_tile['x']}:{target_tile['z']}"]["units"] = 1
 
         
 
@@ -97,5 +109,6 @@ def aiCycle():
 
 
 if __name__ == "__main__":
-    # print(get_adjacent_hexes(0, 0))
-    aiCycle()
+    tours = 50
+    for i in range(tours):
+        aiCycle()

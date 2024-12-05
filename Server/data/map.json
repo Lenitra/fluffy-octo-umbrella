@@ -2,7 +2,7 @@
     "0:0": {
         "owner": "Lenitra",
         "type": "hq:5",
-        "units": 121
+        "units": 0
     },
     "0:1": {
         "owner": "Lenitra",
@@ -12,7 +12,7 @@
     "0:2": {
         "owner": "Lenitra",
         "type": "barrack:1",
-        "units": 17
+        "units": 0
     },
     "0:3": {
         "owner": "Lenitra",
@@ -27,12 +27,12 @@
     "0:5": {
         "owner": "Maule",
         "type": "hq:2",
-        "units": 485
+        "units": 0
     },
     "0:6": {
         "owner": "Lenitra",
         "type": "",
-        "units": 8
+        "units": 0
     },
     "0:7": {
         "owner": "Lenitra",
@@ -40,12 +40,12 @@
         "units": 0
     },
     "0:8": {
-        "owner": "TheRock",
+        "owner": "",
         "type": "hq:1",
-        "units": 586
+        "units": 0
     },
     "0:9": {
-        "owner": "Lenitra",
+        "owner": "",
         "type": "",
         "units": 0
     },
@@ -167,7 +167,7 @@
     "1:1": {
         "owner": "Lenitra",
         "type": "barrack:1",
-        "units": 42
+        "units": 0
     },
     "1:2": {
         "owner": "Lenitra",
@@ -195,12 +195,12 @@
         "units": 0
     },
     "1:7": {
-        "owner": "Lenitra",
+        "owner": "",
         "type": "radar:1",
-        "units": 128
+        "units": 0
     },
     "1:8": {
-        "owner": "Lenitra",
+        "owner": "",
         "type": "",
         "units": 0
     },
@@ -327,7 +327,7 @@
     "2:1": {
         "owner": "Lenitra",
         "type": "barrack:2",
-        "units": 75
+        "units": 0
     },
     "2:2": {
         "owner": "Lenitra",
@@ -685,14 +685,14 @@
         "units": 0
     },
     "4:9": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "4:10": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "4:11": {
         "owner": "",
@@ -840,19 +840,19 @@
         "units": 0
     },
     "5:8": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "5:9": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 5
+        "units": 0
     },
     "5:10": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "5:11": {
         "owner": "",
@@ -1005,14 +1005,14 @@
         "units": 0
     },
     "6:9": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "6:10": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "6:11": {
         "owner": "",
@@ -1472,7 +1472,7 @@
     "9:6": {
         "owner": "Lenitra",
         "type": "",
-        "units": 1
+        "units": 0
     },
     "9:7": {
         "owner": "Lenitra",
@@ -2267,7 +2267,7 @@
     "14:5": {
         "owner": "Lenitra",
         "type": "",
-        "units": 21
+        "units": 0
     },
     "14:6": {
         "owner": "Lenitra",
@@ -2312,7 +2312,7 @@
     "14:14": {
         "owner": "",
         "type": "",
-        "units": 5
+        "units": 0
     },
     "14:15": {
         "owner": "",
@@ -2422,7 +2422,7 @@
     "15:4": {
         "owner": "Lenitra",
         "type": "radar:3",
-        "units": 31
+        "units": 0
     },
     "15:5": {
         "owner": "",
@@ -2595,14 +2595,14 @@
         "units": 0
     },
     "16:7": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "16:8": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "16:9": {
         "owner": "",
@@ -2750,19 +2750,19 @@
         "units": 0
     },
     "17:6": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "17:7": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 5
+        "units": 0
     },
     "17:8": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "17:9": {
         "owner": "",
@@ -2915,14 +2915,14 @@
         "units": 0
     },
     "18:7": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "18:8": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "18:9": {
         "owner": "",
@@ -3267,7 +3267,7 @@
     "20:13": {
         "owner": "",
         "type": "",
-        "units": 5
+        "units": 0
     },
     "20:14": {
         "owner": "",
@@ -3412,7 +3412,7 @@
     "21:10": {
         "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "21:11": {
         "owner": "",
@@ -3992,7 +3992,7 @@
     "24:30": {
         "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "24:31": {
         "owner": "",
@@ -4395,14 +4395,14 @@
         "units": 0
     },
     "27:15": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "27:16": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "27:17": {
         "owner": "",
@@ -4417,7 +4417,7 @@
     "27:19": {
         "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "27:20": {
         "owner": "",
@@ -4555,19 +4555,19 @@
         "units": 0
     },
     "28:15": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "28:16": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 5
+        "units": 0
     },
     "28:17": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "28:18": {
         "owner": "",
@@ -4715,14 +4715,14 @@
         "units": 0
     },
     "29:15": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "29:16": {
-        "owner": "IA",
+        "owner": "",
         "type": "",
-        "units": 3
+        "units": 0
     },
     "29:17": {
         "owner": "",
