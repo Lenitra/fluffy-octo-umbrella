@@ -20,6 +20,8 @@ public class PlayerControler : MonoBehaviour
 
     [SerializeField] private InfoPanelText tileInfo;
 
+    [SerializeField] private TextMeshProUGUI stateInfoText;
+
     private Coroutine activeCoroutine; // Référence à la coroutine active
 
     private GridGenerator gridGenerator;
@@ -126,10 +128,10 @@ public class PlayerControler : MonoBehaviour
                         if (hit.collider.gameObject.tag == "Tile"){
                             gameManager.moveUnitsBtnClic(selectedTile.name.Split(' ')[1], hit.collider.gameObject.name.Split(' ')[1], selectedUnits);
                             state = "";
+                            stateInfoText.text = "";
                             selectedTile.GetComponent<Tile>().unselect();
                             StartAnimatingTileInfoPanel(false);
                             selectedTile = null;
-
                         }
                     }
                 }
@@ -139,6 +141,7 @@ public class PlayerControler : MonoBehaviour
             tmpdist = 0;
         }
     }
+
 
 
     private void buildBtnClic(){
@@ -171,6 +174,7 @@ public class PlayerControler : MonoBehaviour
         movePanel.gameObject.SetActive(false);
         state = "move";
         selectedUnits = units;
+        stateInfoText.text = "Vous avez sélectionné " + selectedUnits + " unités. Cliquez sur une case pour les déplacer.";
     }
 
     public void getFromBuildPanel(string type = ""){

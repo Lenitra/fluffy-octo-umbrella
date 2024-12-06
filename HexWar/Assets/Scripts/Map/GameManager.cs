@@ -40,21 +40,16 @@ public class GameManager : MonoBehaviour
 
     public void seeHQBtnClic(){
         // loop through all children
-        Debug.Log("seeHQBtnClic");
         foreach (Transform child in transform){
             if (child.gameObject.GetComponent<Tile>().type.Split(':')[0] == "hq" && child.gameObject.GetComponent<Tile>().owner == PlayerPrefs.GetString("username")){
                 camControler.lookTile(child.gameObject);
                 return;
             }
         }
-        Debug.Log("HQ not found");
     }
 
     public void seeAllUnits(){
-        Debug.Log("seeAllUnits");
-
         seeAllUnitsBool = !seeAllUnitsBool;
-
         foreach (Transform child in transform){
             child.gameObject.GetComponent<Tile>().moreInfo.SetActive(seeAllUnitsBool);
         }
