@@ -12,9 +12,14 @@ def leaderboard():
 
     data = []
     for k, v in users.items():
-        data.append({"username": k, "money": v["money"]})
+        if k == "Nyx":
+            continue
+        data.append([k, v["money"]])
 
-    data = sorted(data, key=lambda x: x["money"], reverse=True)
+    data = sorted(data, key=lambda x: x[1], reverse=True)
+
+
+
     return jsonify(data)
 
 @app.route("/leaderboard/territory")
@@ -24,7 +29,7 @@ def leaderboard2():
         map = json.load(f)
 
     for tile in map.values():
-        if tile["owner"] == "":
+        if tile["owner"] == "" or tile["owner"] == "Nyx":
             continue
         try:
             toret[tile["owner"]] += 1
@@ -32,6 +37,11 @@ def leaderboard2():
             toret[tile["owner"]] = 1
         
     toret = sorted(toret.items(), key=lambda x: x[1], reverse=True)
+    
+    # remove "Nyx" from leaderboard
+    for i in range(len(toret)):
+        if toret[i][0] == "Nyx":
+            toret.pop(i)
 
 
     return jsonify(toret)
@@ -45,7 +55,7 @@ def leaderboard3():
         map = json.load(f)
 
     for tile in map.values():
-        if tile["owner"] == "":
+        if tile["owner"] == "" or tile["owner"] == "Nyx":
             continue
         try:
             toret[tile["owner"]] += tile["units"]
@@ -53,11 +63,12 @@ def leaderboard3():
             toret[tile["owner"]] = tile["units"]
 
     toret = sorted(toret.items(), key=lambda x: x[1], reverse=True)
+
     return jsonify(toret)
 
 
 # récupère les 10 premiers de chaque leaderboard
-@app.route("/leaderboard/all")
+@app.route("/leaderboard/all2")
 def leaderboard4():
     with open(HERE + "/data/users.json") as f:
         users = json.load(f)
@@ -70,7 +81,7 @@ def leaderboard4():
 
     with open(HERE + "/data/map.json") as f:
         map = json.load(f)
-    
+
     for tile in map.values():
         if tile["owner"] == "":
             continue
@@ -80,5 +91,20 @@ def leaderboard4():
     data["money"] = sorted(data["money"].items(), key=lambda x: x[1], reverse=True)[:10]
     data["territory"] = sorted(data["territory"].items(), key=lambda x: x[1], reverse=True)[:10]
     data["units"] = sorted(data["units"].items(), key=lambda x: x[1], reverse=True)[:10]
+
+    return jsonify(data)
+
+
+# récupère les 10 premiers de chaque leaderboard
+@app.route("/leaderboard/all")
+def leaderboard5():
+    data = {"money": {}, "territory": {}, "units": {}}
+    data["money"] = leaderboard().json
+    data["territory"] = leaderboard2().json
+    data["units"] = leaderboard3().json
+
+    # for k, v in data.items():
+        # replace all keys by 0 to 9
+        
 
     return jsonify(data)

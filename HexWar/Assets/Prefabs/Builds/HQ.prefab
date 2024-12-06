@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7690321775869496489}
+  - component: {fileID: 4683770055132556506}
   m_Layer: 0
   m_Name: HQ
   m_TagString: Untagged
@@ -33,6 +34,23 @@ Transform:
   - {fileID: 1054140719525357751}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!111 &4683770055132556506
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520387732827577120}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: fac63f05fb8bfa7478977947e31eb855, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: fac63f05fb8bfa7478977947e31eb855, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1 &6932186153961257350
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,6 +217,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: da7e6eb31de90594688170c7e4916e3d, type: 2}
+    - target: {fileID: 8466723390377137296, guid: fe32c40b23560c841ae1fc3a3b973f16, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.3206
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

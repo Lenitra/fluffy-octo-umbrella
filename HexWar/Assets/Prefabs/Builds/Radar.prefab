@@ -95,6 +95,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8828999129532947305}
+  - component: {fileID: 8099082061806493222}
   m_Layer: 0
   m_Name: Radar
   m_TagString: Untagged
@@ -119,6 +120,23 @@ Transform:
   - {fileID: 4580407423509542304}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!111 &8099082061806493222
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8674176847597691436}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: 46d9ff727e11f4b4fa9df730bc9deb73, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 46d9ff727e11f4b4fa9df730bc9deb73, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1001 &4042641703484805707
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -227,10 +245,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: SatelliteDish
       objectReference: {fileID: 0}
+    - target: {fileID: 3910878301222411376, guid: 71f853165f564f54f85de4275552bdb3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3910878301222411376, guid: 71f853165f564f54f85de4275552bdb3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.14
+      objectReference: {fileID: 0}
     - target: {fileID: 5875751445394133558, guid: 71f853165f564f54f85de4275552bdb3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 51aa417e7d841f04697fec08fb91cfe0, type: 2}
+    - target: {fileID: 7490838798379005382, guid: 71f853165f564f54f85de4275552bdb3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 360
+      objectReference: {fileID: 0}
     - target: {fileID: 8685854918478818399, guid: 71f853165f564f54f85de4275552bdb3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 

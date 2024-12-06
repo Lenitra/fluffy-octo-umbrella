@@ -70,6 +70,7 @@ def aiCycle():
             for tile in get_adjacent_hexes(x, y):
                 map[f"{tile['x']}:{tile['z']}"]["owner"] = "Nyx"
                 map[f"{tile['x']}:{tile['z']}"]["units"] = 3
+                map[f"{tile['x']}:{tile['z']}"]["type"] = ""
 
 
 
@@ -100,6 +101,8 @@ def aiCycle():
             if random.random() < len(empty_tiles) * 0.05 and map[k]["units"] > 5:
                 map[f"{target_tile['x']}:{target_tile['z']}"]["owner"] = "Nyx"
                 map[f"{target_tile['x']}:{target_tile['z']}"]["units"] = 1
+                map[f"{target_tile['x']}:{target_tile['z']}"]["type"] = ""
+
 
         
 
@@ -109,6 +112,6 @@ def aiCycle():
 
 
 if __name__ == "__main__":
-    tours = 50
+    tours = 30
     for i in range(tours):
         aiCycle()

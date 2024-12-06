@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text moneyText;
 
     
-    private bool seeAllUnitsBool = false;
+    public bool seeAllUnitsBool = false;
 
 
     // EFFECTS
@@ -28,10 +28,12 @@ public class GameManager : MonoBehaviour
 
 
     void Start(){
-        // get the 
+
         serverClient = GetComponent<ServerClient>();
         gridGenerator = GetComponent<GridGenerator>();
         camControler = Camera.main.GetComponent<CamController>();
+
+        // Events listeners
         seeAllUnitsBtn.onClick.AddListener(seeAllUnits);
         seeHQ.onClick.AddListener(seeHQBtnClic);
     }
@@ -46,13 +48,13 @@ public class GameManager : MonoBehaviour
             }
         }
         Debug.Log("HQ not found");
-
-
     }
 
     public void seeAllUnits(){
+        Debug.Log("seeAllUnits");
+
         seeAllUnitsBool = !seeAllUnitsBool;
-        // loop through all children 
+
         foreach (Transform child in transform){
             child.gameObject.GetComponent<Tile>().moreInfo.SetActive(seeAllUnitsBool);
         }

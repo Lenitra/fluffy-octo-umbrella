@@ -79,8 +79,7 @@ public class ServerClient : MonoBehaviour
             }
         }
         // Debug.Log("PollGameState took: " + (Time.time - startTime) + " seconds");
-        gameManager.seeAllUnits();
-        gameManager.seeAllUnits();
+
     }
 
     

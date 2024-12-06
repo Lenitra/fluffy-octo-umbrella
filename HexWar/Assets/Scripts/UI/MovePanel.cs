@@ -9,6 +9,7 @@ public class MovePanel : MonoBehaviour
     [SerializeField] private Slider moveSlider;
     [SerializeField] private Button moveBtn;
     [SerializeField] private Button cancelBtn;
+    [SerializeField] private Button maxBtn;
     [SerializeField] private InputField selectedUnitsInputField;
 
     [SerializeField] private PlayerControler playerControler;
@@ -24,6 +25,7 @@ public class MovePanel : MonoBehaviour
         selectedUnitsInputField.onValueChanged.AddListener(inputChange);
         moveSlider.onValueChanged.AddListener(sliderChange);
         moveBtn.onClick.AddListener(() => playerControler.getFromMovePanel(int.Parse(moveSlider.value.ToString())));
+        maxBtn.onClick.AddListener(() => selectedUnitsInputField.text = moveSlider.maxValue.ToString());
     }
 
     public void init(int maxUnits){

@@ -22,7 +22,6 @@ public class Tile : MonoBehaviour
     [SerializeField] private GameObject toShowOnSelected;
     [SerializeField] private GameObject hoverOwner;
     [SerializeField] private GameObject glow;
-
     public GameObject moreInfo;
 
     [Header("Prefabs")]
@@ -94,15 +93,8 @@ public class Tile : MonoBehaviour
 
 
 
-        // //  if the owner is the same as the username from playerprefs, show the hoverOwner 
-        // if (owner == PlayerPrefs.GetString("username"))
-        // {
-        //     hoverOwner.SetActive(true);
-        // }
-        // else
-        // {
-            hoverOwner.SetActive(false);
-        // }
+        hoverOwner.SetActive(false);
+
 
 
         // switch pour configurer l'objet à instancier en fonction du type en minuscule

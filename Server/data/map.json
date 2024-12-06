@@ -2,7 +2,7 @@
     "0:0": {
         "owner": "Lenitra",
         "type": "hq:5",
-        "units": 0
+        "units": 28
     },
     "0:1": {
         "owner": "Lenitra",
@@ -12,7 +12,7 @@
     "0:2": {
         "owner": "Lenitra",
         "type": "barrack:1",
-        "units": 0
+        "units": 1
     },
     "0:3": {
         "owner": "Lenitra",
@@ -40,7 +40,7 @@
         "units": 0
     },
     "0:8": {
-        "owner": "",
+        "owner": "TheRock",
         "type": "hq:1",
         "units": 0
     },
@@ -167,12 +167,12 @@
     "1:1": {
         "owner": "Lenitra",
         "type": "barrack:1",
-        "units": 0
+        "units": 1
     },
     "1:2": {
         "owner": "Lenitra",
         "type": "barrack:1",
-        "units": 0
+        "units": 1
     },
     "1:3": {
         "owner": "Lenitra",
@@ -195,7 +195,7 @@
         "units": 0
     },
     "1:7": {
-        "owner": "",
+        "owner": "TheRock",
         "type": "radar:1",
         "units": 0
     },
@@ -205,14 +205,14 @@
         "units": 0
     },
     "1:9": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 3
     },
     "1:10": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 3
     },
     "1:11": {
         "owner": "",
@@ -327,7 +327,7 @@
     "2:1": {
         "owner": "Lenitra",
         "type": "barrack:2",
-        "units": 0
+        "units": 2
     },
     "2:2": {
         "owner": "Lenitra",
@@ -365,24 +365,24 @@
         "units": 0
     },
     "2:9": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 4
     },
     "2:10": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 16
     },
     "2:11": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 9
     },
     "2:12": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 5
     },
     "2:13": {
         "owner": "",
@@ -410,19 +410,19 @@
         "units": 0
     },
     "2:18": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 5
     },
     "2:19": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 6
     },
     "2:20": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 5
     },
     "2:21": {
         "owner": "",
@@ -525,19 +525,19 @@
         "units": 0
     },
     "3:9": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 11
     },
     "3:10": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 32
     },
     "3:11": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 11
     },
     "3:12": {
         "owner": "",
@@ -565,24 +565,24 @@
         "units": 0
     },
     "3:17": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 4
     },
     "3:18": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 18
     },
     "3:19": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 14
     },
     "3:20": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 1
     },
     "3:21": {
         "owner": "",
@@ -685,24 +685,24 @@
         "units": 0
     },
     "4:9": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 5
     },
     "4:10": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 11
     },
     "4:11": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 12
     },
     "4:12": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 1
     },
     "4:13": {
         "owner": "",
@@ -725,29 +725,29 @@
         "units": 0
     },
     "4:17": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 5
     },
     "4:18": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 17
     },
     "4:19": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 30
     },
     "4:20": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 10
     },
     "4:21": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 2
     },
     "4:22": {
         "owner": "",
@@ -850,9 +850,9 @@
         "units": 0
     },
     "5:10": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 5
     },
     "5:11": {
         "owner": "",
@@ -885,19 +885,19 @@
         "units": 0
     },
     "5:17": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 3
     },
     "5:18": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 9
     },
     "5:19": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 6
     },
     "5:20": {
         "owner": "",
@@ -1055,9 +1055,9 @@
         "units": 0
     },
     "6:19": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 2
     },
     "6:20": {
         "owner": "",
@@ -1155,19 +1155,19 @@
         "units": 0
     },
     "7:7": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 2
     },
     "7:8": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 1
     },
     "7:9": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 1
     },
     "7:10": {
         "owner": "",
@@ -1200,8 +1200,8 @@
         "units": 0
     },
     "7:16": {
-        "owner": "",
-        "type": "",
+        "owner": "Lenitra",
+        "type": "radar:4",
         "units": 0
     },
     "7:17": {
@@ -1302,7 +1302,7 @@
     "8:4": {
         "owner": "Lenitra",
         "type": "barrack:1",
-        "units": 0
+        "units": 1
     },
     "8:5": {
         "owner": "",
@@ -1310,29 +1310,29 @@
         "units": 0
     },
     "8:6": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
     "8:7": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 9
     },
     "8:8": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 12
     },
     "8:9": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 7
     },
     "8:10": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 1
     },
     "8:11": {
         "owner": "",
@@ -1360,7 +1360,7 @@
         "units": 0
     },
     "8:16": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -1470,24 +1470,24 @@
         "units": 0
     },
     "9:6": {
-        "owner": "Lenitra",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 12
     },
     "9:7": {
-        "owner": "Lenitra",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 30
     },
     "9:8": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 13
     },
     "9:9": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 2
     },
     "9:10": {
         "owner": "Lenitra",
@@ -1515,7 +1515,7 @@
         "units": 0
     },
     "9:15": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -1630,19 +1630,19 @@
         "units": 0
     },
     "10:6": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
     "10:7": {
-        "owner": "",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 13
     },
     "10:8": {
-        "owner": "Lenitra",
+        "owner": "Nyx",
         "type": "",
-        "units": 0
+        "units": 10
     },
     "10:9": {
         "owner": "Lenitra",
@@ -1675,7 +1675,7 @@
         "units": 0
     },
     "10:15": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -1800,9 +1800,9 @@
         "units": 0
     },
     "11:8": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
-        "units": 0
+        "units": 5
     },
     "11:9": {
         "owner": "",
@@ -1830,7 +1830,7 @@
         "units": 0
     },
     "11:14": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -1990,7 +1990,7 @@
         "units": 0
     },
     "12:14": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },
@@ -3205,7 +3205,7 @@
         "units": 0
     },
     "20:1": {
-        "owner": "",
+        "owner": "Lenitra",
         "type": "",
         "units": 0
     },

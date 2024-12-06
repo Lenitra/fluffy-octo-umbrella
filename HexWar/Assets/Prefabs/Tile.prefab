@@ -74,7 +74,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   units: 0
-  owner: none
+  owner: 
   position: 0000000000000000
   type: 
   tileInfos: {fileID: 6875343273113787766}
