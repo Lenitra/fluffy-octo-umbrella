@@ -18,11 +18,17 @@ public class UpgradePanel : MonoBehaviour
     void Start()
     {
 
-        closeBtn.onClick.AddListener(() => gameObject.SetActive(false));
+        closeBtn.onClick.AddListener(closeBtnClic);
 
         buildBtn.onClick.AddListener(() => playerControler.getFromBuildPanel());
     }
     
+    private void closeBtnClic()
+    {
+        playerControler.unselectTile();
+        gameObject.SetActive(false);
+    }
+
     public void Initialise(Tile selectedTile)
     {
         this.selectedTile = selectedTile;

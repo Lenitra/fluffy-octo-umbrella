@@ -29,6 +29,9 @@ public class CamController : MonoBehaviour
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0.0f)
         {
+            if (EventSystem.current.IsPointerOverGameObject()){
+                return;
+            }
             float zoomAmount = scroll * zoomSpeed;
             float newY = transform.position.y - zoomAmount;
 
@@ -44,6 +47,9 @@ public class CamController : MonoBehaviour
         {
             if (EventSystem.current.IsPointerOverGameObject())
             {
+                isDragging = false;
+                initialMousePosition = Input.mousePosition;
+                lastMousePosition = Input.mousePosition;
                 return; 
             }
             initialMousePosition = Input.mousePosition;
@@ -54,6 +60,9 @@ public class CamController : MonoBehaviour
         {
             if (EventSystem.current.IsPointerOverGameObject())
             {
+                isDragging = false;
+                initialMousePosition = Input.mousePosition;
+                lastMousePosition = Input.mousePosition;
                 return; 
             }
             // Calculer la distance parcourue par la souris depuis le début du clic
@@ -86,6 +95,14 @@ public class CamController : MonoBehaviour
         // Lorsque le bouton gauche de la souris est relâché
         else if (Input.GetMouseButtonUp(0))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                isDragging = false;
+                initialMousePosition = Input.mousePosition;
+                lastMousePosition = Input.mousePosition;
+                return;
+            }
+
             if (isDragging)
             {
                 // Fin du glissement

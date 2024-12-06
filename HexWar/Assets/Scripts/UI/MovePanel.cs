@@ -36,6 +36,7 @@ public class MovePanel : MonoBehaviour
     }
 
     void cancelBtnClic(){
+        playerControler.unselectTile();
         gameObject.SetActive(false);
     }
 

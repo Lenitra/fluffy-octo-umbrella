@@ -8,9 +8,7 @@ using System;
 
 public class PlayerControler : MonoBehaviour
 {
-
-    // Ajouter de l'UI pour afficher les informations des hexagones sélectionnés
-    [SerializeField] private Transform tileRelativeCanvas;
+    [SerializeField] private RelativeTileCanvas tileRelativeCanvas;
     [SerializeField] private RectTransform tileInfoPanel;
     [SerializeField] private GameObject movePanel;
     [SerializeField] private GameObject buildPanel;
@@ -20,35 +18,29 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] private Button buildBtn;
 
     [SerializeField] private InfoPanelText tileInfo;
-
     [SerializeField] private TextMeshProUGUI stateInfoText;
-
-    private Coroutine activeCoroutine; // Référence à la coroutine active
 
     private GridGenerator gridGenerator;
     private GameManager gameManager;
     private CamController camControler;
 
     private Vector3 previousMousePosition;
-    private float timeClicked = 0;
-
+    public float timeClicked = 0;
 
     private string state = "";
-
     private GameObject selectedTile;
     private int selectedUnits;
 
     public float tmpdist = 0;
+    private bool skipNextClick = false; // Ce booléen va servir à ignorer le prochain clic
 
-
-    void Start(){
-
+    void Start()
+    {
         gridGenerator = GetComponent<GridGenerator>();
         gameManager = GetComponent<GameManager>();
         camControler = Camera.main.GetComponent<CamController>();
         previousMousePosition = Input.mousePosition;
 
-        // add event listener to moveUnitsBtn
         moveUnitsBtn.onClick.AddListener(moveUnitsBtnClic);
         buildBtn.onClick.AddListener(buildBtnClic);
 
@@ -56,247 +48,169 @@ public class PlayerControler : MonoBehaviour
         buildPanel.gameObject.SetActive(false);
     }
 
-
     void Update()
     {
         if (Input.GetMouseButton(0))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
             timeClicked += Time.deltaTime;
             tmpdist += Vector3.Distance(Input.mousePosition, previousMousePosition);
-            previousMousePosition = Input.mousePosition; // Met à jour la position précédente de la souris
+            previousMousePosition = Input.mousePosition;
         }
 
-        if (selectedTile != null){
-            tileInfo.SetText("<sprite=36>" + selectedTile.GetComponent<Tile>().position[0] + ":" + selectedTile.GetComponent<Tile>().position[1] + "\n<sprite=112>" + selectedTile.GetComponent<Tile>().owner + "\n" + "<sprite=91>" + selectedTile.GetComponent<Tile>().units);
-        } else {
+        if (selectedTile != null)
+        {
+            tileInfo.SetText("<sprite=36>" + selectedTile.GetComponent<Tile>().position[0] + ":" + selectedTile.GetComponent<Tile>().position[1] +
+                             "\n<sprite=112>" + selectedTile.GetComponent<Tile>().owner +
+                             "\n<sprite=91>" + selectedTile.GetComponent<Tile>().units);
+        }
+        else
+        {
             tileInfo.SetText("");
         }
 
-
-        // lancer de raycast
         if (Input.GetMouseButtonUp(0))
         {
-            
-            
-            if (timeClicked < 0.25f) {
-            
-                // check if the click is on a UI element
+            // Si on a marqué que le prochain clic doit être ignoré
+            if (skipNextClick)
+            {
+                skipNextClick = false; // Réinitialiser pour le clic suivant
+                timeClicked = 0;
+                tmpdist = 0;
+                return; // On ignore ce clic entièrement
+            }
+
+            if (timeClicked < 0.25f)
+            {
                 if (EventSystem.current.IsPointerOverGameObject())
                 {
-                    return; 
+                    timeClicked = 0;
+                    tmpdist = 0;
+                    return;
                 }
 
-                if (state == ""){
+                if (state == "")
+                {
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     RaycastHit hit;
                     if (Physics.Raycast(ray, out hit))
                     {
-
-
-                        if (PlayerPrefs.GetString("username") == hit.collider.gameObject.GetComponent<Tile>().owner){
-
-                            if (selectedTile == null)
+                        if (selectedTile == null)
+                        {
+                            // Vérifier si la tuile appartient au joueur
+                            if (PlayerPrefs.GetString("username") == hit.collider.gameObject.GetComponent<Tile>().owner)
                             {
-                                selectedTile = hit.collider.gameObject;
-                                camControler.lookTile(selectedTile);
-                                selectedTile.GetComponent<Tile>().select();
-                                StartAnimatingTileInfoPanel(true);
-                            } 
-                            
-                            else {
-                                selectedTile.GetComponent<Tile>().unselect();
-                                StartAnimatingTileInfoPanel(false);
-                                if (hit.collider.gameObject == selectedTile){
-                                    selectedTile = null;
-                                    return;
-                                } else {
-                                    selectedTile = hit.collider.gameObject;
-                                    selectedTile.GetComponent<Tile>().select();
-                                    camControler.lookTile(selectedTile);
-                                    StartAnimatingTileInfoPanel(true);
-                                }
+                                selectTile(hit.collider.gameObject);
                             }
                         }
+                        else
+                        {
+                            unselectTile();
+                        }
                     }
                 }
-
-                else if (state == "move"){
-                    // move units
+                else if (state == "move")
+                {
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     RaycastHit hit;
                     if (Physics.Raycast(ray, out hit))
                     {
-                        if (hit.collider.gameObject.tag == "Tile"){
+                        if (hit.collider.gameObject.CompareTag("Tile"))
+                        {
                             gameManager.moveUnitsBtnClic(selectedTile.name.Split(' ')[1], hit.collider.gameObject.name.Split(' ')[1], selectedUnits);
-                            state = "";
-                            stateInfoText.text = "";
-                            selectedTile.GetComponent<Tile>().unselect();
-                            StartAnimatingTileInfoPanel(false);
-                            selectedTile = null;
+                            unselectTile();
                         }
                     }
                 }
+            }
 
-            }   
             timeClicked = 0;
             tmpdist = 0;
         }
     }
 
-
-
-    private void buildBtnClic(){
-        if (selectedTile != null){
-
-            // Si la tile est vide
-            if(selectedTile.GetComponent<Tile>().type == ""){
+    public void buildBtnClic()
+    {
+        if (selectedTile != null)
+        {
+            if (selectedTile.GetComponent<Tile>().type == "")
+            {
                 buildPanel.gameObject.SetActive(true);
             }
-
-            // Si il y a un batiment au niveau inférieur à 5
-            else if (!selectedTile.GetComponent<Tile>().type.EndsWith("5")){
+            else if (!selectedTile.GetComponent<Tile>().type.EndsWith("5"))
+            {
                 upgradePanel.gameObject.GetComponent<UpgradePanel>().Initialise(selectedTile.GetComponent<Tile>());
                 upgradePanel.gameObject.SetActive(true);
             }
         }
     }
 
-
-    private void moveUnitsBtnClic(){
-        if (selectedTile != null){
-            if (selectedTile.GetComponent<Tile>().units > 0){
-                movePanel.gameObject.SetActive(true);
-                movePanel.GetComponent<MovePanel>().init(selectedTile.GetComponent<Tile>().units);
-            }
+    public void moveUnitsBtnClic()
+    {
+        if (selectedTile != null && selectedTile.GetComponent<Tile>().units > 0)
+        {
+            movePanel.gameObject.SetActive(true);
+            movePanel.GetComponent<MovePanel>().init(selectedTile.GetComponent<Tile>().units);
         }
     }
 
-    public void getFromMovePanel(int units){
+    public void getFromMovePanel(int units)
+    {
         movePanel.gameObject.SetActive(false);
         state = "move";
         selectedUnits = units;
         stateInfoText.text = "Vous avez sélectionné " + selectedUnits + " unités. Cliquez sur une case pour les déplacer.";
     }
 
-    public void getFromBuildPanel(string type = ""){
-        if (type == ""){
+    public void getFromBuildPanel(string type = "")
+    {
+        if (type == "")
+        {
             type = selectedTile.GetComponent<Tile>().type.Split(":")[0];
         }
 
         buildPanel.gameObject.SetActive(false);
         upgradePanel.gameObject.SetActive(false);
-        gameManager.buildBtnClic(selectedTile.name.Split(' ')[1], type); 
-        
-    }
-    
-
-
-
-    private IEnumerator animateTileInfoPanel()
-    {
-        // Position cible en X relative (par rapport à l'ancrage)
-        float targetX = 100f;
-
-        // Récupération du RectTransform
-        RectTransform rectTransform = tileInfoPanel.GetComponent<RectTransform>();
-
-        // Tant que la position relative actuelle est inférieure à la cible
-        while (rectTransform.anchoredPosition.x < targetX)
-        {
-            // Lerp pour une transition fluide
-            rectTransform.anchoredPosition = Vector2.Lerp(
-                rectTransform.anchoredPosition, 
-                new Vector2(targetX, rectTransform.anchoredPosition.y), 
-                Time.deltaTime * 10 // Ajustez la vitesse
-            );
-
-            // Vérification de proximité pour éviter une boucle infinie
-            if (Mathf.Abs(rectTransform.anchoredPosition.x - targetX) < 0.01f)
-            {
-                rectTransform.anchoredPosition = new Vector2(targetX, rectTransform.anchoredPosition.y);
-                break;
-            }
-
-            yield return new WaitForEndOfFrame();
-        }
-
-        // La coroutine est terminée, réinitialisation de la référence
-        activeCoroutine = null;
+        gameManager.buildBtnClic(selectedTile.name.Split(' ')[1], type);
+        unselectTile();
     }
 
-    private IEnumerator animateTileInfoPanelBack()
+    public void selectTile(GameObject tile)
     {
-        // Position cible en X relative (par rapport à l'ancrage)
-        float targetX = -100f;
-
-        // Récupération du RectTransform
-        RectTransform rectTransform = tileInfoPanel.GetComponent<RectTransform>();
-
-        // Tant que la position relative actuelle est supérieure à la cible
-        while (rectTransform.anchoredPosition.x > targetX)
-        {
-            // Lerp pour une transition fluide
-            rectTransform.anchoredPosition = Vector2.Lerp(
-                rectTransform.anchoredPosition, 
-                new Vector2(targetX, rectTransform.anchoredPosition.y), 
-                Time.deltaTime * 10 // Ajustez la vitesse
-            );
-
-            // Vérification de proximité pour éviter une boucle infinie
-            if (Mathf.Abs(rectTransform.anchoredPosition.x - targetX) < 0.01f)
-            {
-                rectTransform.anchoredPosition = new Vector2(targetX, rectTransform.anchoredPosition.y);
-                break;
-            }
-
-            yield return new WaitForEndOfFrame();
-        }
-
-        // La coroutine est terminée, réinitialisation de la référence
-        activeCoroutine = null;
+        selectedTile = tile;
+        selectedTile.GetComponent<Tile>().select();
+        camControler.lookTile(selectedTile);
+        StartAnimatingTileInfoPanel(true);
     }
 
-    public void StartAnimatingTileInfoPanel(bool moveForward)
+    public void unselectTile()
     {
-        // Désactiver le bouton de construction si la tile est lvl 5
-        if (selectedTile.GetComponent<Tile>().type.EndsWith("5")){
-            buildBtn.interactable = false;
-        }
-        else {
-            buildBtn.interactable = true;
-        }
-
-        // Désactiver le bouton de déplacement si la tile n'a pas d'unités
-        if (selectedTile.GetComponent<Tile>().units == 0){
-            moveUnitsBtn.interactable = false;
-        }
-        else {
-            moveUnitsBtn.interactable = true;
-        }
-
-        // Si une coroutine est déjà active, on l'arrête
-        if (activeCoroutine != null)
+        if (selectedTile != null)
         {
-            StopCoroutine(activeCoroutine);
-            activeCoroutine = null;
+            selectedTile.GetComponent<Tile>().unselect();
+            selectedTile = null;
         }
+        stateInfoText.text = "";
+        state = "";
+        StartAnimatingTileInfoPanel(false);
 
-        if (moveForward){
-            tileRelativeCanvas.gameObject.SetActive(true);
-            tileRelativeCanvas.position = new Vector3(selectedTile.transform.position.x, selectedTile.transform.position.y + 1, selectedTile.transform.position.z);
-        } else {
-            tileRelativeCanvas.gameObject.SetActive(false);
-        }
+        // Ici, on signale qu'on a fermé le menu => le prochain clic doit être ignoré
+        skipNextClick = true;
+    }
 
-        // Démarrer la nouvelle coroutine
-        if (moveForward)
+    public void StartAnimatingTileInfoPanel(bool show)
+    {
+        if (show && selectedTile != null)
         {
-            activeCoroutine = StartCoroutine(animateTileInfoPanel());
+            tileRelativeCanvas.activateTileInfoPanel(selectedTile.GetComponent<Tile>());
+            tileRelativeCanvas.lookTile(selectedTile);
         }
         else
         {
-            activeCoroutine = StartCoroutine(animateTileInfoPanelBack());
+            tileRelativeCanvas.desactivate();
         }
     }
-
 }
