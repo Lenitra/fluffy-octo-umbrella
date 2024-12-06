@@ -14,7 +14,7 @@ public class CamController : MonoBehaviour
 
     // Variables pour le zoom
     private float zoomSpeed = 10f;     // Vitesse du zoom
-    private float minZoom = 5f;        // Zoom minimum (proche)
+    private float minZoom = 10f;        // Zoom minimum (proche)
     private float maxZoom = 50f;       // Zoom maximum (éloigné)
 
     void Start()

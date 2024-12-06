@@ -10,6 +10,7 @@ public class PlayerControler : MonoBehaviour
 {
 
     // Ajouter de l'UI pour afficher les informations des hexagones sélectionnés
+    [SerializeField] private Transform tileRelativeCanvas;
     [SerializeField] private RectTransform tileInfoPanel;
     [SerializeField] private GameObject movePanel;
     [SerializeField] private GameObject buildPanel;
@@ -278,6 +279,13 @@ public class PlayerControler : MonoBehaviour
         {
             StopCoroutine(activeCoroutine);
             activeCoroutine = null;
+        }
+
+        if (moveForward){
+            tileRelativeCanvas.gameObject.SetActive(true);
+            tileRelativeCanvas.position = new Vector3(selectedTile.transform.position.x, selectedTile.transform.position.y + 1, selectedTile.transform.position.z);
+        } else {
+            tileRelativeCanvas.gameObject.SetActive(false);
         }
 
         // Démarrer la nouvelle coroutine
