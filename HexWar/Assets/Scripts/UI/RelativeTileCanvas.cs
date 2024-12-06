@@ -58,7 +58,7 @@ public class RelativeTileCanvas : MonoBehaviour
 
 
     public void lookTile(GameObject tile){
-        transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y + 2f, tile.transform.position.z -0.15f);
+        transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y + 2.5f, tile.transform.position.z -0.5f);
     }
 
     public void activateTileInfoPanel(Tile tile){
