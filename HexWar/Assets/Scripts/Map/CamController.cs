@@ -5,7 +5,7 @@ using System.Collections;
 public class CamController : MonoBehaviour
 {    
     private Coroutine moveCoroutine = null;   // Coroutine pour l'animation de translation
-    private float smoothTime = 4; 
+    private float smoothTime = 3; 
     private Plane groundPlane;
     private bool isDragging = false;
     private Vector3 initialMousePosition;
@@ -15,7 +15,7 @@ public class CamController : MonoBehaviour
     // Variables pour le zoom
     private float zoomSpeed = 10f;     // Vitesse du zoom
     private float minZoom = 10f;        // Zoom minimum (proche)
-    private float maxZoom = 50f;       // Zoom maximum (éloigné)
+    private float maxZoom = 25f;       // Zoom maximum (éloigné)
 
     void Start()
     {
@@ -27,20 +27,32 @@ public class CamController : MonoBehaviour
     {
         // Gestion du zoom avec la molette
         float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if (scroll != 0.0f)
+        if (scroll != 0.0f && moveCoroutine == null)
         {
-            if (EventSystem.current.IsPointerOverGameObject()){
-                return;
-            }
             float zoomAmount = scroll * zoomSpeed;
-            float newY = transform.position.y - zoomAmount;
 
-            // Limiter la position Y entre minZoom et maxZoom
-            newY = Mathf.Clamp(newY, minZoom, maxZoom);
+            // Sauvegarder l'ancienne position Y
+            float oldY = transform.position.y;
+            // Calculer la cible (avant clamp)
+            float targetY = oldY - zoomAmount;
 
-            // Mettre à jour la position de la caméra
-            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+            // Limiter Y entre minZoom et maxZoom
+            float newY = Mathf.Clamp(targetY, minZoom, maxZoom);
+
+            // Calculer le delta Y effectif après clamp
+            float actualDeltaY = newY - oldY;
+
+            // Calcul du ratio en fonction de l'angle de 70°
+            float angleInRadians = 70f * Mathf.Deg2Rad;
+            float ratioZtoY = Mathf.Cos(angleInRadians) / Mathf.Sin(angleInRadians);
+
+            // Calcul du nouveau Z en tenant compte du delta Y effectif
+            float newZ = transform.position.z - (actualDeltaY * ratioZtoY);
+
+            // Mettre à jour la position
+            transform.position = new Vector3(transform.position.x, newY, newZ);
         }
+
 
         // Lorsque le bouton gauche de la souris est enfoncé
         if (Input.GetMouseButtonDown(0))
@@ -137,5 +149,6 @@ public class CamController : MonoBehaviour
         }
 
         transform.position = targetPos; // Ajustement final pour une position précise
+        moveCoroutine = null;
     }
 }

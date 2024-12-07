@@ -2,7 +2,7 @@
     "0:0": {
         "owner": "Lenitra",
         "type": "hq:5",
-        "units": 25
+        "units": 35
     },
     "0:1": {
         "owner": "Lenitra",
@@ -12,7 +12,7 @@
     "0:2": {
         "owner": "Lenitra",
         "type": "barrack:1",
-        "units": 10
+        "units": 17
     },
     "0:3": {
         "owner": "Lenitra",
@@ -161,7 +161,7 @@
     },
     "1:0": {
         "owner": "Lenitra",
-        "type": "miner:3",
+        "type": "miner:4",
         "units": 0
     },
     "1:1": {
@@ -172,7 +172,7 @@
     "1:2": {
         "owner": "Lenitra",
         "type": "barrack:1",
-        "units": 10
+        "units": 17
     },
     "1:3": {
         "owner": "Lenitra",
@@ -326,8 +326,8 @@
     },
     "2:1": {
         "owner": "Lenitra",
-        "type": "barrack:2",
-        "units": 0
+        "type": "barrack:3",
+        "units": 2
     },
     "2:2": {
         "owner": "Lenitra",
@@ -1302,7 +1302,7 @@
     "8:4": {
         "owner": "Lenitra",
         "type": "barrack:1",
-        "units": 10
+        "units": 17
     },
     "8:5": {
         "owner": "",
@@ -1461,7 +1461,7 @@
     },
     "9:4": {
         "owner": "Lenitra",
-        "type": "radar:1",
+        "type": "radar:2",
         "units": 0
     },
     "9:5": {
@@ -1470,9 +1470,9 @@
         "units": 0
     },
     "9:6": {
-        "owner": "Nyx",
+        "owner": "Lenitra",
         "type": "",
-        "units": 2
+        "units": 7
     },
     "9:7": {
         "owner": "Nyx",

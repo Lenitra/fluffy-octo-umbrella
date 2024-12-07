@@ -59,7 +59,7 @@ public class BuildPanel : MonoBehaviour
             buildings[i] = buildingParent.transform.GetChild(i).gameObject;
         }
 
-        closeBtn.onClick.AddListener(() => gameObject.SetActive(false));
+        closeBtn.onClick.AddListener(closeBtnClic);
 
         // Active the first building
         buildings[currentBuilding].SetActive(true);
@@ -67,6 +67,12 @@ public class BuildPanel : MonoBehaviour
         title.text = buildings[currentBuilding].GetComponent<BuildUI>().name;
         updatePrice();
         buildBtn.onClick.AddListener(() => playerControler.getFromBuildPanel(buildings[currentBuilding].GetComponent<BuildUI>().type));
+    }
+
+    void closeBtnClic()
+    {
+        playerControler.unselectTile();
+        gameObject.SetActive(false);
     }
 
     void updatePrice(){

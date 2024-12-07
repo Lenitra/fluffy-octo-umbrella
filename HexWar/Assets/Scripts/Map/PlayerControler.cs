@@ -9,15 +9,9 @@ using System;
 public class PlayerControler : MonoBehaviour
 {
     [SerializeField] private RelativeTileCanvas tileRelativeCanvas;
-    [SerializeField] private RectTransform tileInfoPanel;
     [SerializeField] private GameObject movePanel;
     [SerializeField] private GameObject buildPanel;
     [SerializeField] private GameObject upgradePanel;
-
-    [SerializeField] private Button moveUnitsBtn;
-    [SerializeField] private Button buildBtn;
-
-    [SerializeField] private InfoPanelText tileInfo;
     [SerializeField] private TextMeshProUGUI stateInfoText;
 
     private GridGenerator gridGenerator;
@@ -41,15 +35,13 @@ public class PlayerControler : MonoBehaviour
         camControler = Camera.main.GetComponent<CamController>();
         previousMousePosition = Input.mousePosition;
 
-        moveUnitsBtn.onClick.AddListener(moveUnitsBtnClic);
-        buildBtn.onClick.AddListener(buildBtnClic);
-
         movePanel.gameObject.SetActive(false);
         buildPanel.gameObject.SetActive(false);
     }
 
     void Update()
     {
+
         if (Input.GetMouseButton(0))
         {
             if (EventSystem.current.IsPointerOverGameObject())
@@ -61,16 +53,7 @@ public class PlayerControler : MonoBehaviour
             previousMousePosition = Input.mousePosition;
         }
 
-        if (selectedTile != null)
-        {
-            tileInfo.SetText("<sprite=36>" + selectedTile.GetComponent<Tile>().position[0] + ":" + selectedTile.GetComponent<Tile>().position[1] +
-                             "\n<sprite=112>" + selectedTile.GetComponent<Tile>().owner +
-                             "\n<sprite=91>" + selectedTile.GetComponent<Tile>().units);
-        }
-        else
-        {
-            tileInfo.SetText("");
-        }
+
 
         if (Input.GetMouseButtonUp(0))
         {
@@ -157,12 +140,28 @@ public class PlayerControler : MonoBehaviour
         }
     }
 
+
+    // TODO: Créer un panel d'infos pour les tuiles et appliquer le texte ici
+    public void infosTileBtnClic()
+    {
+        if (selectedTile != null)
+        {
+            string msg = "Infos de la tuile " + selectedTile.name + "\n";
+            msg += "Owner : " + selectedTile.GetComponent<Tile>().owner + "\n";
+            msg += "Units : " + selectedTile.GetComponent<Tile>().units + "\n";
+            msg += "Type : " + selectedTile.GetComponent<Tile>().type ;
+            Debug.Log(msg);
+        }
+    }
+    
+
     public void getFromMovePanel(int units)
     {
         movePanel.gameObject.SetActive(false);
         state = "move";
         selectedUnits = units;
         stateInfoText.text = "Vous avez sélectionné " + selectedUnits + " unités. Cliquez sur une case pour les déplacer.";
+        tileRelativeCanvas.desactivate();
     }
 
     public void getFromBuildPanel(string type = "")
@@ -205,12 +204,13 @@ public class PlayerControler : MonoBehaviour
     {
         if (show && selectedTile != null)
         {
-            tileRelativeCanvas.activateTileInfoPanel(selectedTile.GetComponent<Tile>());
-            tileRelativeCanvas.lookTile(selectedTile);
+            tileRelativeCanvas.selectTile(selectedTile.GetComponent<Tile>());
         }
         else
         {
             tileRelativeCanvas.desactivate();
         }
     }
+
+
 }

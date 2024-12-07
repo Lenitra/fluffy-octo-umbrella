@@ -15,7 +15,7 @@ public class Tile : MonoBehaviour
     public TextMeshPro tileInfos;
     public string color;
 
-
+    private float originalBaseY;
     private float selectionOffset = 0.8f;
 
     // textmeshpro for info on the tile
@@ -39,7 +39,7 @@ public class Tile : MonoBehaviour
 
     void Start()
     {
-        
+        originalBaseY = transform.position.y;
 
         // name of the object is "Hexagon x, z"
         position[0] = int.Parse(gameObject.name.Split("Hexagon ")[1].Split(":")[0]);
@@ -162,70 +162,76 @@ public class Tile : MonoBehaviour
         Start();
     }
 
-    // start the coroutine to select the tile
+    
+
     public void select()
     {
         if (activeCoroutine != null)
         {
             StopCoroutine(activeCoroutine);
         }
-        activeCoroutine = StartCoroutine(selectTile());
+        activeCoroutine = StartCoroutine(SelectTile());
     }
 
-    // start the coroutine to unselect the tile
     public void unselect()
     {
         if (activeCoroutine != null)
         {
             StopCoroutine(activeCoroutine);
         }
-        activeCoroutine = StartCoroutine(unselectTile());
+        activeCoroutine = StartCoroutine(UnselectTile());
     }
 
-
-    private IEnumerator selectTile()
+    private IEnumerator SelectTile()
     {
         toShowOnSelected.gameObject.SetActive(true);
-        float animationDuration = 0.25f; // Durée de l'animation en secondes
+
+        float animationDuration = 0.25f;
         float elapsedTime = 0f;
-        float startPositionY = transform.position.y;
-        float targetPositionY = startPositionY + selectionOffset;
-        
+
+        float startY = transform.position.y;
+        float endY = originalBaseY + selectionOffset;
+
         while (elapsedTime < animationDuration)
         {
-            float moveStep = (selectionOffset / animationDuration) * Time.deltaTime; // Déplacement par frame basé sur le temps
-            transform.position = new Vector3(transform.position.x, transform.position.y + moveStep, transform.position.z);
-            
+            float t = elapsedTime / animationDuration;
+            float newY = Mathf.Lerp(startY, endY, t);
+            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+
             elapsedTime += Time.deltaTime;
-            yield return null; // Attend jusqu'au prochain frame
+            yield return null;
         }
-        
-        // Assure que la position finale est atteinte
-        transform.position = new Vector3(transform.position.x, targetPositionY, transform.position.z);
-        yield return new WaitForSeconds(0.1f); // Attente après l'animation
+
+        // Assure la position finale
+        transform.position = new Vector3(transform.position.x, endY, transform.position.z);
+        yield return new WaitForSeconds(0.1f);
     }
 
-    private IEnumerator unselectTile()
+    private IEnumerator UnselectTile()
     {
         toShowOnSelected.gameObject.SetActive(false);
-        float animationDuration = 0.25f; // Durée de l'animation en secondes
+
+        float animationDuration = 0.25f;
         float elapsedTime = 0f;
-        float startPositionY = transform.position.y;
-        float targetPositionY = startPositionY - selectionOffset;
+
+        float startY = transform.position.y;
+        float endY = originalBaseY; // On revient à la base
 
         while (elapsedTime < animationDuration)
         {
-            float moveStep = (selectionOffset / animationDuration) * Time.deltaTime; // Déplacement par frame basé sur le temps
-            transform.position = new Vector3(transform.position.x, transform.position.y - moveStep, transform.position.z);
-            
+            float t = elapsedTime / animationDuration;
+            float newY = Mathf.Lerp(startY, endY, t);
+            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+
             elapsedTime += Time.deltaTime;
-            yield return null; // Attend jusqu'au prochain frame
+            yield return null;
         }
 
-        // Assure que la position finale est atteinte
-        transform.position = new Vector3(transform.position.x, targetPositionY, transform.position.z);
-        yield return new WaitForSeconds(0.1f); // Attente après l'animation
+        // Assure la position finale
+        transform.position = new Vector3(transform.position.x, endY, transform.position.z);
+        yield return new WaitForSeconds(0.1f);
     }
+
 
 
 
