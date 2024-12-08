@@ -29,7 +29,7 @@ public class LoginSys : MonoBehaviour
     // Coroutine pour envoyer la requête POST au serveur Flask
     IEnumerator Login(string username, string password)
     {
-        string url = "http://localhost:5000/login";
+        string url = DataManager.Instance.GetData("serverIP") + "/login";
         
         // Création des données JSON à envoyer
         string jsonData = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
