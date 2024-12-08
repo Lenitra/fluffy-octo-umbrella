@@ -76,7 +76,7 @@ public class DataManager : MonoBehaviour
     // Méthode pour initialiser les données en fonction de la langue sélectionnée
     void initalise(string lang="fr"){
         dataDictionary.Clear();
-        dataDictionary.Add("serverIP", "localhost:5000");
+        dataDictionary.Add("serverIP", "http://217.160.99.153:8080");
         if (lang == "fr"){
             dataDictionary.Add("build", "Construire");
             dataDictionary.Add("upgrade", "Améliorer");
