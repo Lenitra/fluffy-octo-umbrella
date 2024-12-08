@@ -42,7 +42,7 @@ public class ServerClient : MonoBehaviour
     IEnumerator GetGameState()
     {
         float startTime = Time.time;
-        UnityWebRequest request = UnityWebRequest.Get("http://"+DataManager.Instance.GetData("serverIP")+"/get_hex/"+ PlayerPrefs.GetString("username"));
+        UnityWebRequest request = UnityWebRequest.Get(DataManager.Instance.GetData("serverIP")+"/get_hex/"+ PlayerPrefs.GetString("username"));
         yield return request.SendWebRequest();
 
         if (request.result != UnityWebRequest.Result.Success)
@@ -91,7 +91,7 @@ public class ServerClient : MonoBehaviour
     
     IEnumerator MoveUnitsCoro(string from, string to, int units)
     {
-        UnityWebRequest request = UnityWebRequest.Get("http://"+DataManager.Instance.GetData("serverIP")+"/move_units/" + from + "/" + to + "/" + units);
+        UnityWebRequest request = UnityWebRequest.Get(DataManager.Instance.GetData("serverIP")+"/move_units/" + from + "/" + to + "/" + units);
         yield return request.SendWebRequest();
         // debug the response
         if (request.result != UnityWebRequest.Result.Success)
@@ -143,7 +143,7 @@ public class ServerClient : MonoBehaviour
 
     IEnumerator BuildCoro(string tile, string type)
     {
-        UnityWebRequest request = UnityWebRequest.Get("http://" + DataManager.Instance.GetData("serverIP") + "/buildbat/" + tile + "/" + type);
+        UnityWebRequest request = UnityWebRequest.Get(DataManager.Instance.GetData("serverIP") + "/buildbat/" + tile + "/" + type);
         yield return request.SendWebRequest();
         // debug the response
         if (request.result != UnityWebRequest.Result.Success)
@@ -169,7 +169,7 @@ public class ServerClient : MonoBehaviour
 
     private IEnumerator GetPriceCoroutine(string build, int lvl, Action<int> onComplete)
     {
-        UnityWebRequest request = UnityWebRequest.Get("http://" + DataManager.Instance.GetData("serverIP") + "/get_price/" + build + "/" + lvl);
+        UnityWebRequest request = UnityWebRequest.Get(DataManager.Instance.GetData("serverIP") + "/get_price/" + build + "/" + lvl);
         yield return request.SendWebRequest();
 
         if (request.result == UnityWebRequest.Result.Success)
